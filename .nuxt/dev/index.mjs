@@ -166,23 +166,6 @@ const errorHandler = (async function errorhandler(error, event) {
   return send(event, html);
 });
 
-const script = `
-if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
-  Object.defineProperty(window, '__NUXT_DEVTOOLS_TIME_METRIC__', {
-    value: {},
-    enumerable: false,
-    configurable: true,
-  })
-}
-window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
-`;
-
-const _hGZBemolRm = (function(nitro) {
-  nitro.hooks.hook("render:html", (htmlContext) => {
-    htmlContext.head.push(`<script>${script}<\/script>`);
-  });
-});
-
 const rootDir = "/Users/idrew/Desktop/git_repo/personal/idrew25";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
@@ -272,8 +255,7 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _hGZBemolRm,
-_RL8FAVTEYy
+  _RL8FAVTEYy
 ];
 
 const inlineAppConfig = {

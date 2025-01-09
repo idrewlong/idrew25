@@ -2,7 +2,6 @@
 /// <reference types="@nuxt/fonts" />
 /// <reference types="@nuxt/icon" />
 /// <reference types="@nuxt/image" />
-/// <reference types="@nuxt/devtools" />
 /// <reference types="@nuxt/telemetry" />
 /// <reference types="nuxt-gtag" />
 /// <reference path="types/builder-env.d.ts" />

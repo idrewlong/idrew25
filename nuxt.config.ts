@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 	css: ['~/assets/css/main.css'],
+
 	// site: {
 	// 	url: 'https://www.codeoxford.com',
 	// 	name: 'Code Oxford',
@@ -11,19 +12,23 @@ export default defineNuxtConfig({
 	gtag: {
 		id: '',
 	},
-	app: {
-		pageTransition: { name: 'page', mode: 'out-in' },
-	},
+
+	// app: {
+	// 	pageTransition: { name: 'page', mode: 'out-in' },
+	// },
+
 	postcss: {
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {},
 		},
 	},
+
 	image: {
 		format: ['webp'],
 		domains: [''],
 	},
 
 	modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', 'nuxt-gtag'],
+	compatibilityDate: '2025-01-08',
 });
