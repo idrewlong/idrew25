@@ -10,17 +10,15 @@
 			>
 				<div class="flex flex-col gap-y-1">
 					<div class="text-2xl font-medium text-gray-800">I'm Andrew.</div>
-					<h1
-						class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-slate-100 via-orange-50 to-orange-500 text-transparent bg-clip-text"
-					>
+					<h1 class="text-4xl sm:text-5xl font-bold text-white">
 						I like to build.
 					</h1>
 				</div>
 				<p class="text-sm md:max-w-lg text-gray-800">
 					TypeScript connoisseur. Animation aficionado. Frontend web, mostly
-					React and Next.js. Cross-platform mobile with React Native. Backend
-					with Node.js and Python. Have written an SQL query or two. Can wrangle
-					the cloud when needed.
+					React and Nuxt.js. Cross-platform mobile with React Native. Backend
+					with Lavarel and Node.js. Have written an SQL query or two. Can
+					wrangle the cloud when needed.
 				</p>
 			</div>
 			<div class="flex-shrink-0 relative">
@@ -78,7 +76,7 @@ const changeImage = () => {
 	currentImage.value = currentImage.value === images[0] ? images[1] : images[0];
 	setTimeout(() => {
 		transitioning = false;
-	}, 2000); // Match this with your transition duration
+	}, 4000); // Match this with your transition duration
 };
 
 let imageInterval;

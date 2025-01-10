@@ -1,7 +1,7 @@
 <template>
 	<header class="py-4 px-2">
 		<nav
-			class="p-4 px-6 mx-auto max-w-7xl rounded-3xl md:flex md:justify-between md:items-center shadow-xl"
+			class="p-4 px-6 mx-auto max-w-7xl rounded-3xl md:flex md:justify-between md:items-center shadow-xl bg-white"
 			aria-label="Main navigation"
 		>
 			<div class="flex items-center justify-between">

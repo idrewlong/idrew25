@@ -13,9 +13,9 @@ export default defineNuxtConfig({
 		id: '',
 	},
 
-	// app: {
-	// 	pageTransition: { name: 'page', mode: 'out-in' },
-	// },
+	app: {
+		pageTransition: { name: 'page', mode: 'out-in' },
+	},
 
 	postcss: {
 		plugins: {
