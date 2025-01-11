@@ -17,7 +17,7 @@
 							<img
 								:src="project.image"
 								:alt="project.title"
-								class="absolute inset-0 w-full h-full object-cover"
+								class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-300 hover:grayscale-0"
 							/>
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 <template>
 	<header class="py-4 px-2">
 		<nav
-			class="p-4 px-6 mx-auto max-w-7xl rounded-3xl md:flex md:justify-between md:items-center shadow-xl bg-white"
+			class="p-4 px-6 mx-auto max-w-7xl rounded-3xl md:flex md:justify-between md:items-center shadow-xl bg-white relative"
 			aria-label="Main navigation"
 		>
 			<div class="flex items-center justify-between">
@@ -75,33 +75,38 @@
 				leave-from-class="transform translate-y-0 opacity-100"
 				leave-to-class="transform -translate-y-4 opacity-0"
 			>
-				<div v-show="showMenu" class="flex flex-col mt-8 space-y-4 md:hidden">
-					<NuxtLink
-						v-for="link in navigationLinks"
-						:key="link.to"
-						:to="link.to"
-						class="text-gray-500 transition-colors duration-300 hover:text-orange-400"
-						@click="closeNavbar"
-					>
-						{{ link.label }}
-					</NuxtLink>
-
-					<div class="flex space-x-4 items-center">
-						<a
-							v-for="social in socialLinks"
-							:key="social.url"
-							:href="social.url"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-gray-500"
+				<div
+					v-show="showMenu"
+					class="absolute top-full left-0 right-0 bg-white mt-2 p-4 rounded-xl shadow-lg md:hidden z-50"
+				>
+					<div class="flex flex-col space-y-4">
+						<NuxtLink
+							v-for="link in navigationLinks"
+							:key="link.to"
+							:to="link.to"
+							class="text-gray-500 transition-colors duration-300 hover:text-orange-400"
+							@click="closeNavbar"
 						>
-							<span class="sr-only">{{ social.label }}</span>
-							<Icon
-								:name="social.icon"
-								class="w-6 h-6 transition-colors duration-300 hover:text-orange-400"
-								aria-hidden="true"
-							/>
-						</a>
+							{{ link.label }}
+						</NuxtLink>
+
+						<div class="flex flex-col space-y-4">
+							<a
+								v-for="social in socialLinks"
+								:key="social.url"
+								:href="social.url"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-gray-500 flex items-center gap-2"
+							>
+								<Icon
+									:name="social.icon"
+									class="w-6 h-6 transition-colors duration-300 hover:text-orange-400"
+									aria-hidden="true"
+								/>
+								<span>{{ social.label }}</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</Transition>
@@ -121,7 +126,7 @@ const navigationLinks = [
 
 const socialLinks = [
 	{
-		url: 'https://github.com/Code-Oxford',
+		url: 'https://github.com/idrewlong',
 		icon: 'mdi:github',
 		label: 'GitHub',
 	},

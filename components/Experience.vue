@@ -53,10 +53,10 @@
 					v-if="experience.logo"
 					:src="experience.logo"
 					:alt="`${experience.company} logo`"
-					class="hidden sm:block w-16 h-16 object-contain aspect-square flex-shrink-0 opacity-30 grayscale"
+					class="hidden sm:block w-24 h-24 object-contain aspect-square flex-shrink-0 opacity-30 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
 					:style="{ aspectRatio: '100 / 100' }"
-					width="100"
-					height="100"
+					width="200"
+					height="200"
 					loading="lazy"
 					decoding="async"
 				/>
@@ -126,7 +126,7 @@ const experiences = [
 			'Led the development of a new cardholder experience on web.',
 			"Overhauled the core of Ramp's card transaction web interfaces.",
 		],
-		logo: '/images/IDLOGO.png',
+		logo: '/images/madg.png',
 	},
 	{
 		period: 'December 2023 – June 2024',

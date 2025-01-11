@@ -38,7 +38,7 @@
 					v-if="education.logo"
 					:src="education.logo"
 					:alt="`${education.school} logo`"
-					class="absolute right-0 top-0 w-12 h-12 object-contain opacity-30"
+					class="absolute right-0 top-0 w-12 h-12 object-contain opacity-30 hover:opacity-100 transition-opacity"
 				/>
 			</div>
 		</div>
@@ -54,7 +54,7 @@ const educationList = [
 			'4.0 GPA. Focus on theoretical mathematics, math education, and online curriculum development.',
 		school: 'University of Mississippi',
 		year: '2022',
-		logo: '/images/IDLOGO.png',
+		logo: '/images/olemiss.png',
 	},
 	{
 		degree: 'A.A',
@@ -62,7 +62,7 @@ const educationList = [
 		description: '4.0 GPA. Focus on theoretical and applied mathematics.',
 		school: 'Mississippi Delta Community College',
 		year: '2016',
-		logo: '/images/IDLOGO.png',
+		logo: '/images/mdcc.webp',
 	},
 ];
 </script>
