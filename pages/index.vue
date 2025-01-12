@@ -8,7 +8,7 @@
 		>
 			<Experience />
 			<Education />
-			<Projects />
+			<!-- <Projects /> -->
 		</main>
 	</div>
 </template>

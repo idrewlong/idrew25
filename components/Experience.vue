@@ -133,42 +133,50 @@ const experiences = [
 		title: 'Marketing Project Manager',
 		company: 'Thompson Machinery',
 		description:
-			'Helping client engineering teams shine their brightest. Overseeing the development of open source software and community outreach.',
+			'Led comprehensive marketing and data initiatives across multiple divisions while managing a small team and developing technical solutions.',
 		achievements: [
-			'Oversaw client projects and ensured client teams had what they needed to succeed.',
-			'Led client projects as an IC when needed.',
-			'Led the open source program at Formidable, maintaining existing projects and creating new ones based on client needs and ecosystem trends.',
+			'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress development',
+			'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys',
+			'Created data visualization solutions with Power BI and MySQL databases to track sales metrics and market share, while implementing SEO strategies using Google Analytics and Semrush.',
 		],
-		logo: '/images/IDLOGO.png',
+		logo: '/images/thompson.png',
 	},
 	{
-		period: 'November 2021 – June 2022',
-		title: 'Sr. Software Engineer',
+		period: 'September 2022 – April 2024',
+		title: 'Marketing Project Manager',
 		company: 'Finders Guide',
 		description:
-			"Full stack web and mobile on the Platform team. Built client SDKs and developer tools to help third parties integrate with Coinbase's fiat payment rails.",
+			'Led web development and digital marketing initiatives for multiple clients while managing remote teams and implementing comprehensive branding strategies.',
 		achievements: [
-			"Helped bring Coinbase Pay to market, allowing partners to use Coinbase's fiat rails to on-ramp into the crypto ecosystem.",
-			'Development of Coinbase Pay SDKs for web and mobile.',
+			'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies to expand client market reach',
+			'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies while optimizing their business processes and data utilization',
+		],
+		logo: '/images/g2.png',
+	},
+	{
+		period: 'March 2022 – January 2023',
+		title: 'Customer Support Specialist',
+		company: 'Core Logic',
+		description:
+			'Provided expert software support and customer service while collaborating with development teams to enhance product features and user experience.',
+		achievements: [
+			'Maintained an exceptional 95% customer satisfaction score while providing specialized support for industry-specific software including DASH, Pro-Assist, and Xactimate',
+			'Facilitated effective communication between customers and development teams using Jira and Salesforce while working in an agile SCRUM environment',
+		],
+		logo: '/images/corelogic.webp',
+	},
+	{
+		period: 'January 2018 – December 2020',
+		title: 'Media Coordinator',
+		company: 'LMC',
+		description:
+			'Managed end-to-end video production projects while coordinating content strategy and advertising campaigns for diverse clients including artists and businesses.',
+		achievements: [
+			'Produced and edited over 100 media projects including music videos and commercials while ensuring consistent quality and client satisfaction throughout the creative process',
+			'Orchestrated social media content management using Hootsuite to enhance consumer engagement while maintaining strict project schedules and deadlines',
 		],
 		logo: '/images/IDLOGO.png',
 	},
-	{
-		period: 'Jan. 2021 – Nov. 2021',
-		title: 'Software Engineer',
-		company: 'Previous Company',
-		description: 'Additional experience details...',
-		achievements: ['Achievement 1', 'Achievement 2', 'Achievement 3'],
-		logo: '/images/IDLOGO.png',
-	},
-	// {
-	// 	period: 'June 2020 – Jan. 2021',
-	// 	title: 'Junior Developer',
-	// 	company: 'First Company',
-	// 	description: 'Early career experience...',
-	// 	achievements: ['Achievement 1', 'Achievement 2'],
-	// 	logo: '/images/IDLOGO.png',
-	// },
 ];
 
 const visibleCount = ref(INITIAL_VISIBLE_COUNT);

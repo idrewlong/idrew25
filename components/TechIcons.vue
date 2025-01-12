@@ -30,7 +30,7 @@ const rotationFactor = 0.75;
 
 const techIcons = [
 	{ name: 'logos:html-5', angle: 4.15 },
-	{ name: 'logos:python', angle: 3.78125 },
+	{ name: 'logos:javascript', angle: 3.78125 },
 	{ name: 'logos:nodejs-icon', angle: 3.4125 },
 	{ name: 'logos:tailwindcss-icon', angle: 3.04375 },
 	{ name: 'logos:react', angle: 2.675 },
@@ -39,7 +39,7 @@ const techIcons = [
 	{ name: 'logos:laravel', angle: 1.56875 },
 	{ name: 'logos:typescript-icon', angle: 1.2 },
 	{ name: 'logos:css-3', angle: 0.83125 },
-	{ name: 'logos:javascript', angle: 0.4625 },
+	{ name: 'logos:python', angle: 0.4625 },
 ];
 
 const getIconStyle = (index) => {

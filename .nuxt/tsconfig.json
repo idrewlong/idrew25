@@ -107,6 +107,45 @@
       "#image/*": [
         "../node_modules/@nuxt/image/dist/runtime/*"
       ],
+      "#site-config": [
+        "../node_modules/nuxt-site-config/dist/runtime"
+      ],
+      "#site-config/*": [
+        "../node_modules/nuxt-site-config/dist/runtime/*"
+      ],
+      "#robots": [
+        "../node_modules/@nuxtjs/robots/dist/runtime"
+      ],
+      "#robots/*": [
+        "../node_modules/@nuxtjs/robots/dist/runtime/*"
+      ],
+      "#sitemap": [
+        "../node_modules/@nuxtjs/sitemap/dist/runtime"
+      ],
+      "#sitemap/*": [
+        "../node_modules/@nuxtjs/sitemap/dist/runtime/*"
+      ],
+      "#og-image": [
+        "../node_modules/nuxt-og-image/dist/runtime"
+      ],
+      "#og-image/*": [
+        "../node_modules/nuxt-og-image/dist/runtime/*"
+      ],
+      "#og-image-cache": [
+        "../node_modules/nuxt-og-image/dist/runtime/server/og-image/cache/lru"
+      ],
+      "#schema-org": [
+        "../node_modules/nuxt-schema-org/dist/runtime"
+      ],
+      "#schema-org/*": [
+        "../node_modules/nuxt-schema-org/dist/runtime/*"
+      ],
+      "#seo-utils": [
+        "../node_modules/nuxt-seo-utils/dist/runtime"
+      ],
+      "#seo-utils/*": [
+        "../node_modules/nuxt-seo-utils/dist/runtime/*"
+      ],
       "#vue-router": [
         "../node_modules/vue-router"
       ],
@@ -160,6 +199,22 @@
     "../node_modules/@nuxt/image/dist/runtime",
     "../node_modules/nuxt-gtag/runtime",
     "../node_modules/nuxt-gtag/dist/runtime",
+    "../node_modules/nuxt-site-config/dist/runtime",
+    "../node_modules/nuxt-site-config/dist/dist/runtime",
+    "../node_modules/@nuxtjs/robots/dist/runtime",
+    "../node_modules/@nuxtjs/robots/dist/dist/runtime",
+    "../node_modules/@nuxtjs/sitemap/dist/runtime",
+    "../node_modules/@nuxtjs/sitemap/dist/dist/runtime",
+    "../node_modules/nuxt-og-image/dist/runtime",
+    "../node_modules/nuxt-og-image/dist/dist/runtime",
+    "../node_modules/nuxt-schema-org/dist/runtime",
+    "../node_modules/nuxt-schema-org/dist/dist/runtime",
+    "../node_modules/nuxt-link-checker/dist/runtime",
+    "../node_modules/nuxt-link-checker/dist/dist/runtime",
+    "../node_modules/nuxt-seo-utils/dist/runtime",
+    "../node_modules/nuxt-seo-utils/dist/dist/runtime",
+    "../node_modules/@nuxtjs/seo/runtime",
+    "../node_modules/@nuxtjs/seo/dist/runtime",
     "../node_modules/@nuxt/telemetry/runtime",
     "../node_modules/@nuxt/telemetry/dist/runtime",
     ".."
@@ -172,6 +227,14 @@
     "../node_modules/@nuxt/icon/node_modules",
     "../node_modules/@nuxt/image/node_modules",
     "../node_modules/nuxt-gtag/node_modules",
+    "../node_modules/nuxt-site-config/node_modules",
+    "../node_modules/@nuxtjs/robots/dist/node_modules",
+    "../node_modules/@nuxtjs/sitemap/dist/node_modules",
+    "../node_modules/nuxt-og-image/dist/node_modules",
+    "../node_modules/nuxt-schema-org/dist/node_modules",
+    "../node_modules/nuxt-link-checker/dist/node_modules",
+    "../node_modules/nuxt-seo-utils/dist/node_modules",
+    "../node_modules/@nuxtjs/seo/node_modules",
     "../node_modules/@nuxt/telemetry/node_modules",
     "../node_modules/@nuxt/fonts/runtime/server",
     "../node_modules/@nuxt/fonts/dist/runtime/server",
@@ -181,6 +244,22 @@
     "../node_modules/@nuxt/image/dist/runtime/server",
     "../node_modules/nuxt-gtag/runtime/server",
     "../node_modules/nuxt-gtag/dist/runtime/server",
+    "../node_modules/nuxt-site-config/dist/runtime/server",
+    "../node_modules/nuxt-site-config/dist/dist/runtime/server",
+    "../node_modules/@nuxtjs/robots/dist/runtime/server",
+    "../node_modules/@nuxtjs/robots/dist/dist/runtime/server",
+    "../node_modules/@nuxtjs/sitemap/dist/runtime/server",
+    "../node_modules/@nuxtjs/sitemap/dist/dist/runtime/server",
+    "../node_modules/nuxt-og-image/dist/runtime/server",
+    "../node_modules/nuxt-og-image/dist/dist/runtime/server",
+    "../node_modules/nuxt-schema-org/dist/runtime/server",
+    "../node_modules/nuxt-schema-org/dist/dist/runtime/server",
+    "../node_modules/nuxt-link-checker/dist/runtime/server",
+    "../node_modules/nuxt-link-checker/dist/dist/runtime/server",
+    "../node_modules/nuxt-seo-utils/dist/runtime/server",
+    "../node_modules/nuxt-seo-utils/dist/dist/runtime/server",
+    "../node_modules/@nuxtjs/seo/runtime/server",
+    "../node_modules/@nuxtjs/seo/dist/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "../node_modules/@nuxt/telemetry/dist/runtime/server",
     "../.output"

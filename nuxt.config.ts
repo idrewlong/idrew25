@@ -2,15 +2,17 @@
 export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['~/assets/css/main.css'],
-
-	// site: {
-	// 	url: 'https://www.codeoxford.com',
-	// 	name: 'Code Oxford',
-	// 	defaultLocale: 'en',
-	// 	trailingSlash: true,
-	// },
+	runtimeConfig: {
+		ACCESS_KEY: process.env.ACCESS_KEY,
+	},
+	site: {
+		url: 'https://www.idrewlong.com',
+		name: 'Andrew Long',
+		defaultLocale: 'en',
+		trailingSlash: true,
+	},
 	gtag: {
-		id: '',
+		id: 'G-J7YM70XLHW',
 	},
 
 	app: {
@@ -26,9 +28,15 @@ export default defineNuxtConfig({
 
 	image: {
 		format: ['webp'],
-		domains: [''],
+		domains: ['www.idrewlong.com'],
 	},
 
-	modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/image', 'nuxt-gtag'],
+	modules: [
+		'@nuxt/fonts',
+		'@nuxt/icon',
+		'@nuxt/image',
+		'nuxt-gtag',
+		'@nuxtjs/seo',
+	],
 	compatibilityDate: '2025-01-08',
 });

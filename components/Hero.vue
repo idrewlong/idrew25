@@ -14,11 +14,10 @@
 						I like to build.
 					</h1>
 				</div>
-				<p class="text-sm md:max-w-lg text-gray-800">
+				<p class="md:text-lg md:max-w-lg text-gray-800">
 					TypeScript connoisseur. Animation aficionado. Frontend web, mostly
-					React and Nuxt.js. Cross-platform mobile with React Native. Backend
-					with Lavarel and Node.js. Have written an SQL query or two. Can
-					wrangle the cloud when needed.
+					React, Svelte and Nuxt.js. Cross-platform mobile with React Native.
+					Backend with Lavarel and Node.js. Have written an SQL query or two.
 				</p>
 			</div>
 			<div class="flex-shrink-0 relative">

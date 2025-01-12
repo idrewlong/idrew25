@@ -7,23 +7,18 @@ useSeoMeta({
 		'Connect with Andrew Long, a software engineer specializing in full-stack development. Reach out for collaboration, questions about tech, or just to say hello!',
 	ogDescription:
 		'Looking to collaborate or have questions? Get in touch with Andrew Long, a passionate software engineer focused on creating impactful web solutions.',
-	ogImage: '/images/contact-og.png', // Make sure this exists in your public directory
+	ogImage: '/images/contact-og.png',
 	twitterCard: 'summary_large_image',
 	twitterTitle: 'Contact Andrew Long - Software Engineer',
 	twitterDescription:
 		'Connect with Andrew Long, a software engineer specializing in full-stack development.',
 	twitterImage: '/images/contact-og.png',
 	robots: 'index, follow',
-	canonical: 'https://idrewlong.com/contact', // Replace with your actual domain
+	canonical: 'https://idrewlong.com/contact',
 });
-
-import { ref } from 'vue';
-const config = useRuntimeConfig();
 
 // Form state management
 const form = ref({
-	access_key: config.public.ACCESS_KEY,
-	subject: 'New Contact Form Submission from idrewlong.com',
 	name: '',
 	email: '',
 	message: '',
@@ -40,18 +35,23 @@ const submitForm = async () => {
 	result.value = 'Sending message...';
 
 	try {
-		const response = await $fetch('https://api.web3forms.com/submit', {
+		const response = await $fetch('/api/contact', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
+			body: {
+				name: form.value.name,
+				email: form.value.email,
+				message: form.value.message,
 			},
-			body: form.value,
 		});
 
-		if (response.status === 200) {
+		if (response.success) {
 			status.value = 'success';
 			result.value = "Thank you for your message! I'll get back to you soon.";
+
+			// Reset form after successful submission
+			form.value.name = '';
+			form.value.email = '';
+			form.value.message = '';
 		} else {
 			status.value = 'error';
 			result.value = 'Something went wrong. Please try again.';
@@ -61,13 +61,6 @@ const submitForm = async () => {
 		result.value = 'Failed to send message. Please try again later.';
 	} finally {
 		isSubmitting.value = false;
-
-		// Reset form after successful submission
-		if (status.value === 'success') {
-			form.value.name = '';
-			form.value.email = '';
-			form.value.message = '';
-		}
 
 		// Clear result after delay
 		setTimeout(() => {
