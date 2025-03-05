@@ -64,7 +64,7 @@ const educationList = [
 		achievements: [
 			'Lyceum Scholar',
 			'Lens Colletive Program',
-			"Chancellor's Class",
+			"Chancellor's Leadership Class",
 		],
 		school: 'University of Mississippi',
 		year: '2022',

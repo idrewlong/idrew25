@@ -1,5 +1,5 @@
 <template>
-	<section class="max-w-6xl mx-auto p-6">
+	<section class="max-w-6xl mx-auto p-6" id="projects">
 		<h1 class="text-3xl font-bold mb-2">Projects</h1>
 		<p class="text-gray-600 mb-8">Some open things I've worked on.</p>
 
@@ -113,39 +113,39 @@ const projects = [
 		technologies: ['logos:react', 'logos:typescript-icon'],
 	},
 	{
-		title: 'OSInt Raycast Extension',
+		title: 'Pro-link Resumes',
 		description:
 			'A Raycast extension for running Open Source Intelligence checks on a domain.',
-		image: '/projects/osint-raycast.png',
+		image: '/images/fat8.jpg',
 		link: '#',
 		technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
 	},
 	{
-		title: 'Groqd',
+		title: 'ID-SEO',
 		description:
 			'A type and runtime safe query builder for the GROQ query language.',
-		image: '/projects/groqd.png',
+		image: '/images/fat8.jpg',
 		link: '#',
 		technologies: ['logos:typescript-icon', 'logos:javascript'],
 	},
 	{
-		title: 'Clips',
+		title: 'Porta Productions',
 		description: 'A screen recording app built with web technologies.',
-		image: '/projects/clips.png',
-		link: '#',
+		image: '/images/fat8.jpg',
+		link: 'https://porta.productions/',
 		technologies: ['logos:electron', 'logos:javascript'],
 	},
 	{
 		title: 'Mandelbruh',
 		description: 'An interactive Mandelbrot set explorer built with WebGL.',
-		image: '/projects/mandelbruh.png',
+		image: '/images/fat8.jpg',
 		link: '#',
 		technologies: ['logos:webgl', 'logos:javascript'],
 	},
 	{
 		title: 'React Native Zephyr',
 		description: 'A design system and component library for React Native.',
-		image: '/projects/react-native-zephyr.png',
+		image: '/images/fat8.jpg',
 		link: '#',
 		technologies: ['logos:react', 'logos:typescript-icon'],
 	},

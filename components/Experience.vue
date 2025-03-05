@@ -53,10 +53,12 @@
 					v-if="experience.logo"
 					:src="experience.logo"
 					:alt="`${experience.company} logo`"
-					class="hidden sm:block w-24 h-24 object-contain aspect-square flex-shrink-0 opacity-30 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-					:style="{ aspectRatio: '100 / 100' }"
-					width="200"
-					height="200"
+					:class="[
+						'hidden sm:block w-24 h-24 object-contain flex-shrink-0 opacity-30 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0',
+						experience.company === 'Finders Guide' ? 'scale-75' : '',
+					]"
+					width="96"
+					height="96"
 					loading="lazy"
 					decoding="async"
 				/>
@@ -142,7 +144,7 @@ const experiences = [
 		logo: '/images/thompson.png',
 	},
 	{
-		period: 'September 2022 – April 2024',
+		period: 'September 2022 – December 2023',
 		title: 'Marketing Project Manager',
 		company: 'Finders Guide',
 		description:
