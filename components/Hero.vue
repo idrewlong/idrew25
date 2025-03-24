@@ -37,10 +37,10 @@
 					</h1>
 				</div>
 				<p class="text-base sm:text-lg text-gray-100 leading-relaxed max-w-xl">
-					TypeScript connoisseur. Animation aficionado. Fullstack web, mostly
-					React, Svelte, Nuxt.js or Laravel. Cross-platform mobile with React
-					Native. Backend with Lavarel and Node.js. Have written a Python bot or
-					two.
+					TypeScript connoisseur. Golang nerd. Animation aficionado. Fullstack
+					web, mostly React, Svelte, Nuxt or Laravel. Cross-platform mobile with
+					React Native. Backend with Lavarel, Golang and Node.js. Have written a
+					Python bot or two.
 				</p>
 				<div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
 					<NuxtLink

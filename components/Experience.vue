@@ -137,7 +137,7 @@ const experiences = [
 		description:
 			'Led comprehensive marketing and data initiatives across multiple divisions while managing a small team and developing technical solutions.',
 		achievements: [
-			'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress development',
+			'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress.',
 			'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys',
 			'Created data visualization solutions with Power BI and MySQL databases to track sales metrics and market share, while implementing SEO strategies using Google Analytics and Semrush.',
 		],

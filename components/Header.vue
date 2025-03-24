@@ -131,7 +131,7 @@ const socialLinks = [
 		label: 'GitHub',
 	},
 	{
-		url: 'https://discord.com/invite/FrEnAhpReY',
+		url: 'https://www.linkedin.com/in/idrewlong/',
 		icon: 'mdi:linkedin',
 		label: 'LinkedIn',
 	},

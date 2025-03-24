@@ -9,6 +9,7 @@
 			<Experience />
 			<Education />
 			<Projects />
+			<Articles />
 		</main>
 	</div>
 </template>
