@@ -1,174 +1,237 @@
 <template>
-	<section class="max-w-6xl mx-auto p-6" id="projects">
-		<h1 class="text-3xl font-bold mb-2">Projects</h1>
-		<p class="text-gray-600 mb-8">Some open things I've worked on.</p>
+  <section
+    ref="projectsSection"
+    class="bg-gradient-to-br from-orange-400 via-orange-500 to-orange-400 py-12"
+    id="projects"
+  >
+    <div class="max-w-6xl mx-auto p-6 relative">
+      <!-- Main Slider Content -->
+      <!-- <h2 class="text-3xl font-bold text-white mb-2">Projects</h2>
+      <p class="text-white mb-8">
+        Here are some of the projects I've worked on.
+      </p> -->
+      <div class="grid md:grid-cols-5 gap-8 items-center">
+        <!-- Left Column: Text, Counter, Thumbnails -->
+        <div ref="leftColumn" class="md:col-span-2">
+          <div class="flex items-center gap-4 mb-4 text-sm text-white">
+            <div class="w-8 h-px bg-white"></div>
+            <span
+              >{{ String(activeIndex + 1).padStart(2, '0') }} /
+              {{ String(projects.length).padStart(2, '0') }}</span
+            >
+          </div>
 
-		<div class="grid md:grid-cols-2 gap-6">
-			<div
-				v-for="project in visibleProjects"
-				:key="project.title"
-				class="group"
-			>
-				<!-- Project Card -->
-				<div class="flex flex-col">
-					<!-- Project Image Container -->
-					<div class="rounded-lg overflow-hidden mb-4 bg-gray-100">
-						<div class="aspect-[16/9] relative">
-							<img
-								:src="project.image"
-								:alt="project.title"
-								class="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-300 hover:grayscale-0"
-							/>
-						</div>
-					</div>
+          <a :href="activeProject.link" target="_blank" class="block mb-4">
+            <h2
+              ref="titleEl"
+              class="text-3xl font-bold text-white hover:text-orange-100 transition-colors duration-300 inline-flex items-center gap-2"
+            >
+              {{ activeProject.title }}
+              <Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
+            </h2>
+          </a>
+          <p class="text-white mb-8" ref="descriptionEl">
+            {{ activeProject.description }}
+          </p>
 
-					<!-- Project Info -->
-					<div class="flex items-start justify-between gap-4">
-						<h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
-						<div class="flex gap-2">
-							<Icon
-								v-for="tech in project.technologies"
-								:key="tech"
-								:icon="tech"
-								class="w-5 h-5"
-							/>
-						</div>
-					</div>
-					<p class="text-gray-600 text-sm mb-2">
-						{{ project.description }}
-					</p>
-					<a
-						:href="project.link"
-						class="font-medium hover:text-gray-900 transition-colors inline-flex items-center gap-1"
-					>
-						Check it out
-						<Icon
-							icon="material-symbols:arrow-circle-right-outline"
-							class="w-4 h-4 relative top-[1px]"
-						/>
-					</a>
-				</div>
-			</div>
-		</div>
+          <div
+            ref="techIconsEl"
+            v-if="activeProject.technologies"
+            class="flex flex-wrap gap-3 mb-8"
+          >
+            <Icon
+              v-for="tech in activeProject.technologies"
+              :key="tech"
+              :icon="tech"
+              class="w-8 h-8 text-white"
+            />
+          </div>
 
-		<div class="mt-8 text-center">
-			<button
-				v-if="!isExpanded && hasMoreProjects"
-				@click="loadMore"
-				class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center mx-auto gap-2"
-			>
-				<span>Show More Projects</span>
-				<svg
-					class="w-4 h-4"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M19 9l-7 7-7-7"
-					/>
-				</svg>
-			</button>
+          <div ref="buttonsEl" class="flex gap-2">
+            <button
+              @click="prevSlide"
+              class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
+            >
+              <Icon icon="heroicons:arrow-left-20-solid" class="w-5 h-5" />
+            </button>
+            <button
+              @click="nextSlide"
+              class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
+            >
+              <Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
-			<button
-				v-if="isExpanded"
-				@click="showLess"
-				class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center mx-auto gap-2"
-			>
-				<span>Show Less</span>
-				<svg
-					class="w-4 h-4"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M5 15l7-7 7 7"
-					/>
-				</svg>
-			</button>
-		</div>
-	</section>
+        <!-- Right Column: Image -->
+        <div ref="rightColumn" class="md:col-span-3">
+          <div
+            class="relative rounded-lg overflow-hidden border border-gray-200"
+          >
+            <img
+              :src="activeProject.image"
+              :alt="activeProject.title"
+              ref="imageEl"
+              class="w-full h-auto object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const INITIAL_VISIBLE_COUNT = 4;
+const { $gsap, $ScrollTrigger } = useNuxtApp();
 
 const projects = [
-	{
-		title: 'Victory Native',
-		description:
-			'High-performance charting library for React Native powered by Reanimated, Skia, Gesture Handler, and D3.',
-		image: '/images/fat8.jpg',
-		link: '#',
-		technologies: ['logos:react', 'logos:typescript-icon'],
-	},
-	{
-		title: 'Pro-link Resumes',
-		description:
-			'A Raycast extension for running Open Source Intelligence checks on a domain.',
-		image: '/images/fat8.jpg',
-		link: '#',
-		technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
-	},
-	{
-		title: 'ID-SEO',
-		description:
-			'A type and runtime safe query builder for the GROQ query language.',
-		image: '/images/fat8.jpg',
-		link: '#',
-		technologies: ['logos:typescript-icon', 'logos:javascript'],
-	},
-	{
-		title: 'Porta Productions',
-		description: 'A screen recording app built with web technologies.',
-		image: '/images/fat8.jpg',
-		link: 'https://porta.productions/',
-		technologies: ['logos:electron', 'logos:javascript'],
-	},
-	{
-		title: 'Mandelbruh',
-		description: 'An interactive Mandelbrot set explorer built with WebGL.',
-		image: '/images/fat8.jpg',
-		link: '#',
-		technologies: ['logos:webgl', 'logos:javascript'],
-	},
-	{
-		title: 'React Native Zephyr',
-		description: 'A design system and component library for React Native.',
-		image: '/images/fat8.jpg',
-		link: '#',
-		technologies: ['logos:react', 'logos:typescript-icon'],
-	},
+  {
+    title: 'Victory Native',
+    description:
+      'High-performance charting library for React Native powered by Reanimated, Skia, Gesture Handler, and D3.',
+    image: '/images/fat8.jpg',
+    link: '#',
+    technologies: ['logos:react', 'logos:typescript-icon'],
+  },
+  {
+    title: 'Pro-link Resumes',
+    description:
+      'A Raycast extension for running Open Source Intelligence checks on a domain.',
+    image: '/images/fat8.jpg',
+    link: '#',
+    technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
+  },
+  {
+    title: 'ID-SEO',
+    description:
+      'A type and runtime safe query builder for the GROQ query language.',
+    image: '/images/fat8.jpg',
+    link: '#',
+    technologies: ['logos:typescript-icon', 'logos:javascript'],
+  },
+  {
+    title: 'Porta Productions',
+    description: 'A screen recording app built with web technologies.',
+    image: '/images/fat8.jpg',
+    link: 'https://porta.productions/',
+    technologies: ['logos:electron', 'logos:javascript'],
+  },
+  {
+    title: 'Mandelbruh',
+    description: 'An interactive Mandelbrot set explorer built with WebGL.',
+    image: '/images/fat8.jpg',
+    link: '#',
+    technologies: ['logos:webgl', 'logos:javascript'],
+  },
+  {
+    title: 'React Native Zephyr',
+    description: 'A design system and component library for React Native.',
+    image: '/images/fat8.jpg',
+    link: '#',
+    technologies: ['logos:react', 'logos:typescript-icon'],
+  },
 ];
 
-const visibleCount = ref(INITIAL_VISIBLE_COUNT);
-const isExpanded = ref(false);
+const activeIndex = ref(0);
+const activeProject = computed(() => projects[activeIndex.value]);
 
-const visibleProjects = computed(() => {
-	return projects.slice(0, visibleCount.value);
-});
+const projectsSection = ref(null);
+const leftColumn = ref(null);
+const rightColumn = ref(null);
+const titleEl = ref(null);
+const descriptionEl = ref(null);
+const imageEl = ref(null);
+const techIconsEl = ref(null);
+const buttonsEl = ref(null);
 
-const hasMoreProjects = computed(() => {
-	return visibleCount.value < projects.length;
-});
-
-const loadMore = () => {
-	visibleCount.value = projects.length;
-	isExpanded.value = true;
+const nextSlide = () => {
+  goToSlide((activeIndex.value + 1) % projects.length);
 };
 
-const showLess = () => {
-	visibleCount.value = INITIAL_VISIBLE_COUNT;
-	isExpanded.value = false;
+const prevSlide = () => {
+  goToSlide((activeIndex.value - 1 + projects.length) % projects.length);
 };
+
+const goToSlide = (index) => {
+  if (index === activeIndex.value) return;
+  activeIndex.value = index;
+};
+
+const initScrollAnimations = () => {
+  if (!projectsSection.value || !leftColumn.value || !rightColumn.value) return;
+
+  $gsap.set(leftColumn.value, { opacity: 0, x: -50 });
+  $gsap.set(rightColumn.value, { opacity: 0, x: 50 });
+
+  const tl = $gsap.timeline({
+    scrollTrigger: {
+      trigger: projectsSection.value,
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    },
+  });
+
+  tl.to(leftColumn.value, {
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: 'power2.out',
+  }).to(
+    rightColumn.value,
+    {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+    },
+    '-=0.6'
+  );
+};
+
+watch(activeIndex, () => {
+  const textElements = [
+    titleEl.value,
+    descriptionEl.value,
+    techIconsEl.value,
+  ].filter(Boolean);
+
+  $gsap.fromTo(
+    textElements,
+    { opacity: 0, y: 10 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+      stagger: 0.1,
+    }
+  );
+
+  $gsap.fromTo(
+    imageEl.value,
+    {
+      opacity: 0,
+      scale: 1.05,
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      ease: 'power3.out',
+    }
+  );
+});
+
+onMounted(() => {
+  nextTick(() => {
+    initScrollAnimations();
+  });
+});
 </script>
+
+<style scoped>
+/* Scoped styles can be added here if needed */
+</style>

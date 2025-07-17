@@ -1,15 +1,14 @@
 <template>
-	<div class="min-h-screen bg-background flex flex-col items-center w-full">
-		<div class="w-full">
-			<Hero />
-		</div>
-		<main
-			class="w-full py-12 flex flex-col items-center justify-center gap-y-32"
-		>
-			<Experience />
-			<Education />
-			<Projects />
-			<Articles />
-		</main>
-	</div>
+  <div class="min-h-screen flex flex-col w-full">
+    <Hero />
+    <main class="w-full py-12 flex flex-col justify-center gap-y-16">
+      <Resume />
+      <Experience />
+      <div class="w-full">
+        <Projects />
+      </div>
+      <Articles />
+      <Cta />
+    </main>
+  </div>
 </template>

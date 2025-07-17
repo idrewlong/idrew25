@@ -18,33 +18,33 @@ declare module '@nuxt/schema' {
      */
     ["gtag"]: typeof import("nuxt-gtag").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module`
      */
-    ["site"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["site"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module`
      */
-    ["robots"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["robots"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
      */
-    ["sitemap"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["sitemap"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module`
      */
-    ["ogImage"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["ogImage"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module`
      */
-    ["schemaOrg"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["schemaOrg"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module`
      */
-    ["linkChecker"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["linkChecker"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module`
      */
-    ["seo"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["seo"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
      * Configuration for `@nuxtjs/seo`
      */
@@ -72,33 +72,33 @@ declare module '@nuxt/schema' {
      */
     ["gtag"]?: typeof import("nuxt-gtag").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module`
      */
-    ["site"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["site"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module`
      */
-    ["robots"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["robots"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
      */
-    ["sitemap"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["sitemap"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module`
      */
-    ["ogImage"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["ogImage"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module`
      */
-    ["schemaOrg"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["schemaOrg"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module`
      */
-    ["linkChecker"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["linkChecker"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module`
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module`
      */
-    ["seo"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["seo"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
      * Configuration for `@nuxtjs/seo`
      */
@@ -107,7 +107,7 @@ declare module '@nuxt/schema' {
      * Configuration for `@nuxt/telemetry`
      */
     ["telemetry"]?: typeof import("@nuxt/telemetry").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxt/fonts", Exclude<NuxtConfig["fonts"], boolean>] | ["@nuxt/icon", Exclude<NuxtConfig["icon"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["nuxt-gtag", Exclude<NuxtConfig["gtag"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module", Exclude<NuxtConfig["robots"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module", Exclude<NuxtConfig["sitemap"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module", Exclude<NuxtConfig["ogImage"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module", Exclude<NuxtConfig["schemaOrg"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module", Exclude<NuxtConfig["linkChecker"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module", Exclude<NuxtConfig["seo"], boolean>] | ["@nuxtjs/seo", Exclude<NuxtConfig["nuxtseo"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
+    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxt/fonts", Exclude<NuxtConfig["fonts"], boolean>] | ["@nuxt/icon", Exclude<NuxtConfig["icon"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["nuxt-gtag", Exclude<NuxtConfig["gtag"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module", Exclude<NuxtConfig["robots"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module", Exclude<NuxtConfig["sitemap"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module", Exclude<NuxtConfig["ogImage"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module", Exclude<NuxtConfig["schemaOrg"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module", Exclude<NuxtConfig["linkChecker"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module", Exclude<NuxtConfig["seo"], boolean>] | ["@nuxtjs/seo", Exclude<NuxtConfig["nuxtseo"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
   }
 }
 declare module 'nuxt/schema' {
@@ -133,40 +133,40 @@ declare module 'nuxt/schema' {
      */
     ["gtag"]: typeof import("nuxt-gtag").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module
      */
-    ["site"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["site"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module
      */
-    ["robots"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["robots"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module
      */
-    ["sitemap"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["sitemap"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module
      */
-    ["ogImage"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["ogImage"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module
      */
-    ["schemaOrg"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["schemaOrg"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module
      */
-    ["linkChecker"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["linkChecker"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module
      */
-    ["seo"]: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["seo"]: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
      * Configuration for `@nuxtjs/seo`
      * @see https://www.npmjs.com/package/@nuxtjs/seo
@@ -200,40 +200,40 @@ declare module 'nuxt/schema' {
      */
     ["gtag"]?: typeof import("nuxt-gtag").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module
      */
-    ["site"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["site"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module
      */
-    ["robots"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["robots"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module
      */
-    ["sitemap"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["sitemap"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module
      */
-    ["ogImage"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["ogImage"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module
      */
-    ["schemaOrg"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["schemaOrg"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module
      */
-    ["linkChecker"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["linkChecker"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module`
-     * @see https://www.npmjs.com/package//Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module
+     * Configuration for `/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module`
+     * @see https://www.npmjs.com/package//Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module
      */
-    ["seo"]?: typeof import("/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["seo"]?: typeof import("/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
      * Configuration for `@nuxtjs/seo`
      * @see https://www.npmjs.com/package/@nuxtjs/seo
@@ -244,7 +244,7 @@ declare module 'nuxt/schema' {
      * @see https://www.npmjs.com/package/@nuxt/telemetry
      */
     ["telemetry"]?: typeof import("@nuxt/telemetry").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxt/fonts", Exclude<NuxtConfig["fonts"], boolean>] | ["@nuxt/icon", Exclude<NuxtConfig["icon"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["nuxt-gtag", Exclude<NuxtConfig["gtag"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/robots/dist/module", Exclude<NuxtConfig["robots"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/@nuxtjs/sitemap/dist/module", Exclude<NuxtConfig["sitemap"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-og-image/dist/module", Exclude<NuxtConfig["ogImage"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-schema-org/dist/module", Exclude<NuxtConfig["schemaOrg"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-link-checker/dist/module", Exclude<NuxtConfig["linkChecker"], boolean>] | ["/Users/idrew/Desktop/git_repo/personal/idrew25/node_modules/nuxt-seo-utils/dist/module", Exclude<NuxtConfig["seo"], boolean>] | ["@nuxtjs/seo", Exclude<NuxtConfig["nuxtseo"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
+    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxt/fonts", Exclude<NuxtConfig["fonts"], boolean>] | ["@nuxt/icon", Exclude<NuxtConfig["icon"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["nuxt-gtag", Exclude<NuxtConfig["gtag"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/robots/dist/module", Exclude<NuxtConfig["robots"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/@nuxtjs/sitemap/dist/module", Exclude<NuxtConfig["sitemap"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/module", Exclude<NuxtConfig["ogImage"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-schema-org/dist/module", Exclude<NuxtConfig["schemaOrg"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-link-checker/dist/module", Exclude<NuxtConfig["linkChecker"], boolean>] | ["/Users/id-dev/Desktop/git_repo/idrew25/node_modules/nuxt-seo-utils/dist/module", Exclude<NuxtConfig["seo"], boolean>] | ["@nuxtjs/seo", Exclude<NuxtConfig["nuxtseo"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
   }
   interface RuntimeConfig {
    app: {
