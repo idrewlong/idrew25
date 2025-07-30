@@ -46,7 +46,7 @@ const skillCategories = [
   },
   {
     title: 'Backend',
-    skills: ['PHP', 'Laravel', 'WP REST API', 'Node.js', 'GraphQL', 'Golang'],
+    skills: ['PHP', 'Laravel', 'Node.js', 'GraphQL', 'Golang', 'WP REST API'],
   },
   {
     title: 'Dev-Ops',

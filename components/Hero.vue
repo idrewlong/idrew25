@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
 const { $gsap } = useNuxtApp();
 
@@ -120,9 +120,9 @@ const currentWord = ref('');
 const words = ['sites', 'apps', 'bots'];
 let currentWordIndex = 0;
 const images = ['/images/me_1.png', '/images/me_3.png'];
-let transitioning = false;
+let imageTransitioning = false;
 let imageInterval;
-let wordInterval;
+let typewriterTimeout;
 
 // Template refs
 const heroSection = ref(null);
@@ -132,36 +132,41 @@ const description = ref(null);
 const buttons = ref(null);
 const imageContainer = ref(null);
 
-const typeWord = async (word) => {
-  transitioning = true;
-  // Type out the word
-  for (let i = 0; i < word.length; i++) {
-    currentWord.value += word[i];
-    await new Promise((resolve) => setTimeout(resolve, 75)); // Keep typing speed
+// Typewriter state
+let wordIndex = 0;
+let letterIndex = 0;
+let isDeleting = false;
+
+const typewriterEffect = () => {
+  const currentTargetWord = words[wordIndex];
+  let newWord = '';
+  let delay = 100;
+
+  if (isDeleting) {
+    newWord = currentTargetWord.substring(0, letterIndex - 1);
+    letterIndex--;
+    delay = 100; // Slower deletion
+  } else {
+    newWord = currentTargetWord.substring(0, letterIndex + 1);
+    letterIndex++;
+    delay = 75; // Typing speed
   }
 
-  // Pause at the end of the word
-  await new Promise((resolve) => setTimeout(resolve, 2500)); // Keep display time
+  currentWord.value = newWord;
 
-  // Delete the word more slowly
-  while (currentWord.value.length > 0) {
-    currentWord.value = currentWord.value.slice(0, -1);
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Slower deletion
+  if (!isDeleting && newWord === currentTargetWord) {
+    // Word typed, pause, then start deleting
+    isDeleting = true;
+    delay = 2500;
+  } else if (isDeleting && newWord === '') {
+    // Word deleted, pause, then start next word
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length;
+    letterIndex = 0;
+    delay = 500;
   }
 
-  // Very short pause before next word
-  await new Promise((resolve) => setTimeout(resolve, 50));
-  transitioning = false;
-
-  // Chain to next word immediately
-  currentWordIndex = (currentWordIndex + 1) % words.length;
-  await typeWord(words[currentWordIndex]);
-};
-
-const changeWord = async () => {
-  if (transitioning) return;
-  currentWordIndex = (currentWordIndex + 1) % words.length;
-  await typeWord(words[currentWordIndex]);
+  typewriterTimeout = setTimeout(typewriterEffect, delay);
 };
 
 const scrollToProjects = () => {
@@ -178,12 +183,12 @@ const updateScroll = () => {
 };
 
 const changeImage = () => {
-  if (transitioning) return;
-  transitioning = true;
+  if (imageTransitioning) return;
+  imageTransitioning = true;
   currentImage.value = currentImage.value === images[0] ? images[1] : images[0];
   setTimeout(() => {
-    transitioning = false;
-  }, 4000);
+    imageTransitioning = false;
+  }, 2000); // Aligned with CSS transition for a smoother effect
 };
 
 const initAnimations = () => {
@@ -263,7 +268,7 @@ onMounted(() => {
   // Initialize current image and word
   isClient.value = true;
   currentImage.value = images[0];
-  typeWord(words[0]); // Start with first word
+  typewriterEffect(); // Start typewriter
 
   // Set up image rotation only
   imageInterval = setInterval(changeImage, 4000);
@@ -277,7 +282,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', updateScroll);
   if (imageInterval) clearInterval(imageInterval);
-  if (wordInterval) clearInterval(wordInterval);
+  if (typewriterTimeout) clearTimeout(typewriterTimeout);
 });
 </script>
 

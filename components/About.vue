@@ -17,9 +17,9 @@
     solve real business problems...not just pretty interfaces that look good in
     screenshots. <br /><br />Currently living in Long Beach, MS with my wife and
     our dog Bo, who's honestly the best coworker I've ever had. When I'm not
-    coding, you'll find me shooting my Mamiya 645 (vintage), getting lost in
-    nature, or diving deep into family history because apparently I'm 30 going
-    on 70. I'm an old soul.
+    coding, you'll find me shooting my Mamiya 645, getting lost in nature, or
+    diving deep into family history because apparently I'm 30 going on 70. I'm
+    an old soul.
   </p>
 </template>
 

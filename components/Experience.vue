@@ -111,11 +111,12 @@ const experiences = [
     title: 'SEO Developer',
     company: 'Mad Genius',
     description:
-      'Full-stack web development using React and Python. Leading initiatives to streamline cardholder and admin workflows.',
+      'Full-stack web development using Nuxt, React, React Native, Laravel, WordPress, and more. Leading SEO initiatives and comprehensive digital marketing strategies for enterprise clients including Yates Construction, Regional Homes, and the Mississippi State Department of Health.',
     achievements: [
-      'Led a team of fantastic engineers on the spend management frontend team.',
-      'Led the development of a new cardholder experience on web.',
-      "Overhauled the core of Ramp's card transaction web interfaces.",
+      'Develop and execute SEO and digital marketing strategies with in-depth audits covering web presence, AI integration, and social media optimization including YouTube SEO.',
+      'Build and maintain WordPress sites, headless WordPress implementations with Nuxt, React Native mobile applications, and full-stack Laravel web applications.',
+      'Work fluently between multiple teams to properly implement development standards and SEO content across all client projects.',
+      'Design and build various internal tools including web crawlers and automation scripts to streamline SEO analysis and reporting processes.',
     ],
     logo: '/images/madg.png',
   },
@@ -127,7 +128,7 @@ const experiences = [
       'Led comprehensive marketing and data initiatives across multiple divisions while managing a small team and developing technical solutions.',
     achievements: [
       'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress.',
-      'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys',
+      'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys.',
       'Created data visualization solutions with Power BI and MySQL databases to track sales metrics and market share, while implementing SEO strategies using Google Analytics and Semrush.',
     ],
     logo: '/images/thompson.png',
@@ -139,8 +140,8 @@ const experiences = [
     description:
       'Led web development and digital marketing initiatives for multiple clients while managing remote teams and implementing comprehensive branding strategies.',
     achievements: [
-      'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies to expand client market reach',
-      'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies while optimizing their business processes and data utilization',
+      'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies to expand client market reach.',
+      'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies while optimizing their business processes and data utilization.',
     ],
     logo: '/images/g2.png',
   },
