@@ -12,3 +12,14 @@
     </main>
   </div>
 </template>
+
+<script setup>
+useSeoMeta({
+  title: 'Full Stack Developer',
+  description:
+    'Andrew Long is a full stack developer with a passion for building web applications and marketing strategies.',
+  ogTitle: 'Full Stack Developer',
+  ogDescription:
+    'Andrew Long is a full stack developer with a passion for building web applications and marketing strategies.',
+});
+</script>

@@ -44,8 +44,8 @@
           class="text-base sm:text-lg text-gray-100 leading-relaxed max-w-xl"
         >
           TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack web,
-          mostly React, Svelte, Nuxt or Laravel. Backend with Lavarel, Node.js,
-          and Python. Have written a Python bot or two.
+          mostly React, Svelte, Next or Nuxt. Backend with Lavarel, Node.js, and
+          PHP. Have written a Python bot or two.
         </p>
         <div ref="buttons" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <NuxtLink
