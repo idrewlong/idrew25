@@ -10,7 +10,7 @@ declare module '#app' {
 }
 declare module '@unhead/schema' {
 
-  type PublicFiles = '/_robots.txt' | '/favicon.ico' | '/images/IDLOGO.png' | '/images/computer.png' | '/images/corelogic.webp' | '/images/fat8.jpg' | '/images/g2.png' | '/images/madg.png' | '/images/mdcc.webp' | '/images/me_1.png' | '/images/me_3.png' | '/images/olemiss.png' | '/images/thompson.png' | '/images/tools.png' | (string & Record<never, never>)
+  type PublicFiles = '/_robots.txt' | '/favicon.ico' | '/images/EGH.png' | '/images/IDLOGO.png' | '/images/Regional.png' | '/images/Yates.png' | '/images/computer.png' | '/images/corelogic.webp' | '/images/fat8.jpg' | '/images/g2.png' | '/images/luscos.png' | '/images/madg.png' | '/images/madgcover.png' | '/images/mdcc.webp' | '/images/me_1.png' | '/images/me_3.png' | '/images/olemiss.png' | '/images/thompson.png' | '/images/tools.png' | (string & Record<never, never>)
   type JsFiles = (string & Record<never, never>)
 
   interface SchemaAugmentations {

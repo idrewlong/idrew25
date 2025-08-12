@@ -66,13 +66,13 @@
         <!-- Right Column: Image -->
         <div ref="rightColumn" class="md:col-span-3">
           <div
-            class="relative rounded-lg overflow-hidden border border-gray-200"
+            class="relative rounded-lg overflow-hidden border border-gray-200 w-full h-0 pb-[56.25%]"
           >
             <img
               :src="activeProject.image"
               :alt="activeProject.title"
               ref="imageEl"
-              class="w-full h-auto object-cover"
+              class="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         </div>
@@ -89,42 +89,71 @@ const { $gsap, $ScrollTrigger } = useNuxtApp();
 
 const projects = [
   {
-    title: 'Victory Native',
+    title: 'Mad Genius - 5.0',
     description:
       'High-performance charting library for React Native powered by Reanimated, Skia, Gesture Handler, and D3.',
-    image: '/images/fat8.jpg',
-    link: '#',
-    technologies: ['logos:react', 'logos:typescript-icon'],
+    image: '/images/madgcover.png',
+    link: 'https://madg.com/',
+    technologies: [
+      'logos:nuxt-icon',
+      'logos:typescript-icon',
+      'logos:tailwindcss-icon',
+      'logos:wordpress-icon',
+      'logos:graphql',
+      'logos:wpengine',
+    ],
   },
   {
-    title: 'Pro-link Resumes',
+    title: 'Yates Construction',
     description:
       'A Raycast extension for running Open Source Intelligence checks on a domain.',
-    image: '/images/fat8.jpg',
-    link: '#',
-    technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
+    image: '/images/Yates.png',
+    link: 'https://wgyates.com/',
+    technologies: [
+      'logos:nuxt-icon',
+      'logos:tailwindcss-icon',
+      'logos:wordpress-icon',
+      'logos:graphql',
+      'logos:wpengine',
+    ],
   },
   {
-    title: 'ID-SEO',
+    title: 'Regional Homes',
     description:
       'A type and runtime safe query builder for the GROQ query language.',
-    image: '/images/fat8.jpg',
-    link: '#',
-    technologies: ['logos:typescript-icon', 'logos:javascript'],
+    image: '/images/Regional.png',
+    link: 'https://regionalhomes.net/',
+    technologies: [
+      'logos:nuxt-icon',
+      'logos:tailwindcss-icon',
+      'logos:wordpress-icon',
+      'logos:graphql',
+      'logos:wpengine',
+    ],
   },
   {
-    title: 'Porta Productions',
+    title: 'Eley Guild Hardy',
     description: 'A screen recording app built with web technologies.',
-    image: '/images/fat8.jpg',
-    link: 'https://porta.productions/',
-    technologies: ['logos:electron', 'logos:javascript'],
+    image: '/images/EGH.png',
+    link: 'https://eleyguildhardy.com/',
+    technologies: [
+      'logos:wordpress-icon',
+      'logos:tailwindcss-icon',
+      'logos:wpengine',
+    ],
   },
   {
-    title: 'Mandelbruh',
+    title: "Lusco's Restaurant",
     description: 'An interactive Mandelbrot set explorer built with WebGL.',
-    image: '/images/fat8.jpg',
-    link: '#',
-    technologies: ['logos:webgl', 'logos:javascript'],
+    image: '/images/luscos.png',
+    link: 'https://luscos.restaurant/',
+    technologies: [
+      'logos:nuxt-icon',
+      'logos:tailwindcss-icon',
+      'logos:wordpress-icon',
+      'logos:graphql',
+      'logos:wpengine',
+    ],
   },
   {
     title: 'React Native Zephyr',
