@@ -32,10 +32,9 @@
             class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight"
           >
             I like to build
-            <span
-              class="text-transparent bg-clip-text bg-gradient-to-r from-orange-200 to-white"
-            >
-              amazing <span class="typewriter">{{ currentWord }}</span>
+            <span class="text-white">
+              amazing
+              <span class="typewriter text-white">{{ currentWord }}</span>
             </span>
           </h1>
         </div>
@@ -105,6 +104,21 @@
         </div>
       </div>
     </section>
+    <!-- Scroll down indicator -->
+    <div class="flex justify-center mt-6 sm:mt-8">
+      <button
+        type="button"
+        @click="scrollToProjects"
+        class="group inline-flex items-center justify-center p-3 sm:p-4 rounded-full bg-white/90 text-orange-600 shadow-lg ring-1 ring-black/5 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 animate-bounce"
+        aria-label="Scroll to projects"
+      >
+        <Icon
+          name="heroicons:chevron-down"
+          class="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:translate-y-px"
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   </div>
 </template>
 
