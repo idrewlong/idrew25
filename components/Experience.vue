@@ -1,98 +1,59 @@
 <template>
-  <section ref="experienceSection" class="max-w-6xl mx-auto p-6">
-    <h1 ref="title" class="text-3xl font-bold font-serif text-stone-900 mb-2">Experience & Projects</h1>
-    <p ref="subtitle" class="text-stone-500 mb-8">
-      My work history. From creating marketing strategies to slinging code.
-    </p>
+  <section ref="expSection" class="max-w-6xl mx-auto px-6">
+    <!-- Notion-style section label -->
+    <div ref="labelEl" class="flex items-center gap-3 mb-12">
+      <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">Experience</span>
+      <div class="flex-1 h-px bg-stone-200"></div>
+    </div>
 
-    <div class="flex flex-col md:flex-row gap-y-8 md:gap-x-12">
-      <!-- Left sticky navigation -->
-      <div ref="navigation" class="w-full md:w-1/4 md:sticky top-20 h-full">
-        <ul
-          class="flex flex-row flex-wrap items-center gap-x-4 gap-y-1 md:flex-col md:items-stretch md:gap-0 md:space-y-4"
-        >
-          <li
-            v-for="(experience, index) in experiences"
-            :key="index"
-            :class="[
-              'border-b-4 md:border-l-4 md:border-b-0 transition-colors duration-200 whitespace-nowrap',
-              selectedIndex === index
-                ? 'border-orange-400'
-                : 'border-transparent',
-            ]"
-          >
-            <button
-              @click="selectExperience(index)"
-              :class="[
-                'w-full text-left py-2 px-2 md:px-4',
-                selectedIndex === index
-                  ? 'text-stone-900'
-                  : 'text-stone-400 hover:text-stone-700',
-              ]"
-            >
-              {{ experience.company }}
-            </button>
-          </li>
-        </ul>
+    <!-- Timeline -->
+    <div class="relative">
+      <!-- Vertical line (draws on scroll) -->
+      <div class="absolute left-2 top-5 bottom-5 w-px bg-stone-100">
+        <div ref="timelineLine" class="w-full h-full bg-stone-300 origin-top"></div>
       </div>
 
-      <!-- Right content -->
-      <div class="w-full md:w-3/4" ref="contentContainer">
+      <!-- Experience items -->
+      <div class="space-y-12 md:space-y-14">
         <div
-          v-if="selectedExperience"
-          class="flex flex-col-reverse md:flex-row gap-8 items-start"
+          v-for="(exp, i) in experiences"
+          :key="exp.company"
+          :ref="(el) => { if (el) itemEls[i] = el }"
+          class="flex gap-8 items-start"
         >
-          <div class="flex-grow space-y-4">
-            <div>
-              <div class="text-xs text-stone-400 font-medium tracking-wide">
-                {{ selectedExperience.period }}
-              </div>
-              <div class="text-lg font-bold text-stone-900">
-                {{ selectedExperience.title }} @
-                <span class="text-orange-500">{{
-                  selectedExperience.company
-                }}</span>
-              </div>
+          <!-- Dot column -->
+          <div class="w-4 shrink-0 pt-1 relative z-10">
+            <div
+              class="w-4 h-4 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center"
+            >
+              <div class="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
             </div>
-            <div class="text-sm text-stone-500">
-              {{ selectedExperience.description }}
+          </div>
+
+          <!-- Content -->
+          <div class="flex-1 min-w-0 pb-2">
+            <div class="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6 mb-2">
+              <h3 class="text-lg font-bold font-serif text-stone-900 leading-snug">
+                {{ exp.title }}
+                <span class="text-orange-500"> @ {{ exp.company }}</span>
+              </h3>
+              <span class="text-xs text-stone-400 font-medium tracking-wide md:ml-auto shrink-0">
+                {{ exp.period }}
+              </span>
             </div>
-            <ul class="text-sm text-stone-500 flex flex-col gap-y-1.5">
+            <p class="text-sm text-stone-500 mb-4 leading-relaxed max-w-2xl">
+              {{ exp.description }}
+            </p>
+            <ul class="space-y-2">
               <li
-                v-for="(achievement, index) in selectedExperience.achievements"
-                :key="index"
-                class="flex gap-x-2 items-start"
+                v-for="(ach, j) in exp.achievements.slice(0, 2)"
+                :key="j"
+                class="flex gap-3 items-start text-sm text-stone-400"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 448 512"
-                  fill="currentColor"
-                  class="w-3.5 h-3.5 pt-1.5 shrink-0"
-                >
-                  <path
-                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                  />
-                </svg>
-                <span>{{ achievement }}</span>
+                <span class="text-orange-400 shrink-0 leading-5">—</span>
+                <span class="leading-relaxed">{{ ach }}</span>
               </li>
             </ul>
-          </div>
-          <div class="hidden md:block flex-shrink-0 self-center md:self-auto">
-            <img
-              v-if="selectedExperience.logo"
-              :src="selectedExperience.logo"
-              :alt="`${selectedExperience.company} logo`"
-              :class="[
-                'w-24 h-24 object-contain',
-                selectedExperience.company === 'Finders Guide'
-                  ? 'scale-75'
-                  : '',
-              ]"
-              width="96"
-              height="96"
-              loading="lazy"
-              decoding="async"
-            />
           </div>
         </div>
       </div>
@@ -101,9 +62,14 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 
 const { $gsap } = useNuxtApp();
+
+const expSection = ref(null);
+const labelEl = ref(null);
+const timelineLine = ref(null);
+const itemEls = ref([]);
 
 const experiences = [
   {
@@ -113,12 +79,9 @@ const experiences = [
     description:
       'Full-stack web development using Nuxt, React, React Native, Laravel, WordPress, and more. Leading SEO initiatives and comprehensive digital marketing strategies for enterprise clients including Yates Construction, Regional Homes, and the Mississippi State Department of Health.',
     achievements: [
-      'Develop and execute SEO and digital marketing strategies with in-depth audits covering web presence, AI integration, and social media optimization including YouTube SEO.',
+      'Develop and execute SEO and digital marketing strategies with in-depth audits covering web presence, AI integration, and social media optimization.',
       'Build and maintain WordPress sites, headless WordPress implementations with Nuxt, React Native mobile applications, and full-stack Laravel web applications.',
-      'Work fluently between multiple teams to properly implement development standards and SEO content across all client projects.',
-      'Design and build various internal tools including web crawlers and automation scripts to streamline SEO analysis and reporting processes.',
     ],
-    logo: '/images/madg.png',
   },
   {
     period: 'December 2023 – June 2024',
@@ -129,9 +92,7 @@ const experiences = [
     achievements: [
       'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress.',
       'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys.',
-      'Created data visualization solutions with Power BI and MySQL databases to track sales metrics and market share, while implementing SEO strategies using Google Analytics and Semrush.',
     ],
-    logo: '/images/thompson.png',
   },
   {
     period: 'September 2022 – December 2023',
@@ -140,10 +101,9 @@ const experiences = [
     description:
       'Led web development and digital marketing initiatives for multiple clients while managing remote teams and implementing comprehensive branding strategies.',
     achievements: [
-      'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies to expand client market reach.',
-      'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies while optimizing their business processes and data utilization.',
+      'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies.',
+      'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies.',
     ],
-    logo: '/images/g2.png',
   },
   {
     period: 'March 2022 – January 2023',
@@ -152,100 +112,70 @@ const experiences = [
     description:
       'Provided expert software support and customer service while collaborating with development teams to enhance product features and user experience.',
     achievements: [
-      'Maintained an exceptional 95% customer satisfaction score while providing specialized support for industry-specific software including DASH, Pro-Assist, and Xactimate',
-      'Facilitated effective communication between customers and development teams using Jira and Salesforce while working in an agile SCRUM environment',
+      'Maintained an exceptional 95% customer satisfaction score while providing specialized support for industry-specific software.',
+      'Facilitated effective communication between customers and development teams using Jira and Salesforce in an agile SCRUM environment.',
     ],
-    logo: '/images/corelogic.webp',
   },
   {
     period: 'January 2018 – December 2020',
     title: 'Media Coordinator',
     company: 'LMC',
     description:
-      'Managed end-to-end video production projects while coordinating content strategy and advertising campaigns for diverse clients including artists and businesses.',
+      'Managed end-to-end video production projects while coordinating content strategy and advertising campaigns for diverse clients.',
     achievements: [
-      'Produced and edited over 100 media projects including music videos and commercials while ensuring consistent quality and client satisfaction throughout the creative process',
-      'Orchestrated social media content management using Hootsuite to enhance consumer engagement while maintaining strict project schedules and deadlines',
+      'Produced and edited over 100 media projects including music videos and commercials while ensuring consistent quality and client satisfaction.',
+      'Orchestrated social media content management using Hootsuite to enhance consumer engagement while maintaining strict project schedules.',
     ],
-    logo: '/images/IDLOGO.png',
   },
 ];
 
-const selectedIndex = ref(0);
-const contentContainer = ref(null);
-const experienceSection = ref(null);
-const title = ref(null);
-const subtitle = ref(null);
-const navigation = ref(null);
-
-const selectedExperience = computed(() => experiences[selectedIndex.value]);
-
-const selectExperience = (index) => {
-  selectedIndex.value = index;
-};
-
-const initScrollAnimations = () => {
-  if (
-    !experienceSection.value ||
-    !title.value ||
-    !subtitle.value ||
-    !navigation.value ||
-    !contentContainer.value
-  )
-    return;
-
-  $gsap.set([title.value, subtitle.value], { opacity: 0, y: 30 });
-  $gsap.set(navigation.value, { opacity: 0, x: -30 });
-  $gsap.set(contentContainer.value, { opacity: 0, x: 30 });
-
-  const tl = $gsap.timeline({
-    scrollTrigger: {
-      trigger: experienceSection.value,
-      start: 'top 80%',
-      toggleActions: 'play none none none',
-    },
-  });
-
-  tl.to([title.value, subtitle.value], {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    ease: 'power2.out',
-    stagger: 0.2,
-  })
-    .to(
-      navigation.value,
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      },
-      '-=0.6'
-    )
-    .to(
-      contentContainer.value,
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      },
-      '<'
-    );
-};
-
-watch(selectedExperience, () => {
-  if (contentContainer.value) {
-    $gsap.fromTo(
-      contentContainer.value,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
-    );
-  }
-});
-
 onMounted(() => {
-  nextTick(initScrollAnimations);
+  nextTick(() => {
+    if (!expSection.value) return;
+
+    // Draw timeline line on scroll
+    $gsap.set(timelineLine.value, { scaleY: 0, transformOrigin: 'top center' });
+    $gsap.to(timelineLine.value, {
+      scaleY: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: expSection.value,
+        start: 'top center',
+        end: 'bottom center',
+        scrub: 0.5,
+      },
+    });
+
+    // Animate section label
+    $gsap.set(labelEl.value, { opacity: 0, y: 20 });
+    $gsap.to(labelEl.value, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: expSection.value,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    // Animate each item individually as it enters view
+    itemEls.value.filter(Boolean).forEach((el) => {
+      $gsap.set(el, { opacity: 0, x: 20 });
+      $gsap.to(el, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 87%',
+          toggleActions: 'play none none none',
+        },
+      });
+    });
+  });
 });
 </script>

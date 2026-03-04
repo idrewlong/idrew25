@@ -74,6 +74,18 @@
 				</div>
 			</div>
 
+			<!-- Scroll indicator -->
+			<div
+				ref="scrollIndicator"
+				class="absolute bottom-5 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 pointer-events-none z-10"
+			>
+				<span class="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-400">Scroll</span>
+				<div class="flex flex-col items-center gap-1">
+					<div class="w-px h-6 bg-gradient-to-b from-stone-300 to-transparent"></div>
+					<Icon name="heroicons:chevron-down-20-solid" class="w-3 h-3 text-stone-300" />
+				</div>
+			</div>
+
 			<!-- Tech Icons and Image -->
 			<div ref="imageContainer" class="relative flex-shrink-0 mt-8 sm:mt-0">
 				<div
@@ -134,6 +146,7 @@ const title = ref(null);
 const description = ref(null);
 const buttons = ref(null);
 const imageContainer = ref(null);
+const scrollIndicator = ref(null);
 
 // Typewriter state
 let wordIndex = 0;
@@ -180,6 +193,9 @@ const scrollToProjects = () => {
 const updateScroll = () => {
 	requestAnimationFrame(() => {
 		scrollPosition.value = window.scrollY / 1000;
+		if (scrollIndicator.value) {
+			scrollIndicator.value.style.opacity = String(Math.max(0, 1 - window.scrollY / 120));
+		}
 	});
 };
 
