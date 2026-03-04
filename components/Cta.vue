@@ -7,12 +7,12 @@
         ref="header"
         class="flex items-center justify-center md:justify-start mb-4"
       >
-        <h2 class="text-3xl font-bold text-black">Let's Work Together</h2>
-        <div class="h-1 hidden md:block bg-orange-400 w-32 ml-4"></div>
+        <h2 class="text-3xl font-bold font-serif text-stone-900">Let's Work Together</h2>
+        <div class="h-px hidden md:block bg-orange-400/60 w-32 ml-4"></div>
       </div>
       <p
         ref="description"
-        class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto md:mx-0"
+        class="text-base text-stone-500 mb-8 max-w-3xl mx-auto md:mx-0"
       >
         I'm always looking for new projects and opportunities. If you have a
         project in mind or just want to say hello, feel free to reach out. Let's
@@ -21,7 +21,7 @@
       <div ref="button">
         <NuxtLink
           to="/contact"
-          class="inline-block bg-orange-500 text-white font-bold py-4 px-8 rounded-lg hover:bg-orange-600 transition-colors text-lg"
+          class="inline-block bg-orange-500 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-400 transition-colors duration-200"
         >
           Get in Touch
         </NuxtLink>
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const ctaSection = ref(null);
 const header = ref(null);

@@ -4,15 +4,21 @@
 	>
 		<section
 			ref="heroSection"
-			class="relative bg-gradient-to-br from-orange-400 via-orange-500 to-orange-400 rounded-2xl overflow-hidden flex flex-col sm:flex-row justify-center items-center w-full shadow-2xl"
+			class="relative bg-white rounded-2xl overflow-hidden flex flex-col sm:flex-row justify-center items-center w-full border border-stone-200 shadow-sm"
 		>
 			<!-- Background decorative elements -->
-			<div class="absolute inset-0 overflow-hidden">
+			<div class="absolute inset-0 overflow-hidden pointer-events-none">
+				<!-- Warm orange glow near image side -->
 				<div
-					class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
+					class="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_60%,rgba(249,115,22,0.06)_0%,transparent_65%)]"
 				></div>
+				<!-- Subtle warm grid texture -->
 				<div
-					class="absolute inset-0 bg-[linear-gradient(45deg,transparent_0%,rgba(255,255,255,0.05)_50%,transparent_100%)]"
+					class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.025)_1px,transparent_1px)] bg-[size:48px_48px]"
+				></div>
+				<!-- Soft bottom gradient -->
+				<div
+					class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-orange-50/40 to-transparent"
 				></div>
 			</div>
 
@@ -20,27 +26,27 @@
 			<div
 				class="relative p-8 sm:p-12 flex flex-1 flex-col gap-y-6 sm:gap-y-8 self-start sm:self-end max-w-2xl"
 			>
-				<div class="flex flex-col gap-y-1 sm:gap-y-2">
+				<div class="flex flex-col gap-y-2 sm:gap-y-3">
 					<div
 						ref="greeting"
-						class="text-lg sm:text-xl font-medium text-gray-100 tracking-wide"
+						class="text-xs sm:text-sm font-medium text-orange-400/70 tracking-[0.2em] uppercase"
 					>
 						Hi, I'm Andrew
 					</div>
 					<h1
 						ref="title"
-						class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight"
+						class="text-4xl sm:text-5xl md:text-6xl font-bold text-stone-900 leading-tight font-serif"
 					>
 						I like to build
-						<span class="text-white">
+						<span class="text-stone-900">
 							amazing
-							<span class="typewriter text-white">{{ currentWord }}</span>
+							<span class="typewriter text-orange-400">{{ currentWord }}</span>
 						</span>
 					</h1>
 				</div>
 				<p
 					ref="description"
-					class="text-base sm:text-lg text-gray-100 leading-relaxed max-w-xl"
+					class="text-sm sm:text-base text-stone-500 leading-relaxed max-w-xl"
 				>
 					TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack web,
 					mostly React, Svelte, Next or Nuxt. Backend with Lavarel, Node.js, and
@@ -49,7 +55,7 @@
 				<div ref="buttons" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
 					<NuxtLink
 						to="/contact"
-						class="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-white text-orange-600 font-medium hover:bg-gray-100 transition-colors duration-300 text-sm sm:text-base"
+						class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-orange-500 text-white font-medium hover:bg-orange-400 transition-colors duration-200 text-sm"
 					>
 						Let's work
 						<Icon
@@ -61,7 +67,7 @@
 					<NuxtLink
 						to="#projects"
 						@click.prevent="scrollToProjects"
-						class="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg border border-white/20 text-white font-medium hover:bg-white/10 transition-colors duration-300 text-sm sm:text-base"
+						class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-stone-300 text-stone-600 font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors duration-200 text-sm"
 					>
 						View Projects
 					</NuxtLink>
@@ -117,14 +123,12 @@ const isClient = ref(false);
 const currentImage = ref('');
 const currentWord = ref('');
 const words = ['sites', 'apps', 'bots'];
-let currentWordIndex = 0;
 const images = ['/images/me_1.png', '/images/me_3.png'];
 let imageTransitioning = false;
 let imageInterval;
 let typewriterTimeout;
 
 // Template refs
-const heroSection = ref(null);
 const greeting = ref(null);
 const title = ref(null);
 const description = ref(null);
@@ -144,21 +148,19 @@ const typewriterEffect = () => {
 	if (isDeleting) {
 		newWord = currentTargetWord.substring(0, letterIndex - 1);
 		letterIndex--;
-		delay = 100; // Slower deletion
+		delay = 100;
 	} else {
 		newWord = currentTargetWord.substring(0, letterIndex + 1);
 		letterIndex++;
-		delay = 75; // Typing speed
+		delay = 75;
 	}
 
 	currentWord.value = newWord;
 
 	if (!isDeleting && newWord === currentTargetWord) {
-		// Word typed, pause, then start deleting
 		isDeleting = true;
 		delay = 2500;
 	} else if (isDeleting && newWord === '') {
-		// Word deleted, pause, then start next word
 		isDeleting = false;
 		wordIndex = (wordIndex + 1) % words.length;
 		letterIndex = 0;
@@ -187,11 +189,10 @@ const changeImage = () => {
 	currentImage.value = currentImage.value === images[0] ? images[1] : images[0];
 	setTimeout(() => {
 		imageTransitioning = false;
-	}, 2000); // Aligned with CSS transition for a smoother effect
+	}, 2000);
 };
 
 const initAnimations = () => {
-	// Set initial states
 	$gsap.set([greeting.value, title.value, description.value, buttons.value], {
 		opacity: 0,
 		y: 30,
@@ -202,7 +203,6 @@ const initAnimations = () => {
 		scale: 0.9,
 	});
 
-	// Create timeline for entrance animations
 	const tl = $gsap.timeline();
 
 	tl.to(greeting.value, {
@@ -254,25 +254,20 @@ const initAnimations = () => {
 };
 
 onMounted(() => {
-	// Set up scroll listener with throttling
 	window.addEventListener('scroll', updateScroll, { passive: true });
 
-	// Preload images
 	images.forEach((src) => {
 		const img = new Image();
 		img.src = src;
 		img.decode().catch(() => {});
 	});
 
-	// Initialize current image and word
 	isClient.value = true;
 	currentImage.value = images[0];
-	typewriterEffect(); // Start typewriter
+	typewriterEffect();
 
-	// Set up image rotation only
 	imageInterval = setInterval(changeImage, 4000);
 
-	// Initialize GSAP animations
 	nextTick(() => {
 		initAnimations();
 	});
@@ -304,7 +299,7 @@ onUnmounted(() => {
 	opacity: 1;
 	transform: translateY(0);
 	position: relative;
-	min-width: 60px; /* Ensure space for the words */
+	min-width: 60px;
 }
 
 .word-transition.changing {
@@ -312,7 +307,6 @@ onUnmounted(() => {
 	transform: translateY(20px);
 }
 
-/* Prevent flickering in Webkit browsers */
 @media not all and (min-resolution: 0.001dpcm) {
 	@supports (-webkit-appearance: none) {
 		.smooth-image {
@@ -321,7 +315,6 @@ onUnmounted(() => {
 	}
 }
 
-/* Improve performance in Firefox */
 @-moz-document url-prefix() {
 	.smooth-image {
 		transform: translate(0, 0);
@@ -332,7 +325,7 @@ onUnmounted(() => {
 .typewriter {
 	display: inline-block;
 	min-width: 80px;
-	border-right: 2px solid white;
+	border-right: 2px solid #f97316;
 	padding-right: 4px;
 	animation: blink 0.75s step-end infinite;
 }
@@ -343,7 +336,7 @@ onUnmounted(() => {
 		border-color: transparent;
 	}
 	50% {
-		border-color: white;
+		border-color: #f97316;
 	}
 }
 </style>

@@ -3,19 +3,19 @@
     <div
       v-for="education in educationList"
       :key="education.year"
-      class="education-item relative min-h-[200px] w-full md:p-6 rounded-lg"
+      class="education-item relative min-h-[200px] w-full md:p-6 rounded-lg border border-stone-200 bg-white"
     >
       <!-- Top Section -->
       <div class="pr-16">
         <!-- Add padding for logo -->
         <h2 class="flex items-baseline gap-2 mb-4">
-          <span class="md:text-2xl font-semibold">{{ education.degree }}</span>
-          <span class="md:text-2xl text-orange-400">
+          <span class="md:text-2xl font-semibold text-stone-900">{{ education.degree }}</span>
+          <span class="md:text-2xl text-orange-500">
             - {{ education.major }}
           </span>
         </h2>
 
-        <ul class="text-sm text-gray-600 flex flex-col gap-y-2">
+        <ul class="text-sm text-stone-500 flex flex-col gap-y-2">
           <li
             v-for="(achievement, index) in education.achievements"
             :key="index"
@@ -30,8 +30,8 @@
       <!-- School Info Section -->
       <div class="mt-6">
         <div class="grid grid-cols-[1fr_80px] items-center">
-          <h3 class="md:text-lg text-gray-600">{{ education.school }}</h3>
-          <span class="text-gray-600 text-right">{{ education.year }}</span>
+          <h3 class="md:text-lg text-stone-500">{{ education.school }}</h3>
+          <span class="text-stone-400 text-right">{{ education.year }}</span>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
 import { ref, onMounted, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const educationContainer = ref(null);
 

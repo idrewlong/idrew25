@@ -17,7 +17,9 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        serif: ['Instrument Serif', 'Georgia', 'serif'],
         mono: [
+          'Geist Mono',
           'ui-monospace',
           'SFMono-Regular',
           'Menlo',
@@ -28,23 +30,11 @@ module.exports = {
           'monospace',
         ],
       },
-      // colors: {
-      //   background: {
-      //     light: '#deded0',
-      //     DEFAULT: '#E4E3D8',
-      //     dark: '#d0d0ad',
-      //   },
-      //   accent: {
-      //     DEFAULT: '#486242',
-      //     light: '#8BA484',
-      //   },
-      //   white: '#F5F5F5',
-      //   black: {
-      //     light: '#494848',
-      //     DEFAULT: '#1A1A1A',
-      //   },
-      //   'subtle-copy': '#505047',
-      // },
+      colors: {
+        canvas: '#0d0d0d',
+        surface: '#161616',
+        elevated: '#1e1e1e',
+      },
       maxWidth: {
         content: '50rem',
         'wide-content': '62rem',

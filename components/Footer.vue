@@ -6,7 +6,7 @@
 			class="flex flex-col justify-center items-center py-5 mt-auto mx-auto"
 			:is-fat="isFat"
 		>
-			<p class="text-sm text-gray-600">
+			<p class="text-sm text-stone-400">
 				© {{ year }} Andrew Long. All rights reserved.
 			</p>
 		</ContentContainer>

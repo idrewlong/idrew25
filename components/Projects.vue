@@ -1,7 +1,7 @@
 <template>
 	<section
 		ref="projectsSection"
-		class="bg-gradient-to-br from-orange-400 via-orange-500 to-orange-400 py-12"
+		class="bg-stone-100/70 border-y border-stone-200 py-12"
 		id="projects"
 	>
 		<div class="max-w-6xl mx-auto p-6 relative">
@@ -16,7 +16,7 @@
 					<!-- Meta row: work origin + counter -->
 					<div
 						ref="metaEl"
-						class="flex items-center gap-3 mb-2 text-xs text-white/80"
+						class="flex items-center gap-3 mb-2 text-xs text-stone-400"
 					>
 						<span
 							class="inline-flex items-center gap-2"
@@ -30,7 +30,7 @@
 							></span>
 							{{ activeProject.isRealWork ? 'Real Work' : 'Side Project' }}
 						</span>
-						<span class="w-6 h-px bg-white/20" aria-hidden="true"></span>
+						<span class="w-6 h-px bg-stone-300" aria-hidden="true"></span>
 						<span
 							>{{ String(activeIndex + 1).padStart(2, '0') }} /
 							{{ String(projects.length).padStart(2, '0') }}</span
@@ -46,14 +46,14 @@
 					>
 						<h2
 							ref="titleEl"
-							class="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-white hover:text-orange-100 transition-colors duration-300 inline-flex items-center gap-2"
+							class="text-3xl md:text-4xl font-bold font-serif tracking-tight leading-tight text-stone-900 hover:text-orange-500 transition-colors duration-300 inline-flex items-center gap-2"
 						>
 							{{ activeProject.title }}
 							<Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
 						</h2>
 					</a>
 					<p
-						class="text-white/90 mb-6 max-w-prose md:max-w-[52ch] leading-relaxed"
+						class="text-stone-500 text-sm mb-6 max-w-prose md:max-w-[52ch] leading-relaxed"
 						ref="descriptionEl"
 					>
 						{{ activeProject.description }}
@@ -68,7 +68,7 @@
 						<span
 							v-for="tag in visibleWorkTypes"
 							:key="tag"
-							class="px-2.5 py-1 rounded-full text-[11px] font-medium text-white/90 bg-white/10 border border-white/15"
+							class="px-2.5 py-1 rounded-full text-[11px] font-medium text-stone-600 bg-white border border-stone-300"
 						>
 							{{ tag }}
 						</span>
@@ -82,7 +82,7 @@
 						>
 							<button
 								type="button"
-								class="px-2.5 py-1 rounded-full text-[11px] text-white/80 bg-white/5 border border-white/10"
+								class="px-2.5 py-1 rounded-full text-[11px] text-stone-500 bg-white border border-stone-300"
 								@click="toggleOverflow"
 								@touchstart.prevent.stop="toggleOverflow"
 								@keydown.enter.prevent="toggleOverflow"
@@ -96,12 +96,12 @@
 
 							<div
 								v-show="showWorkTypeOverflow"
-								class="absolute top-full mt-2 left-0 z-50 rounded-lg border border-white/10 bg-white/10 backdrop-blur-sm px-2 py-1 whitespace-nowrap shadow-lg"
+								class="absolute top-full mt-2 left-0 z-50 rounded-lg border border-stone-200 bg-white px-2 py-1 whitespace-nowrap shadow-lg"
 							>
 								<span
 									v-for="tag in hiddenWorkTypes"
 									:key="tag"
-									class="mr-2 last:mr-0 inline-block px-2.5 py-1 rounded-full text-[11px] font-medium text-white/90 bg-white/10 border border-white/15"
+									class="mr-2 last:mr-0 inline-block px-2.5 py-1 rounded-full text-[11px] font-medium text-stone-600 bg-stone-100 border border-stone-200"
 								>
 									{{ tag }}
 								</span>
@@ -118,22 +118,22 @@
 							v-for="tech in (activeProject.technologies || []).slice(0, 6)"
 							:key="tech"
 							:icon="tech"
-							class="w-6 h-6 text-white/80 opacity-80"
+							class="w-6 h-6 opacity-70"
 						/>
 					</div>
 
-					<div ref="buttonsEl" class="flex gap-2">
+					<div class="flex gap-2">
 						<button
 							@click="prevSlide"
 							aria-label="Previous project"
-							class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
+							class="bg-white hover:bg-stone-50 text-stone-600 rounded-full p-2 transition border border-stone-300 shadow-sm"
 						>
 							<Icon icon="heroicons:arrow-left-20-solid" class="w-5 h-5" />
 						</button>
 						<button
 							@click="nextSlide"
 							aria-label="Next project"
-							class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
+							class="bg-white hover:bg-stone-50 text-stone-600 rounded-full p-2 transition border border-stone-300 shadow-sm"
 						>
 							<Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
 						</button>
@@ -162,7 +162,7 @@
 import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const projects = [
 	{
@@ -280,7 +280,6 @@ const techIconsEl = ref(null);
 const workTypesEl = ref(null);
 const metaEl = ref(null);
 const workTypeOverflowWrapper = ref(null);
-const buttonsEl = ref(null);
 
 const openOverflow = () => {
 	showWorkTypeOverflow.value = true;

@@ -1,7 +1,7 @@
 <template>
   <section ref="experienceSection" class="max-w-6xl mx-auto p-6">
-    <h1 ref="title" class="text-3xl font-bold mb-2">Experience & Projects</h1>
-    <p ref="subtitle" class="text-gray-600 mb-8">
+    <h1 ref="title" class="text-3xl font-bold font-serif text-stone-900 mb-2">Experience & Projects</h1>
+    <p ref="subtitle" class="text-stone-500 mb-8">
       My work history. From creating marketing strategies to slinging code.
     </p>
 
@@ -26,8 +26,8 @@
               :class="[
                 'w-full text-left py-2 px-2 md:px-4',
                 selectedIndex === index
-                  ? 'text-black'
-                  : 'text-gray-500 hover:text-black',
+                  ? 'text-stone-900'
+                  : 'text-stone-400 hover:text-stone-700',
               ]"
             >
               {{ experience.company }}
@@ -44,20 +44,20 @@
         >
           <div class="flex-grow space-y-4">
             <div>
-              <div class="text-xs text-black-light font-medium">
+              <div class="text-xs text-stone-400 font-medium tracking-wide">
                 {{ selectedExperience.period }}
               </div>
-              <div class="text-lg font-bold">
+              <div class="text-lg font-bold text-stone-900">
                 {{ selectedExperience.title }} @
-                <span class="text-orange-400">{{
+                <span class="text-orange-500">{{
                   selectedExperience.company
                 }}</span>
               </div>
             </div>
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-stone-500">
               {{ selectedExperience.description }}
             </div>
-            <ul class="text-sm text-gray-600 flex flex-col gap-y-1.5">
+            <ul class="text-sm text-stone-500 flex flex-col gap-y-1.5">
               <li
                 v-for="(achievement, index) in selectedExperience.achievements"
                 :key="index"
@@ -103,7 +103,7 @@
 <script setup>
 import { ref, watch, computed, onMounted, nextTick } from 'vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const experiences = [
   {

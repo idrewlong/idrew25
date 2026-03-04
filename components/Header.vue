@@ -1,7 +1,7 @@
 <template>
 	<header class="py-4 px-2">
 		<nav
-			class="p-4 px-6 mx-auto max-w-7xl rounded-3xl md:flex md:justify-between md:items-center shadow-xl bg-white relative"
+			class="p-4 px-6 mx-auto max-w-7xl rounded-2xl md:flex md:justify-between md:items-center bg-white/90 backdrop-blur-md border border-stone-200 shadow-sm relative"
 			aria-label="Main navigation"
 		>
 			<div class="flex items-center justify-between">
@@ -16,7 +16,7 @@
 				<!-- Mobile menu button -->
 				<button
 					type="button"
-					class="text-gray-900 focus:outline-none rounded md:hidden"
+					class="text-stone-500 focus:outline-none rounded md:hidden hover:text-stone-900 transition-colors duration-200"
 					:aria-expanded="showMenu"
 					aria-controls="main-navigation"
 					@click="toggleNavbar"
@@ -42,24 +42,24 @@
 					v-for="link in navigationLinks"
 					:key="link.to"
 					:to="link.to"
-					class="text-gray-500 transition-colors duration-300 hover:text-orange-400"
+					class="text-stone-500 text-sm tracking-wide transition-colors duration-300 hover:text-orange-500"
 				>
 					{{ link.label }}
 				</NuxtLink>
 
-				<div class="flex gap-6 items-center">
+				<div class="flex gap-5 items-center">
 					<a
 						v-for="social in socialLinks"
 						:key="social.url"
 						:href="social.url"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-gray-500"
+						class="text-stone-400"
 					>
 						<span class="sr-only">{{ social.label }}</span>
 						<Icon
 							:name="social.icon"
-							class="w-6 h-6 transition-colors duration-300 hover:text-orange-400"
+							class="w-5 h-5 transition-colors duration-300 hover:text-orange-500"
 							aria-hidden="true"
 						/>
 					</a>
@@ -77,14 +77,14 @@
 			>
 				<div
 					v-show="showMenu"
-					class="absolute top-full left-0 right-0 bg-white mt-2 p-4 rounded-xl shadow-lg md:hidden z-50"
+					class="absolute top-full left-0 right-0 bg-white mt-2 p-4 rounded-xl border border-stone-200 shadow-lg md:hidden z-50"
 				>
 					<div class="flex flex-col space-y-4">
 						<NuxtLink
 							v-for="link in navigationLinks"
 							:key="link.to"
 							:to="link.to"
-							class="text-gray-500 transition-colors duration-300 hover:text-orange-400"
+							class="text-stone-500 text-sm transition-colors duration-300 hover:text-orange-500"
 							@click="closeNavbar"
 						>
 							{{ link.label }}
@@ -97,14 +97,14 @@
 								:href="social.url"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-gray-500 flex items-center gap-2"
+								class="text-stone-400 flex items-center gap-2 hover:text-orange-500 transition-colors duration-300"
 							>
 								<Icon
 									:name="social.icon"
-									class="w-6 h-6 transition-colors duration-300 hover:text-orange-400"
+									class="w-5 h-5"
 									aria-hidden="true"
 								/>
-								<span>{{ social.label }}</span>
+								<span class="text-sm">{{ social.label }}</span>
 							</a>
 						</div>
 					</div>

@@ -76,46 +76,46 @@ const submitForm = async () => {
     <div class="max-w-4xl mx-auto">
       <!-- Header Section -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-4">Let's Connect</h1>
-        <p class="text-gray-600 max-w-2xl mx-auto">
+        <h1 class="text-4xl font-bold font-serif text-stone-900 mb-4">Let's Connect</h1>
+        <p class="text-stone-500 max-w-2xl mx-auto">
           Have a question or want to collaborate? I'm always excited to connect
           with other developers and businesses.
         </p>
       </div>
 
       <!-- Contact Card -->
-      <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+      <div class="bg-white rounded-2xl border border-stone-200 p-8 md:p-12">
         <!-- Contact Options -->
         <div class="grid md:grid-cols-2 gap-8 mb-12">
           <div
-            class="text-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+            class="text-center p-6 rounded-xl bg-stone-50 border border-stone-200 hover:border-stone-300 transition-colors"
           >
             <Icon
               name="heroicons:envelope"
               class="w-8 h-8 mx-auto mb-4 text-orange-500"
             />
-            <h3 class="font-semibold mb-2">Email</h3>
+            <h3 class="font-semibold mb-2 text-stone-800">Email</h3>
             <a
               href="mailto:idrewlong@gmail.com"
-              class="text-orange-500 hover:text-orange-600 transition-colors"
+              class="text-orange-500 hover:text-orange-600 transition-colors text-sm"
             >
               idrewlong@gmail.com
             </a>
           </div>
           <div
-            class="text-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+            class="text-center p-6 rounded-xl bg-stone-50 border border-stone-200 hover:border-stone-300 transition-colors"
           >
             <Icon
               name="heroicons:chat-bubble-left-right"
               class="w-8 h-8 mx-auto mb-4 text-orange-500"
             />
-            <h3 class="font-semibold mb-2">Social</h3>
+            <h3 class="font-semibold mb-2 text-stone-800">Social</h3>
             <div class="flex justify-center gap-4">
               <a
                 href="https://github.com/idrewlong"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-gray-600 hover:text-orange-500 transition-colors"
+                class="text-stone-400 hover:text-orange-500 transition-colors"
               >
                 <Icon name="mdi:github" class="w-6 h-6" />
               </a>
@@ -123,7 +123,7 @@ const submitForm = async () => {
                 href="https://linkedin.com/in/yourprofile"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-gray-600 hover:text-orange-500 transition-colors"
+                class="text-stone-400 hover:text-orange-500 transition-colors"
               >
                 <Icon name="mdi:linkedin" class="w-6 h-6" />
               </a>
@@ -138,7 +138,7 @@ const submitForm = async () => {
               type="text"
               required
               v-model="form.name"
-              class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-orange-500 rounded-lg bg-gray-50 text-gray-900 focus:outline-none transition-colors"
+              class="w-full px-4 py-3 border-b border-stone-300 focus:border-orange-500 bg-transparent text-stone-900 placeholder-stone-400 focus:outline-none transition-colors"
               :class="{ 'border-orange-500': form.name }"
               placeholder="Your Name"
             />
@@ -150,7 +150,7 @@ const submitForm = async () => {
               type="email"
               required
               v-model="form.email"
-              class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-orange-500 rounded-lg bg-gray-50 text-gray-900 focus:outline-none transition-colors"
+              class="w-full px-4 py-3 border-b border-stone-300 focus:border-orange-500 bg-transparent text-stone-900 placeholder-stone-400 focus:outline-none transition-colors"
               :class="{ 'border-orange-500': form.email }"
               placeholder="Your Email"
             />
@@ -162,7 +162,7 @@ const submitForm = async () => {
               required
               v-model="form.message"
               rows="5"
-              class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-orange-500 rounded-lg bg-gray-50 text-gray-900 focus:outline-none transition-colors"
+              class="w-full px-4 py-3 border-b border-stone-300 focus:border-orange-500 bg-transparent text-stone-900 placeholder-stone-400 focus:outline-none transition-colors"
               :class="{ 'border-orange-500': form.message }"
               placeholder="Your Message"
             ></textarea>
@@ -181,12 +181,12 @@ const submitForm = async () => {
           <div
             v-if="result"
             :class="[
-              'text-center p-4 rounded-lg',
+              'text-center p-4 rounded-lg text-sm',
               status === 'success'
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                 : status === 'error'
-                ? 'bg-red-100 text-red-700'
-                : 'bg-orange-100 text-orange-800',
+                ? 'bg-red-50 text-red-700 border border-red-200'
+                : 'bg-orange-50 text-orange-700 border border-orange-200',
             ]"
           >
             {{ result }}
@@ -195,7 +195,7 @@ const submitForm = async () => {
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="w-full md:w-auto px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+            class="w-full md:w-auto px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-400 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
             <Icon name="heroicons:paper-airplane" class="w-5 h-5" />

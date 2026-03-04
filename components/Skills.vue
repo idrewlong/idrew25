@@ -10,12 +10,12 @@
       class="skill-category"
     >
       <h3
-        class="text-lg md:text-xl font-bold mb-2 pb-2 border-b-2 border-orange-400 inline-block"
+        class="text-xs font-bold mb-2 pb-1.5 border-b border-stone-300 text-stone-800 inline-block tracking-widest uppercase"
       >
         {{ category.title }}
       </h3>
       <ul class="mt-4 space-y-2 text-sm md:text-base">
-        <li v-for="skill in category.skills" :key="skill" class="text-gray-600">
+        <li v-for="skill in category.skills" :key="skill" class="text-stone-500">
           {{ skill }}
         </li>
       </ul>
@@ -26,10 +26,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const skillsContainer = ref(null);
-const skillCategoryRefs = ref([]);
 
 const skillCategories = [
   {

@@ -1,7 +1,7 @@
 <template>
   <section ref="articlesSection" class="max-w-6xl mx-auto p-6" id="articles">
-    <h1 ref="title" class="text-3xl font-bold mb-2 font-mono">Articles</h1>
-    <p ref="subtitle" class="text-gray-600 mb-8">
+    <h1 ref="title" class="text-3xl font-bold mb-2 font-serif text-stone-900">Articles</h1>
+    <p ref="subtitle" class="text-stone-500 mb-8">
       Thoughts and insights on marketing, AI, and web development.
     </p>
 
@@ -9,7 +9,7 @@
       <article
         v-for="article in articles"
         :key="article.url"
-        class="article-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl"
+        class="article-card group bg-white rounded-2xl overflow-hidden border border-stone-200 hover:border-stone-300 shadow-sm hover:shadow-md transition-all duration-300"
       >
         <a
           :href="article.url"
@@ -30,25 +30,25 @@
           </div>
 
           <!-- Content Container with Fixed Height -->
-          <div class="p-6 flex flex-col flex-grow bg-white">
+          <div class="p-6 flex flex-col flex-grow">
             <div class="flex items-start justify-between gap-4 mb-3">
               <h2
-                class="text-xl font-mono font-bold group-hover:text-orange-500 transition-colors line-clamp-2"
+                class="text-base font-serif font-bold text-stone-900 group-hover:text-orange-500 transition-colors line-clamp-2"
               >
                 {{ article.title }}
               </h2>
               <time
                 :datetime="article.date"
-                class="text-sm text-gray-500 whitespace-nowrap font-mono"
+                class="text-xs text-stone-400 whitespace-nowrap"
               >
                 {{ formatDate(article.date) }}
               </time>
             </div>
-            <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
+            <p class="text-stone-500 text-sm mb-4 line-clamp-2 flex-grow">
               {{ article.description }}
             </p>
             <div
-              class="flex items-center text-orange-500 group-hover:text-orange-600 transition-colors font-mono"
+              class="flex items-center text-orange-500 group-hover:text-orange-600 transition-colors text-sm"
             >
               Read article
               <Icon
@@ -67,7 +67,7 @@
 import { ref, onMounted, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const articlesSection = ref(null);
 const title = ref(null);

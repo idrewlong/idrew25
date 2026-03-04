@@ -1,5 +1,5 @@
 <template>
-  <p ref="aboutText" class="text-sm leading-relaxed text-gray-600">
+  <p ref="aboutText" class="text-sm leading-relaxed text-stone-600">
     I've always been drawn to solving problems and building things that
     (sometimes) work. After high school, I attended Mississippi Delta Community
     College and then to Ole Miss for broadcast journalism, I found my groove
@@ -26,7 +26,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const aboutText = ref(null);
 
