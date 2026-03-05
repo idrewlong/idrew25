@@ -5,9 +5,10 @@
 			<!-- <Stats /> -->
 			<About />
 			<Marquee />
+			<Experience />
 
 			<Skills />
-			<Experience />
+			<!-- <Experience /> -->
 			<Education />
 			<div class="w-full">
 				<Projects />
