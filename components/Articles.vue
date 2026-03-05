@@ -1,9 +1,9 @@
 <template>
   <section ref="articlesSection" class="max-w-6xl mx-auto p-6" id="articles">
-    <h1 ref="title" class="text-3xl font-bold mb-2 font-serif text-stone-900">Articles</h1>
-    <p ref="subtitle" class="text-stone-500 mb-8">
-      Thoughts and insights on marketing, AI, and web development.
-    </p>
+    <div ref="title" class="flex items-center gap-3 mb-10">
+      <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">Articles</span>
+      <div class="flex-1 h-px bg-stone-200"></div>
+    </div>
 
     <div ref="articlesGrid" class="grid md:grid-cols-2 gap-6">
       <article
@@ -71,7 +71,6 @@ const { $gsap } = useNuxtApp();
 
 const articlesSection = ref(null);
 const title = ref(null);
-const subtitle = ref(null);
 const articlesGrid = ref(null);
 
 const articles = [
@@ -107,7 +106,6 @@ const initScrollAnimations = () => {
   if (
     !articlesSection.value ||
     !title.value ||
-    !subtitle.value ||
     !articlesGrid.value
   ) {
     return;
@@ -115,12 +113,7 @@ const initScrollAnimations = () => {
   // Set initial states with slide positions
   $gsap.set(title.value, {
     opacity: 0,
-    x: -50,
-  });
-
-  $gsap.set(subtitle.value, {
-    opacity: 0,
-    x: 50,
+    y: 20,
   });
 
   const articleCards = articlesGrid.value.querySelectorAll('.article-card');
@@ -143,22 +136,10 @@ const initScrollAnimations = () => {
   // Animate title, subtitle, and cards
   tl.to(title.value, {
     opacity: 1,
-    x: 0,
-    duration: 0.7,
-    ease: 'expo.out',
-    clearProps: 'all',
+    y: 0,
+    duration: 0.5,
+    ease: 'power2.out',
   })
-    .to(
-      subtitle.value,
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.7,
-        ease: 'expo.out',
-        clearProps: 'all',
-      },
-      '-=0.5'
-    ) // Overlap with title animation
     .to(
       articleCards,
       {

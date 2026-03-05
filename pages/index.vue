@@ -11,7 +11,7 @@
 			<!-- <Experience /> -->
 			<Education />
 			<div class="w-full">
-				<Projects />
+				<Projects2 />
 			</div>
 			<Marquee :reverse="true" />
 			<Articles />

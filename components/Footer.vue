@@ -1,20 +1,17 @@
 <!-- components/Footer.vue -->
 <template>
-	<div class="footer-wrapper flex flex-col items-center justify-center">
-		<ContentContainer
-			as="footer"
-			class="flex flex-col justify-center items-center py-5 mt-auto mx-auto"
-			:is-fat="isFat"
-		>
-			<p class="text-sm text-stone-400">
-				© {{ year }} Andrew Long. All rights reserved.
-			</p>
-		</ContentContainer>
-	</div>
+	<footer class="w-full border-t border-stone-200 bg-[var(--bg)]">
+		<div class="max-w-6xl mx-auto px-6">
+			<div class="flex items-center justify-between py-4">
+				<span class="footer-text">Long Beach // MS</span>
+				<span class="footer-text">© {{ year }} Andrew Long</span>
+			</div>
+		</div>
+	</footer>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
 	isFat: {
 		type: Boolean,
 		default: false,
@@ -25,8 +22,7 @@ const year = new Date().getFullYear();
 </script>
 
 <style scoped>
-.footer-wrapper {
-	width: 100%;
-	margin-top: auto;
+.footer-text {
+	@apply text-[9px] tracking-[0.2em] uppercase text-stone-400 font-mono;
 }
 </style>
