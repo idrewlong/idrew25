@@ -10,7 +10,7 @@ declare module '#app' {
 }
 declare module '@unhead/schema' {
 
-  type PublicFiles = '/_robots.txt' | '/favicon.ico' | '/images/EGH.png' | '/images/IDLOGO.png' | '/images/Regional.png' | '/images/Yates.png' | '/images/computer.png' | '/images/corelogic.webp' | '/images/fat8.jpg' | '/images/g2.png' | '/images/idrew.png' | '/images/idrewfilm.png' | '/images/luscos.png' | '/images/madg.png' | '/images/madgcover.png' | '/images/mdcc.webp' | '/images/me_1.png' | '/images/me_3.png' | '/images/olemiss.png' | '/images/taylortrolley.png' | '/images/thompson.png' | '/images/tools.png' | (string & Record<never, never>)
+  type PublicFiles = '/_robots.txt' | '/favicon.ico' | '/images/EGH.webp' | '/images/IDLOGO.webp' | '/images/OG.webp' | '/images/Regional.webp' | '/images/Yates.webp' | '/images/computer.webp' | '/images/corelogic.webp' | '/images/fat8.webp' | '/images/g2.webp' | '/images/idrew.webp' | '/images/idrewfilm.webp' | '/images/luscos.webp' | '/images/madg.webp' | '/images/madgcover.webp' | '/images/mdcc.webp' | '/images/me_1.webp' | '/images/me_3.webp' | '/images/olemiss.webp' | '/images/taylortrolley.webp' | '/images/thompson.webp' | '/images/tools.webp' | (string & Record<never, never>)
   type JsFiles = (string & Record<never, never>)
 
   interface SchemaAugmentations {

@@ -157,7 +157,7 @@ const educationList = [
 		],
 		school: 'University of Mississippi',
 		year: '2022',
-		logo: '/images/olemiss.png',
+		logo: '/images/olemiss.webp',
 	},
 	{
 		degree: 'A.A',

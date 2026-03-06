@@ -7824,9 +7824,6 @@ const sources$1 = [
         },
         "urls": [
             {
-                "loc": "/blog"
-            },
-            {
                 "loc": "/contact"
             },
             {

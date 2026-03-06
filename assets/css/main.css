@@ -25,16 +25,20 @@
 html {
 	scroll-behavior: smooth;
 	background: var(--bg);
+	overflow-x: hidden;
 }
 
 body {
 	min-height: 100vh;
 	background: var(--bg);
+	overflow-x: hidden;
+	max-width: 100vw;
 }
 
 #__nuxt {
 	@apply min-h-screen flex flex-col;
 	background: var(--bg);
+	overflow-x: hidden;
 }
 
 /* Scrollbar */

@@ -246,7 +246,7 @@ const projects = [
 		title: 'Mad Genius - 5.0',
 		description:
 			'Creative agency site redesign; assisted in rebuilding architecture for optimized GSAP transitions and stronger SEO.',
-		image: '/images/madgcover.png',
+		image: '/images/madgcover.webp',
 		link: 'https://madg.com/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
@@ -262,7 +262,7 @@ const projects = [
 		title: 'Yates Construction',
 		description:
 			'Corporate website for a national construction firm; modular templates and performance/SEO improvements.',
-		image: '/images/Yates.png',
+		image: '/images/Yates.webp',
 		link: 'https://wgyates.com/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
@@ -278,7 +278,7 @@ const projects = [
 		title: 'Regional Homes',
 		description:
 			'Marketing site for a home builder; flexible components and streamlined lead-gen pages. Over 50 sites total.',
-		image: '/images/Regional.png',
+		image: '/images/Regional.webp',
 		link: 'https://regionalhomes.net/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
@@ -293,7 +293,7 @@ const projects = [
 	{
 		title: 'Eley Guild Hardy',
 		description: 'Architecture portfolio; optimized imagery and page transitions.',
-		image: '/images/EGH.png',
+		image: '/images/EGH.webp',
 		link: 'https://eleyguildhardy.com/',
 		workTypes: ['Web Development'],
 		isRealWork: true,
@@ -307,7 +307,7 @@ const projects = [
 		title: 'idrewfilm',
 		description:
 			'Photography portfolio; optimized imagery and page transitions. Digital Ocean Droplet, hosted on Cloudflare.',
-		image: '/images/idrewfilm.png',
+		image: '/images/idrewfilm.webp',
 		link: 'https://idrewfilm.com/',
 		workTypes: ['Web Development', 'Web Design', 'Branding', 'SEO'],
 		isRealWork: false,
@@ -322,7 +322,7 @@ const projects = [
 		title: 'Taylor Trolley',
 		description:
 			'Brand and marketing site for a charter trolley service in Oxford/Taylor, MS.',
-		image: '/images/taylortrolley.png',
+		image: '/images/taylortrolley.webp',
 		link: 'https://taylortrolley.vercel.app/',
 		workTypes: ['Web Development', 'Web Design', 'Branding'],
 		isRealWork: false,

@@ -10,6 +10,7 @@ useSeoMeta({
     'Connect with Andrew Long, a full stack developer specializing in web development and marketing. Reach out for collaboration, or just to say hello!',
   ogDescription:
     'Connect with Andrew Long, a full stack developer specializing in web development and marketing. Reach out for collaboration, or just to say hello!',
+  ogImage: '/images/OG.webp',
   twitterCard: 'summary_large_image',
   twitterTitle: 'Contact',
   twitterDescription:

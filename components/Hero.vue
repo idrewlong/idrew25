@@ -71,7 +71,7 @@
 					<TechIcons />
 					<div class="hero-photo-wrapper">
 						<img
-							src="/images/me_1.png"
+							src="/images/me_1.webp"
 							alt="Andrew's photo"
 							class="hero-photo"
 							loading="lazy"
@@ -106,7 +106,7 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 const { $gsap } = useNuxtApp();
 
 const currentWord = ref('');
-const words = ['sites', 'apps', 'bots'];
+const words = ['tools', 'apps', 'sites', 'bots'];
 let typewriterTimeout;
 
 // Template refs

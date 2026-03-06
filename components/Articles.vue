@@ -80,7 +80,7 @@ const articles = [
     url: 'https://madg.com/2025/03/19/the-modern-marketers-guide-to-ai-implementation/',
     description:
       'A comprehensive guide on integrating AI tools and strategies into modern marketing workflows, focusing on practical applications and real-world examples.',
-    image: '/images/tools.png',
+    image: '/images/tools.webp',
     bgColor: 'from-yellow-400 to-yellow-500',
   },
   {
@@ -89,7 +89,7 @@ const articles = [
     url: 'https://madg.com/2025/01/07/seo-in-the-age-of-ai-search-engines/',
     description:
       'Exploring how AI-powered search engines are changing SEO practices and what marketers need to know to stay ahead of the curve.',
-    image: '/images/computer.png',
+    image: '/images/computer.webp',
     bgColor: 'from-purple-400 to-purple-500',
   },
 ];

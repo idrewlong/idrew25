@@ -4,7 +4,7 @@
 			<!-- Brand -->
 			<NuxtLink to="/" class="brand" aria-label="Go to homepage">
 				<img
-					src="/public/images/IDLOGO.png"
+					src="/images/IDLOGO.webp"
 					class="brand-logo"
 					alt="iDrew"
 				/>
