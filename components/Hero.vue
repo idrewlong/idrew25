@@ -1,8 +1,8 @@
 <template>
 	<section ref="heroSection" class="hero-section">
-		<div class="hero-container max-w-6xl mx-auto px-6">
+		<div class="hero-container max-w-6xl mx-auto px-4 sm:px-6">
 			<!-- Section label — matches rest of site -->
-			<div ref="labelEl" class="flex items-center gap-3 mb-10 md:mb-14">
+			<div ref="labelEl" class="flex items-center gap-3 mb-6 sm:mb-10 md:mb-14">
 				<span
 					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
 					>Portfolio</span
@@ -258,11 +258,18 @@ onUnmounted(() => {
 <style scoped>
 .hero-section {
 	position: relative;
-	padding-top: 3rem;
-	padding-bottom: 4rem;
-	min-height: calc(100vh - 64px);
+	padding-top: 2rem;
+	padding-bottom: 3rem;
+	min-height: calc(100vh - 56px);
 	display: flex;
 	align-items: flex-start;
+}
+
+@media (min-width: 480px) {
+	.hero-section {
+		padding-top: 3rem;
+		padding-bottom: 4rem;
+	}
 }
 
 @media (min-width: 768px) {
@@ -283,7 +290,13 @@ onUnmounted(() => {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
+	gap: 2rem;
+}
+
+@media (min-width: 480px) {
+	.hero-grid {
+		gap: 3rem;
+	}
 }
 
 @media (min-width: 768px) {
@@ -299,9 +312,15 @@ onUnmounted(() => {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 1.75rem;
+	gap: 1.25rem;
 	position: relative;
 	z-index: 10;
+}
+
+@media (min-width: 480px) {
+	.hero-content {
+		gap: 1.75rem;
+	}
 }
 
 .hero-greeting {
@@ -311,7 +330,7 @@ onUnmounted(() => {
 }
 
 .hero-title {
-	font-size: clamp(2.75rem, 7vw, 5.5rem);
+	font-size: clamp(2.25rem, 7vw, 5.5rem);
 	font-weight: 700;
 	line-height: 0.92;
 	letter-spacing: -0.02em;
@@ -384,9 +403,15 @@ onUnmounted(() => {
 	position: relative;
 	flex-shrink: 0;
 	width: 100%;
-	max-width: 420px;
+	max-width: 300px;
 	aspect-ratio: 4 / 5;
 	margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+	.hero-image-area {
+		max-width: 420px;
+	}
 }
 
 @media (min-width: 768px) {
@@ -408,9 +433,16 @@ onUnmounted(() => {
 	bottom: 0;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 280px;
-	height: 400px;
+	width: 220px;
+	height: 320px;
 	z-index: 10;
+}
+
+@media (min-width: 480px) {
+	.hero-photo-wrapper {
+		width: 280px;
+		height: 400px;
+	}
 }
 
 @media (min-width: 768px) {

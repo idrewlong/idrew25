@@ -1,5 +1,5 @@
 <template>
-	<div ref="ctaSection" class="relative w-full max-w-6xl mx-auto px-6">
+	<div ref="ctaSection" class="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Notion-style section label — matches About/Experience/Skills -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span

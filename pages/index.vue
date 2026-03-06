@@ -1,7 +1,7 @@
 <template>
 	<div class="min-h-screen flex flex-col w-full">
 		<Hero />
-		<main class="w-full py-12 flex flex-col justify-center gap-y-20">
+		<main class="w-full py-8 sm:py-12 flex flex-col justify-center gap-y-14 sm:gap-y-20">
 			<!-- <Stats /> -->
 			<About />
 			<Marquee />
@@ -22,7 +22,7 @@
 
 <script setup>
 useSeoMeta({
-	title: 'Full Stack Developer',
+	title: 'Andrew Long | Full Stack Developer',
 	description:
 		'Andrew Long is a full stack developer with a passion for building web applications and marketing strategies.',
 	ogTitle: 'Full Stack Developer',

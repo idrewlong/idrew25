@@ -1,5 +1,5 @@
 <template>
-  <section ref="articlesSection" class="max-w-6xl mx-auto p-6" id="articles">
+  <section ref="articlesSection" class="max-w-6xl mx-auto px-4 sm:px-6 py-6" id="articles">
     <div ref="title" class="flex items-center gap-3 mb-10">
       <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">Articles</span>
       <div class="flex-1 h-px bg-stone-200"></div>
@@ -19,7 +19,7 @@
         >
           <!-- Image Container with Fixed Height -->
           <div
-            class="relative h-[240px] overflow-hidden bg-gradient-to-b"
+            class="relative h-[180px] sm:h-[240px] overflow-hidden bg-gradient-to-b"
             :class="article.bgColor"
           >
             <img

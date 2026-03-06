@@ -1,5 +1,5 @@
 <template>
-	<section ref="skillsSection" class="max-w-6xl mx-auto px-6">
+	<section ref="skillsSection" class="max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Section label — identical pattern to every other section -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span

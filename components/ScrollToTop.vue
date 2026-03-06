@@ -84,10 +84,10 @@ onUnmounted(() => {
 <style scoped>
 .scroll-btn {
 	position: fixed;
-	bottom: 2rem;
-	right: 2rem;
-	width: 44px;
-	height: 44px;
+	bottom: 1rem;
+	right: 1rem;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 	background: rgba(247, 246, 243, 0.88);
 	backdrop-filter: blur(12px);
@@ -107,6 +107,15 @@ onUnmounted(() => {
 		transform 0.15s ease,
 		border-color 0.15s ease;
 	z-index: 50;
+}
+
+@media (min-width: 480px) {
+	.scroll-btn {
+		bottom: 2rem;
+		right: 2rem;
+		width: 44px;
+		height: 44px;
+	}
 }
 
 .scroll-btn:hover {

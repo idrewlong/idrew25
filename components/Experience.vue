@@ -1,5 +1,5 @@
 <template>
-  <section ref="expSection" class="max-w-6xl mx-auto px-6">
+  <section ref="expSection" class="max-w-6xl mx-auto px-4 sm:px-6">
     <!-- Notion-style section label -->
     <div ref="labelEl" class="flex items-center gap-3 mb-12">
       <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">Experience</span>
@@ -19,7 +19,7 @@
           v-for="(exp, i) in experiences"
           :key="exp.company"
           :ref="(el) => { if (el) itemEls[i] = el }"
-          class="flex gap-8 items-start"
+          class="flex gap-4 sm:gap-8 items-start"
         >
           <!-- Dot column -->
           <div class="w-4 shrink-0 pt-1 relative z-10">

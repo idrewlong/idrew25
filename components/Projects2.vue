@@ -6,7 +6,7 @@
 		@mousemove="onMouseMove"
 		@mouseleave="onSectionLeave"
 	>
-		<div class="max-w-6xl mx-auto px-6">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6">
 			<!-- Header -->
 			<div
 				class="flex items-center gap-4 mb-10 text-[11px] font-mono text-stone-400 uppercase tracking-widest"
@@ -26,7 +26,7 @@
 				>
 					<!-- Row header -->
 					<button
-						class="relative w-full flex items-center gap-5 py-5 sm:py-6 group text-left overflow-hidden cursor-none"
+						class="relative w-full flex items-center gap-3 sm:gap-5 py-5 sm:py-6 group text-left overflow-hidden md:cursor-none"
 						:aria-expanded="openIndex === i"
 						:aria-controls="`drawer-${i}`"
 						@click="toggleRow(i)"
@@ -111,8 +111,8 @@
 						ref="bodyEls"
 						style="height: 0; overflow: hidden"
 					>
-						<div class="pb-10 pt-1">
-							<div class="grid md:grid-cols-5 gap-8 lg:gap-12">
+						<div class="pb-6 sm:pb-10 pt-1">
+							<div class="grid md:grid-cols-5 gap-5 sm:gap-8 lg:gap-12">
 								<!-- Left: text details -->
 								<div class="md:col-span-2 flex flex-col gap-5 drawer-text">
 									<p

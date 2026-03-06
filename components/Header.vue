@@ -158,11 +158,18 @@ onUnmounted(() => {
 .header-inner {
 	max-width: 72rem;
 	margin: 0 auto;
-	padding: 0 1.5rem;
-	height: 64px;
+	padding: 0 1rem;
+	height: 56px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+@media (min-width: 480px) {
+	.header-inner {
+		padding: 0 1.5rem;
+		height: 64px;
+	}
 }
 
 /* Brand */
