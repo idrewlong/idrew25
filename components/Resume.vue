@@ -1,18 +1,18 @@
 <template>
   <div ref="resumeContainer" class="container max-w-6xl mx-auto p-8">
     <div ref="headerSection" class="flex items-center mb-8">
-      <h1 class="text-3xl font-bold">More About Me</h1>
-      <div class="h-1 hidden md:block bg-orange-400 w-32 ml-4"></div>
+      <h1 class="text-3xl font-bold font-serif text-stone-900">More About Me</h1>
+      <div class="h-px hidden md:block bg-orange-400/50 w-32 ml-4"></div>
     </div>
-    <div ref="tabsSection" class="mb-8 border-b border-gray-300">
+    <div ref="tabsSection" class="mb-8 border-b border-stone-200">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
         <button
           @click="activeTab = 'about'"
           :class="[
-            'whitespace-nowrap py-4 px-1 border-b-2 ',
+            'whitespace-nowrap py-4 px-1 border-b-2 text-sm tracking-wide transition-colors duration-200',
             activeTab === 'about'
-              ? 'border-orange-400 text-black'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+              ? 'border-orange-500 text-stone-900'
+              : 'border-transparent text-stone-400 hover:text-stone-700 hover:border-stone-300',
           ]"
         >
           About
@@ -20,10 +20,10 @@
         <button
           @click="activeTab = 'skills'"
           :class="[
-            'whitespace-nowrap py-4 px-1 border-b-2 ',
+            'whitespace-nowrap py-4 px-1 border-b-2 text-sm tracking-wide transition-colors duration-200',
             activeTab === 'skills'
-              ? 'border-orange-400 text-black'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+              ? 'border-orange-500 text-stone-900'
+              : 'border-transparent text-stone-400 hover:text-stone-700 hover:border-stone-300',
           ]"
         >
           Skills
@@ -31,10 +31,10 @@
         <button
           @click="activeTab = 'education'"
           :class="[
-            'whitespace-nowrap py-4 px-1 border-b-2 ',
+            'whitespace-nowrap py-4 px-1 border-b-2 text-sm tracking-wide transition-colors duration-200',
             activeTab === 'education'
-              ? 'border-orange-400 text-black'
-              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+              ? 'border-orange-500 text-stone-900'
+              : 'border-transparent text-stone-400 hover:text-stone-700 hover:border-stone-300',
           ]"
         >
           Education
@@ -61,7 +61,7 @@ import About from './About.vue';
 import Skills from './Skills.vue';
 import Education from './Education.vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const activeTab = ref('about');
 

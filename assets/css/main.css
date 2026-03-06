@@ -1,42 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-	font-family: 'Geist Mono', serif;
+	--accent: #f97316;
+	--accent-dim: #c2570a;
+	--bg: #F7F6F3;
+	--bg-card: #FFFFFF;
+	--bg-elevated: #F0EEE9;
+	--border: #E7E5E0;
+	--text: #1C1917;
+	--text-muted: #78716C;
+
+	font-family: 'Geist Mono', monospace;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
-	@apply bg-gray-200;
+	background: var(--bg);
+	color: var(--text);
 }
 
 html {
 	scroll-behavior: smooth;
+	background: var(--bg);
 }
 
 body {
-	@apply min-h-screen;
+	min-height: 100vh;
+	background: var(--bg);
 }
 
 #__nuxt {
 	@apply min-h-screen flex flex-col;
+	background: var(--bg);
 }
 
+/* Scrollbar */
 .scrollbar-hide::-webkit-scrollbar {
 	display: none;
 }
 
-/* Default styling for scroll bars */
 *::-webkit-scrollbar {
-	/* width: 15px; */
-	@apply w-2 h-2;
+	@apply w-0.5 h-0.5;
 }
 *::-webkit-scrollbar-thumb {
-	@apply bg-gray-300 dark:bg-gray-700 rounded;
+	background: #D6D3D1;
+	border-radius: 4px;
 }
 
-/* For IE, Edge and Firefox */
 .scrollbar-hide {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }

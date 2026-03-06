@@ -1,99 +1,142 @@
 <template>
-  <div
-    ref="skillsContainer"
-    class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8"
-  >
-    <div
-      v-for="(category, index) in skillCategories"
-      :key="category.title"
-      :ref="(el) => (skillCategories[index] = el)"
-      class="skill-category"
-    >
-      <h3
-        class="text-lg md:text-xl font-bold mb-2 pb-2 border-b-2 border-orange-400 inline-block"
-      >
-        {{ category.title }}
-      </h3>
-      <ul class="mt-4 space-y-2 text-sm md:text-base">
-        <li v-for="skill in category.skills" :key="skill" class="text-gray-600">
-          {{ skill }}
-        </li>
-      </ul>
-    </div>
-  </div>
+	<section ref="skillsSection" class="max-w-6xl mx-auto px-4 sm:px-6">
+		<!-- Section label — identical pattern to every other section -->
+		<div ref="labelEl" class="flex items-center gap-3 mb-10">
+			<span
+				class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
+				>Skills</span
+			>
+			<div class="flex-1 h-px bg-stone-200"></div>
+		</div>
+
+		<!-- Rows directly on page background, no card container -->
+		<div class="">
+			<div
+				v-for="(category, i) in skillCategories"
+				:key="category.title"
+				:ref="
+					(el) => {
+						if (el) rowEls[i] = el;
+					}
+				"
+				class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-16 py-4 md:py-5 border-b border-stone-100 group"
+			>
+				<!-- Index + category label -->
+				<div class="flex items-center gap-3 md:w-44 shrink-0">
+					<span
+						class="text-[9px] font-mono text-stone-300 tabular-nums select-none"
+						aria-hidden="true"
+						>{{ String(i + 1).padStart(2, '0') }}</span
+					>
+					<div class="flex items-center gap-1.5">
+						<span
+							class="w-1 h-1 rounded-full bg-orange-400 shrink-0"
+							aria-hidden="true"
+						></span>
+						<span
+							class="text-xs font-mono tracking-[0.15em] uppercase text-orange-400"
+						>
+							{{ category.title }}
+						</span>
+					</div>
+				</div>
+
+				<!-- Skills — dot-separated, same mono text as rest of site -->
+				<p class="text-sm text-stone-600 leading-relaxed">
+					<template v-for="(skill, j) in category.skills" :key="skill"
+						>{{ skill
+						}}<span
+							v-if="j < category.skills.length - 1"
+							class="text-stone-300 mx-1.5"
+							>·</span
+						></template
+					>
+				</p>
+			</div>
+		</div>
+	</section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
-const skillsContainer = ref(null);
-const skillCategoryRefs = ref([]);
+const skillsSection = ref(null);
+const labelEl = ref(null);
+const rowEls = ref([]);
 
 const skillCategories = [
-  {
-    title: 'Frontend',
-    skills: [
-      'React/Next.js',
-      'Vue/Nuxt.js',
-      'Svelte/SvelteKit',
-      'Tailwind',
-      'GSAP',
-      'WordPress',
-      'Headless WordPress',
-    ],
-  },
-  {
-    title: 'Backend',
-    skills: ['PHP', 'Laravel', 'Node.js', 'GraphQL', 'Golang', 'WP REST API'],
-  },
-  {
-    title: 'Dev-Ops',
-    skills: ['Docker', 'CI/CD', 'Git', 'Digital Ocean', 'Vercel'],
-  },
-  {
-    title: 'Data',
-    skills: ['Python', 'Pandas', 'NumPy', 'MySQL', 'PostgreSQL'],
-  },
-  {
-    title: 'Software',
-    skills: [
-      'Figma',
-      'Adobe Suite',
-      'Screaming Frog SEO Spider',
-      'SEM Rush',
-      'Google Analytics',
-      'Google Search Console',
-      'Google Tag Manager',
-    ],
-  },
+	{
+		title: 'Frontend',
+		skills: [
+			'React / Next.js',
+			'Vue / Nuxt.js',
+			'Svelte / SvelteKit',
+			'Tailwind CSS',
+			'GSAP',
+			'WordPress',
+			'Headless CMS',
+		],
+	},
+	{
+		title: 'Backend',
+		skills: ['PHP', 'Laravel', 'Node.js', 'GraphQL', 'Golang', 'WP REST API'],
+	},
+	{
+		title: 'Dev-Ops',
+		skills: ['Docker', 'CI/CD', 'Git', 'Digital Ocean', 'Vercel'],
+	},
+	{
+		title: 'Data',
+		skills: ['Python', 'Pandas', 'NumPy', 'MySQL', 'PostgreSQL'],
+	},
+	{
+		title: 'Design & SEO',
+		skills: [
+			'Figma',
+			'Adobe Suite',
+			'Screaming Frog',
+			'SEM Rush',
+			'Google Analytics',
+			'Google Search Console',
+			'Google Tag Manager',
+		],
+	},
 ];
 
 onMounted(() => {
-  nextTick(() => {
-    const skillElements =
-      skillsContainer.value.querySelectorAll('.skill-category');
+	nextTick(() => {
+		if (!skillsSection.value) return;
 
-    $gsap.fromTo(
-      skillElements,
-      {
-        opacity: 0,
-        y: 40,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: skillsContainer.value,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-  });
+		$gsap.set(labelEl.value, { opacity: 0, y: 20 });
+		$gsap.set(rowEls.value.filter(Boolean), { opacity: 0, x: -12 });
+
+		const tl = $gsap.timeline({
+			scrollTrigger: {
+				trigger: skillsSection.value,
+				start: 'top 80%',
+				toggleActions: 'play none none none',
+			},
+		});
+
+		tl.to(labelEl.value, {
+			opacity: 1,
+			y: 0,
+			duration: 0.5,
+			ease: 'power2.out',
+		}).to(
+			rowEls.value.filter(Boolean),
+			{
+				opacity: 1,
+				x: 0,
+				duration: 0.45,
+				ease: 'power2.out',
+				stagger: 0.07,
+				clearProps: 'all',
+			},
+			'-=0.2'
+		);
+	});
 });
 </script>

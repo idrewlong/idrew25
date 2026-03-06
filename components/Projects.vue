@@ -1,168 +1,124 @@
 <template>
 	<section
 		ref="projectsSection"
-		class="bg-gradient-to-br from-orange-400 via-orange-500 to-orange-400 py-12"
+		class="bg-stone-100/70 border-y border-stone-200 py-16"
 		id="projects"
+		@mousemove="onMouseMove"
+		@mouseleave="onSectionLeave"
 	>
-		<div class="max-w-6xl mx-auto p-6 relative">
-			<!-- Main Slider Content -->
-			<!-- <h2 class="text-3xl font-bold text-white mb-2">Projects</h2>
-      <p class="text-white mb-8">
-        Here are some of the projects I've worked on.
-      </p> -->
-			<div class="grid md:grid-cols-5 gap-8 md:gap-12 items-center">
-				<!-- Left Column: Text, Counter, Thumbnails -->
-				<div ref="leftColumn" class="md:col-span-2">
-					<!-- Meta row: work origin + counter -->
-					<div
-						ref="metaEl"
-						class="flex items-center gap-3 mb-2 text-xs text-white/80"
-					>
-						<span
-							class="inline-flex items-center gap-2"
-							aria-label="Project type"
-						>
-							<span
-								:class="
-									activeProject.isRealWork ? 'bg-emerald-400' : 'bg-amber-300'
-								"
-								class="w-2 h-2 rounded-full"
-							></span>
-							{{ activeProject.isRealWork ? 'Real Work' : 'Side Project' }}
-						</span>
-						<span class="w-6 h-px bg-white/20" aria-hidden="true"></span>
-						<span
-							>{{ String(activeIndex + 1).padStart(2, '0') }} /
-							{{ String(projects.length).padStart(2, '0') }}</span
-						>
-					</div>
+		<div class="max-w-6xl mx-auto px-6">
+			<!-- Header -->
+			<div
+				class="flex items-center gap-4 mb-12 text-[11px] text-stone-400 uppercase tracking-widest font-mono"
+			>
+				<span>Selected Work</span>
+				<span class="flex-1 h-px bg-stone-200" aria-hidden="true"></span>
+				<span>{{ projects.length }} Projects</span>
+			</div>
 
-					<a
-						:href="activeProject.link"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Open project website"
-						class="block mb-2"
+			<!-- Project rows -->
+			<div ref="listEl">
+				<a
+					v-for="(project, i) in projects"
+					:key="project.title"
+					:href="project.link"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="project-row group flex items-center gap-5 py-5 sm:py-6 border-b border-stone-200 first:border-t cursor-none"
+					@mouseenter="onRowEnter(i)"
+					@mouseleave="onRowLeave"
+					:aria-label="`Visit ${project.title}`"
+				>
+					<!-- Number -->
+					<span
+						class="font-mono text-[11px] text-stone-300 w-6 shrink-0 select-none"
+						aria-hidden="true"
 					>
-						<h2
-							ref="titleEl"
-							class="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-white hover:text-orange-100 transition-colors duration-300 inline-flex items-center gap-2"
-						>
-							{{ activeProject.title }}
-							<Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
-						</h2>
-					</a>
-					<p
-						class="text-white/90 mb-6 max-w-prose md:max-w-[52ch] leading-relaxed"
-						ref="descriptionEl"
-					>
-						{{ activeProject.description }}
-					</p>
+						{{ String(i + 1).padStart(2, '0') }}
+					</span>
 
-					<!-- Work type pills -->
-					<div
-						ref="workTypesEl"
-						v-if="activeProject.workTypes && activeProject.workTypes.length"
-						class="flex flex-wrap items-center gap-2 mb-6"
+					<!-- Title -->
+					<h3
+						class="flex-1 font-serif text-2xl sm:text-3xl text-stone-900 group-hover:text-orange-500 transition-colors duration-300 leading-none truncate"
 					>
+						{{ project.title }}
+					</h3>
+
+					<!-- Tags (desktop) -->
+					<div class="hidden md:flex items-center gap-2 shrink-0">
 						<span
-							v-for="tag in visibleWorkTypes"
+							v-for="tag in project.workTypes.slice(0, 2)"
 							:key="tag"
-							class="px-2.5 py-1 rounded-full text-[11px] font-medium text-white/90 bg-white/10 border border-white/15"
+							class="px-2.5 py-1 rounded-full text-[10px] font-medium text-stone-500 bg-white border border-stone-200 group-hover:border-orange-200 group-hover:text-orange-600 transition-colors duration-300"
 						>
 							{{ tag }}
 						</span>
+					</div>
 
-						<div
-							v-if="hiddenWorkTypes.length"
-							ref="workTypeOverflowWrapper"
-							class="relative inline-block"
-							@mouseenter="isHoverCapable ? openOverflow() : null"
-							@mouseleave="isHoverCapable ? closeOverflow() : null"
-						>
-							<button
-								type="button"
-								class="px-2.5 py-1 rounded-full text-[11px] text-white/80 bg-white/5 border border-white/10"
-								@click="toggleOverflow"
-								@touchstart.prevent.stop="toggleOverflow"
-								@keydown.enter.prevent="toggleOverflow"
-								@keydown.space.prevent="toggleOverflow"
-								aria-haspopup="true"
-								:aria-expanded="showWorkTypeOverflow ? 'true' : 'false'"
-								aria-label="Show more work types"
-							>
-								+{{ hiddenWorkTypes.length }}
-							</button>
+					<!-- Work type dot -->
+					<span
+						class="w-1.5 h-1.5 rounded-full shrink-0 hidden sm:block"
+						:class="project.isRealWork ? 'bg-emerald-400' : 'bg-amber-300'"
+						:title="project.isRealWork ? 'Client work' : 'Side project'"
+					></span>
 
+					<!-- Arrow -->
+					<Icon
+						icon="heroicons:arrow-up-right-20-solid"
+						class="w-4 h-4 text-stone-300 group-hover:text-orange-500 shrink-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+						aria-hidden="true"
+					/>
+				</a>
+			</div>
+		</div>
+
+		<!-- Floating cursor preview (desktop only, client-only to avoid SSR issues) -->
+		<ClientOnly>
+			<Teleport to="body">
+				<div
+					ref="cursorEl"
+					class="fixed top-0 left-0 pointer-events-none z-[9999] select-none hidden md:block"
+					style="opacity: 0; will-change: transform"
+					aria-hidden="true"
+				>
+					<div
+						class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-stone-900"
+						style="width: 300px; transform: translate(20px, -55%)"
+					>
+						<div class="relative aspect-video">
+							<img
+								ref="previewImg"
+								:src="previewProject.image"
+								:alt="previewProject.title"
+								class="absolute inset-0 w-full h-full object-cover"
+							/>
 							<div
-								v-show="showWorkTypeOverflow"
-								class="absolute top-full mt-2 left-0 z-50 rounded-lg border border-white/10 bg-white/10 backdrop-blur-sm px-2 py-1 whitespace-nowrap shadow-lg"
+								class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"
 							>
-								<span
-									v-for="tag in hiddenWorkTypes"
-									:key="tag"
-									class="mr-2 last:mr-0 inline-block px-2.5 py-1 rounded-full text-[11px] font-medium text-white/90 bg-white/10 border border-white/15"
-								>
-									{{ tag }}
-								</span>
+								<div class="absolute bottom-0 inset-x-0 p-3">
+									<p class="text-white/90 text-sm font-serif leading-none">
+										{{ previewProject.title }}
+									</p>
+									<p
+										class="text-white/50 text-[10px] mt-1 font-mono uppercase tracking-wide"
+									>
+										{{ previewProject.workTypes.slice(0, 2).join(' · ') }}
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-
-					<div
-						ref="techIconsEl"
-						v-if="activeProject.technologies"
-						class="flex flex-wrap gap-2.5 mb-8"
-					>
-						<Icon
-							v-for="tech in (activeProject.technologies || []).slice(0, 6)"
-							:key="tech"
-							:icon="tech"
-							class="w-6 h-6 text-white/80 opacity-80"
-						/>
-					</div>
-
-					<div ref="buttonsEl" class="flex gap-2">
-						<button
-							@click="prevSlide"
-							aria-label="Previous project"
-							class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
-						>
-							<Icon icon="heroicons:arrow-left-20-solid" class="w-5 h-5" />
-						</button>
-						<button
-							@click="nextSlide"
-							aria-label="Next project"
-							class="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition"
-						>
-							<Icon icon="heroicons:arrow-right-20-solid" class="w-5 h-5" />
-						</button>
-					</div>
 				</div>
-
-				<!-- Right Column: Image -->
-				<div ref="rightColumn" class="md:col-span-3">
-					<div
-						class="relative rounded-xl overflow-hidden ring-1 ring-white/10 shadow-lg w-full h-0 pb-[56.25%]"
-					>
-						<img
-							:src="activeProject.image"
-							:alt="activeProject.title"
-							ref="imageEl"
-							class="absolute inset-0 w-full h-full object-cover"
-						/>
-					</div>
-				</div>
-			</div>
-		</div>
+			</Teleport>
+		</ClientOnly>
 	</section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const { $gsap, $ScrollTrigger } = useNuxtApp();
+const { $gsap } = useNuxtApp();
 
 const projects = [
 	{
@@ -216,8 +172,7 @@ const projects = [
 	},
 	{
 		title: 'Eley Guild Hardy',
-		description:
-			'Architecture portfolio; Optimized imagery and page transitions.',
+		description: 'Architecture portfolio; Optimized imagery and page transitions.',
 		image: '/images/EGH.png',
 		link: 'https://eleyguildhardy.com/',
 		workTypes: ['Web Development'],
@@ -255,152 +210,103 @@ const projects = [
 	},
 ];
 
-const activeIndex = ref(0);
-const activeProject = computed(() => projects[activeIndex.value]);
-const showWorkTypeOverflow = ref(false);
-const isHoverCapable = ref(false);
-
-const visibleWorkTypes = computed(() => {
-	const types = activeProject.value?.workTypes || [];
-	return types.slice(0, 3);
-});
-
-const hiddenWorkTypes = computed(() => {
-	const types = activeProject.value?.workTypes || [];
-	return types.slice(3);
-});
-
 const projectsSection = ref(null);
-const leftColumn = ref(null);
-const rightColumn = ref(null);
-const titleEl = ref(null);
-const descriptionEl = ref(null);
-const imageEl = ref(null);
-const techIconsEl = ref(null);
-const workTypesEl = ref(null);
-const metaEl = ref(null);
-const workTypeOverflowWrapper = ref(null);
-const buttonsEl = ref(null);
+const listEl = ref(null);
+const cursorEl = ref(null);
+const previewImg = ref(null);
+const previewProject = ref(projects[0]);
+let isCursorVisible = false;
 
-const openOverflow = () => {
-	showWorkTypeOverflow.value = true;
+const onMouseMove = (e) => {
+	if (!cursorEl.value) return;
+	$gsap.to(cursorEl.value, {
+		x: e.clientX,
+		y: e.clientY,
+		duration: 0.55,
+		ease: 'power3.out',
+		overwrite: 'auto',
+	});
 };
 
-const closeOverflow = () => {
-	showWorkTypeOverflow.value = false;
+const onRowEnter = (i) => {
+	const project = projects[i];
+	const isNewProject = previewProject.value !== project;
+
+	previewProject.value = project;
+
+	if (isNewProject && previewImg.value) {
+		$gsap.fromTo(
+			previewImg.value,
+			{ opacity: 0, y: 8 },
+			{ opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' }
+		);
+	}
+
+	if (!isCursorVisible && cursorEl.value) {
+		isCursorVisible = true;
+		$gsap.to(cursorEl.value, {
+			opacity: 1,
+			duration: 0.2,
+			ease: 'power2.out',
+		});
+	}
 };
 
-const toggleOverflow = () => {
-	showWorkTypeOverflow.value = !showWorkTypeOverflow.value;
+const onRowLeave = () => {
+	// keep visible while moving between rows — sectionLeave handles hiding
 };
 
-const nextSlide = () => {
-	goToSlide((activeIndex.value + 1) % projects.length);
+const onSectionLeave = () => {
+	if (!isCursorVisible || !cursorEl.value) return;
+	isCursorVisible = false;
+	$gsap.to(cursorEl.value, {
+		opacity: 0,
+		duration: 0.18,
+		ease: 'power2.in',
+	});
 };
 
-const prevSlide = () => {
-	goToSlide((activeIndex.value - 1 + projects.length) % projects.length);
-};
+const initScrollAnimation = () => {
+	if (!listEl.value || !projectsSection.value) return;
+	const rows = listEl.value.querySelectorAll('.project-row');
+	if (!rows.length) return;
 
-const goToSlide = (index) => {
-	if (index === activeIndex.value) return;
-	activeIndex.value = index;
-};
-
-const initScrollAnimations = () => {
-	if (!projectsSection.value || !leftColumn.value || !rightColumn.value) return;
-
-	$gsap.set(leftColumn.value, { opacity: 0, x: -50 });
-	$gsap.set(rightColumn.value, { opacity: 0, x: 50 });
-
-	const tl = $gsap.timeline({
+	$gsap.set(rows, { opacity: 0, y: 22 });
+	$gsap.to(rows, {
+		opacity: 1,
+		y: 0,
+		duration: 0.65,
+		stagger: 0.08,
+		ease: 'power2.out',
 		scrollTrigger: {
 			trigger: projectsSection.value,
-			start: 'top 80%',
+			start: 'top 75%',
 			toggleActions: 'play none none none',
 		},
 	});
-
-	tl.to(leftColumn.value, {
-		opacity: 1,
-		x: 0,
-		duration: 0.8,
-		ease: 'power2.out',
-	}).to(
-		rightColumn.value,
-		{
-			opacity: 1,
-			x: 0,
-			duration: 0.8,
-			ease: 'power2.out',
-		},
-		'-=0.6'
-	);
 };
 
-watch(activeIndex, () => {
-	// close overflow on slide change
-	showWorkTypeOverflow.value = false;
-	const textElements = [
-		metaEl.value,
-		titleEl.value,
-		descriptionEl.value,
-		workTypesEl.value,
-		techIconsEl.value,
-	].filter(Boolean);
-
-	$gsap.fromTo(
-		textElements,
-		{ opacity: 0, y: 6 },
-		{
-			opacity: 1,
-			y: 0,
-			duration: 0.4,
-			ease: 'power3.out',
-			stagger: 0.06,
-		}
-	);
-
-	$gsap.fromTo(
-		imageEl.value,
-		{
-			opacity: 0,
-			scale: 1.02,
-		},
-		{
-			opacity: 1,
-			scale: 1,
-			duration: 0.55,
-			ease: 'power3.out',
-		}
-	);
-});
-
 onMounted(() => {
-	nextTick(() => {
-		initScrollAnimations();
-	});
-	// detect hover capability for desktop-only hover behavior
-	if (typeof window !== 'undefined' && 'matchMedia' in window) {
-		try {
-			isHoverCapable.value = window.matchMedia('(hover: hover)').matches;
-		} catch (_) {
-			isHoverCapable.value = false;
-		}
-	}
-	// click outside to close on mobile/desktop
-	const onDocClick = (e) => {
-		if (!showWorkTypeOverflow.value) return;
-		const wrapper = workTypeOverflowWrapper.value;
-		if (wrapper && !wrapper.contains(e.target)) {
-			closeOverflow();
-		}
-	};
-	document.addEventListener('click', onDocClick, true);
-	document.addEventListener('touchstart', onDocClick, true);
+	nextTick(initScrollAnimation);
 });
 </script>
 
 <style scoped>
-/* Scoped styles can be added here if needed */
+.project-row {
+	position: relative;
+}
+
+.project-row::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.015));
+	opacity: 0;
+	transition: opacity 0.25s ease;
+	pointer-events: none;
+}
+
+.project-row:hover::before {
+	opacity: 1;
+}
 </style>
