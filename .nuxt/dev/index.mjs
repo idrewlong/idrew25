@@ -832,6 +832,162 @@ const _inlineRuntimeConfig = {
             "allow": true
           }
         ]
+      },
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
       }
     ],
     "sitemap": [

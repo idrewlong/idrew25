@@ -1,128 +1,103 @@
 <template>
-	<div
-		class="container mx-auto px-4 md:px-8 pt-8 mb-16 sm:pt-24 sm:mb-24 max-w-7xl"
-	>
-		<section
-			ref="heroSection"
-			class="relative bg-white rounded-2xl overflow-hidden flex flex-col sm:flex-row justify-center items-center w-full border border-stone-200 shadow-sm"
-		>
-			<!-- Background decorative elements -->
-			<div class="absolute inset-0 overflow-hidden pointer-events-none">
-				<!-- Warm orange glow near image side -->
-				<div
-					class="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_60%,rgba(249,115,22,0.06)_0%,transparent_65%)]"
-				></div>
-				<!-- Subtle warm grid texture -->
-				<div
-					class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.025)_1px,transparent_1px)] bg-[size:48px_48px]"
-				></div>
-				<!-- Soft bottom gradient -->
-				<div
-					class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-orange-50/40 to-transparent"
-				></div>
+	<section ref="heroSection" class="hero-section">
+		<div class="hero-container max-w-6xl mx-auto px-6">
+			<!-- Section label — matches rest of site -->
+			<div ref="labelEl" class="flex items-center gap-3 mb-10 md:mb-14">
+				<span
+					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
+					>Portfolio</span
+				>
+				<div class="flex-1 h-px bg-stone-200"></div>
+				<span
+					class="text-[9px] font-mono tracking-[0.15em] uppercase text-stone-300"
+					>2026</span
+				>
 			</div>
 
-			<!-- Content -->
-			<div
-				class="relative p-8 sm:p-12 flex flex-1 flex-col gap-y-6 sm:gap-y-8 self-start sm:self-end max-w-2xl"
-			>
-				<div class="flex flex-col gap-y-2 sm:gap-y-3">
-					<div
-						ref="greeting"
-						class="text-xs sm:text-sm font-medium text-orange-400/70 tracking-[0.2em] uppercase"
-					>
-						Hi, I'm Andrew
+			<!-- Editorial split layout -->
+			<div class="hero-grid">
+				<!-- Left: Typography -->
+				<div class="hero-content">
+					<div ref="greeting" class="hero-greeting">
+						<span
+							class="text-[9px] font-mono tracking-[0.25em] uppercase text-orange-400"
+							>Hi, I'm Andrew</span
+						>
 					</div>
-					<h1
-						ref="title"
-						class="text-4xl sm:text-5xl md:text-6xl font-bold text-stone-900 leading-tight font-serif"
-					>
-						I like to build
-						<span class="text-stone-900">
-							amazing
-							<span class="typewriter text-orange-400">{{ currentWord }}</span>
-						</span>
+
+					<h1 ref="title" class="hero-title font-serif">
+						I like to build<br />
+						amazing
+						<span class="typewriter text-orange-500">{{ currentWord }}</span>
 					</h1>
+
+					<p ref="description" class="hero-description text-stone-500">
+						TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack
+						web, mostly React, Svelte, Next or Nuxt. Backend with Laravel,
+						Node.js, and PHP. Have written a Python bot or two.
+					</p>
+
+					<!-- CTA Buttons — editorial style matching Cta.vue -->
+					<div ref="buttons" class="hero-buttons">
+						<NuxtLink to="/contact" class="hero-btn-primary group">
+							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
+								>Get In Touch</span
+							>
+							<Icon
+								name="heroicons:arrow-up-right-20-solid"
+								class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+								aria-hidden="true"
+							/>
+						</NuxtLink>
+						<NuxtLink
+							to="#projects"
+							class="hero-btn-secondary group"
+							@click.prevent="scrollToProjects"
+						>
+							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
+								>View Projects</span
+							>
+							<Icon
+								name="heroicons:arrow-down-20-solid"
+								class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5"
+								aria-hidden="true"
+							/>
+						</NuxtLink>
+					</div>
 				</div>
-				<p
-					ref="description"
-					class="text-sm sm:text-base text-stone-500 leading-relaxed max-w-xl"
-				>
-					TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack web,
-					mostly React, Svelte, Next or Nuxt. Backend with Lavarel, Node.js, and
-					PHP. Have written a Python bot or two.
-				</p>
-				<div ref="buttons" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-					<NuxtLink
-						to="/contact"
-						class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-orange-500 text-white font-medium hover:bg-orange-400 transition-colors duration-200 text-sm"
-					>
-						Let's work
-						<Icon
-							name="heroicons:arrow-right"
-							class="w-4 h-4 sm:w-5 sm:h-5 ml-2"
-							aria-hidden="true"
+
+				<!-- Right: Photo + floating tech icons -->
+				<div ref="photoEl" class="hero-image-area">
+					<TechIcons />
+					<div class="hero-photo-wrapper">
+						<img
+							src="/images/me_1.png"
+							alt="Andrew's photo"
+							class="hero-photo"
+							loading="lazy"
 						/>
-					</NuxtLink>
-					<NuxtLink
-						to="#projects"
-						@click.prevent="scrollToProjects"
-						class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-stone-300 text-stone-600 font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors duration-200 text-sm"
-					>
-						View Projects
-					</NuxtLink>
+					</div>
 				</div>
 			</div>
 
 			<!-- Scroll indicator -->
-			<div
-				ref="scrollIndicator"
-				class="absolute bottom-5 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 pointer-events-none z-10"
-			>
-				<span class="text-[9px] font-medium tracking-[0.3em] uppercase text-stone-400">Scroll</span>
-				<div class="flex flex-col items-center gap-1">
-					<div class="w-px h-6 bg-gradient-to-b from-stone-300 to-transparent"></div>
-					<Icon name="heroicons:chevron-down-20-solid" class="w-3 h-3 text-stone-300" />
-				</div>
-			</div>
-
-			<!-- Tech Icons and Image -->
-			<div ref="imageContainer" class="relative flex-shrink-0 mt-8 sm:mt-0">
-				<div
-					class="relative flex justify-end items-end"
-					style="width: 450px; height: 450px"
+			<div ref="scrollIndicator" class="hero-scroll hidden md:flex">
+				<span
+					class="text-[9px] font-mono tracking-[0.3em] uppercase text-stone-400"
+					>Scroll</span
 				>
-					<TechIcons :scroll="scrollPosition" />
+				<div class="flex flex-col items-center gap-1">
 					<div
-						class="relative mt-12 transform hover:scale-105 transition-transform duration-500"
-						style="height: 475px; width: 335px"
-					>
-						<img
-							v-if="!isClient"
-							:src="images[0]"
-							alt="Andrew's photo"
-							class="relative z-10 w-full h-full"
-							loading="lazy"
-						/>
-						<ClientOnly>
-							<img
-								v-for="(image, index) in images"
-								:key="index"
-								:src="image"
-								alt="Andrew's photo"
-								:class="[
-									'absolute top-0 left-0 w-full h-full z-10 smooth-image',
-									{ 'opacity-0': image !== currentImage },
-								]"
-								style="height: 475px; width: 335px; top: 64px"
-								loading="lazy"
-							/>
-						</ClientOnly>
-					</div>
+						class="w-px h-8 bg-gradient-to-b from-stone-300 to-transparent"
+					></div>
+					<Icon
+						name="heroicons:chevron-down-20-solid"
+						class="w-3 h-3 text-stone-300"
+					/>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
 </template>
 
 <script setup>
@@ -130,22 +105,17 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
 const { $gsap } = useNuxtApp();
 
-const scrollPosition = ref(0);
-const isClient = ref(false);
-const currentImage = ref('');
 const currentWord = ref('');
 const words = ['sites', 'apps', 'bots'];
-const images = ['/images/me_1.png', '/images/me_3.png'];
-let imageTransitioning = false;
-let imageInterval;
 let typewriterTimeout;
 
 // Template refs
+const labelEl = ref(null);
 const greeting = ref(null);
 const title = ref(null);
 const description = ref(null);
 const buttons = ref(null);
-const imageContainer = ref(null);
+const photoEl = ref(null);
 const scrollIndicator = ref(null);
 
 // Typewriter state
@@ -192,50 +162,50 @@ const scrollToProjects = () => {
 
 const updateScroll = () => {
 	requestAnimationFrame(() => {
-		scrollPosition.value = window.scrollY / 1000;
 		if (scrollIndicator.value) {
-			scrollIndicator.value.style.opacity = String(Math.max(0, 1 - window.scrollY / 120));
+			scrollIndicator.value.style.opacity = String(
+				Math.max(0, 1 - window.scrollY / 120)
+			);
 		}
 	});
 };
 
-const changeImage = () => {
-	if (imageTransitioning) return;
-	imageTransitioning = true;
-	currentImage.value = currentImage.value === images[0] ? images[1] : images[0];
-	setTimeout(() => {
-		imageTransitioning = false;
-	}, 2000);
-};
-
 const initAnimations = () => {
+	// Label
+	$gsap.set(labelEl.value, { opacity: 0, y: 16 });
 	$gsap.set([greeting.value, title.value, description.value, buttons.value], {
 		opacity: 0,
-		y: 30,
+		y: 40,
 	});
+	$gsap.set(photoEl.value, { opacity: 0, scale: 0.92, y: 20 });
 
-	$gsap.set(imageContainer.value, {
-		opacity: 0,
-		scale: 0.9,
-	});
+	const tl = $gsap.timeline({ delay: 0.15 });
 
-	const tl = $gsap.timeline();
-
-	tl.to(greeting.value, {
+	tl.to(labelEl.value, {
 		opacity: 1,
 		y: 0,
-		duration: 0.8,
+		duration: 0.6,
 		ease: 'power2.out',
 	})
+		.to(
+			greeting.value,
+			{
+				opacity: 1,
+				y: 0,
+				duration: 0.7,
+				ease: 'power2.out',
+			},
+			'-=0.3'
+		)
 		.to(
 			title.value,
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.8,
-				ease: 'power2.out',
+				duration: 0.9,
+				ease: 'expo.out',
 			},
-			'-=0.6'
+			'-=0.5'
 		)
 		.to(
 			description.value,
@@ -252,18 +222,19 @@ const initAnimations = () => {
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.8,
+				duration: 0.7,
 				ease: 'power2.out',
 			},
-			'-=0.6'
+			'-=0.5'
 		)
 		.to(
-			imageContainer.value,
+			photoEl.value,
 			{
 				opacity: 1,
 				scale: 1,
-				duration: 1,
-				ease: 'power2.out',
+				y: 0,
+				duration: 1.1,
+				ease: 'expo.out',
 			},
 			'-=0.8'
 		);
@@ -271,18 +242,7 @@ const initAnimations = () => {
 
 onMounted(() => {
 	window.addEventListener('scroll', updateScroll, { passive: true });
-
-	images.forEach((src) => {
-		const img = new Image();
-		img.src = src;
-		img.decode().catch(() => {});
-	});
-
-	isClient.value = true;
-	currentImage.value = images[0];
 	typewriterEffect();
-
-	imageInterval = setInterval(changeImage, 4000);
 
 	nextTick(() => {
 		initAnimations();
@@ -291,58 +251,203 @@ onMounted(() => {
 
 onUnmounted(() => {
 	window.removeEventListener('scroll', updateScroll);
-	if (imageInterval) clearInterval(imageInterval);
 	if (typewriterTimeout) clearTimeout(typewriterTimeout);
 });
 </script>
 
 <style scoped>
-.smooth-image {
-	transform: translate(0, 0);
-	transform: translateZ(0);
-	-webkit-transform: translate3d(0, 0, 0);
-	transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
-	backface-visibility: hidden;
-	will-change: opacity;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	image-rendering: -webkit-optimize-contrast;
-}
-
-.word-transition {
-	display: inline-block;
-	transition: all 0.5s ease;
-	opacity: 1;
-	transform: translateY(0);
+.hero-section {
 	position: relative;
-	min-width: 60px;
+	padding-top: 3rem;
+	padding-bottom: 4rem;
+	min-height: calc(100vh - 64px);
+	display: flex;
+	align-items: flex-start;
 }
 
-.word-transition.changing {
-	opacity: 0;
-	transform: translateY(20px);
-}
-
-@media not all and (min-resolution: 0.001dpcm) {
-	@supports (-webkit-appearance: none) {
-		.smooth-image {
-			-webkit-transform: translate3d(0, 0, 0);
-		}
+@media (min-width: 768px) {
+	.hero-section {
+		padding-top: 4rem;
+		padding-bottom: 6rem;
+		align-items: center;
 	}
 }
 
-@-moz-document url-prefix() {
-	.smooth-image {
-		transform: translate(0, 0);
-		transform: translate3d(0, 0, 0);
+.hero-container {
+	position: relative;
+	width: 100%;
+}
+
+/* Grid: text left, image right */
+.hero-grid {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+@media (min-width: 768px) {
+	.hero-grid {
+		flex-direction: row;
+		align-items: center;
+		gap: 4rem;
 	}
 }
 
+/* Left content */
+.hero-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 1.75rem;
+	position: relative;
+	z-index: 10;
+}
+
+.hero-greeting {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.hero-title {
+	font-size: clamp(2.75rem, 7vw, 5.5rem);
+	font-weight: 700;
+	line-height: 0.92;
+	letter-spacing: -0.02em;
+	color: var(--text);
+}
+
+.hero-description {
+	font-size: 0.875rem;
+	line-height: 1.75;
+	max-width: 28rem;
+}
+
+@media (min-width: 768px) {
+	.hero-description {
+		font-size: 0.9375rem;
+	}
+}
+
+/* Buttons — matching CTA component style */
+.hero-buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	max-width: 20rem;
+	padding-top: 0.5rem;
+}
+
+@media (min-width: 480px) {
+	.hero-buttons {
+		flex-direction: row;
+		max-width: none;
+	}
+}
+
+.hero-btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: 0.875rem 1.25rem;
+	background: var(--text);
+	color: #fafaf9;
+	transition: background 0.2s ease;
+}
+
+.hero-btn-primary:hover {
+	background: #44403c;
+}
+
+.hero-btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: 0.875rem 1.25rem;
+	border: 1px solid #d6d3d1;
+	color: #57534e;
+	transition:
+		border-color 0.2s ease,
+		color 0.2s ease;
+}
+
+.hero-btn-secondary:hover {
+	border-color: var(--text);
+	color: var(--text);
+}
+
+/* Right: image area */
+.hero-image-area {
+	position: relative;
+	flex-shrink: 0;
+	width: 100%;
+	max-width: 420px;
+	aspect-ratio: 4 / 5;
+	margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+	.hero-image-area {
+		width: 380px;
+		max-width: none;
+		margin: 0;
+	}
+}
+
+@media (min-width: 976px) {
+	.hero-image-area {
+		width: 420px;
+	}
+}
+
+.hero-photo-wrapper {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 280px;
+	height: 400px;
+	z-index: 10;
+}
+
+@media (min-width: 768px) {
+	.hero-photo-wrapper {
+		width: 300px;
+		height: 425px;
+	}
+}
+
+.hero-photo {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+	mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* Scroll indicator */
+.hero-scroll {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	pointer-events: none;
+	z-index: 10;
+}
+
+/* Typewriter cursor */
 .typewriter {
 	display: inline-block;
-	min-width: 80px;
-	border-right: 2px solid #f97316;
-	padding-right: 4px;
+	min-width: 60px;
+	border-right: 2.5px solid var(--accent);
+	padding-right: 3px;
 	animation: blink 0.75s step-end infinite;
 }
 
@@ -352,7 +457,7 @@ onUnmounted(() => {
 		border-color: transparent;
 	}
 	50% {
-		border-color: #f97316;
+		border-color: var(--accent);
 	}
 }
 </style>
