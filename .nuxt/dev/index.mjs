@@ -640,6 +640,14 @@ const _inlineRuntimeConfig = {
       "/__nuxt_error": {
         "cache": false
       },
+      "/resume.pdf": {
+        "headers": {
+          "Content-Type": "application/pdf",
+          "Content-Disposition": "attachment; filename=\"andrew-long-resume.pdf\"",
+          "X-Content-Type-Options": "nosniff",
+          "Cache-Control": "no-store"
+        }
+      },
       "/_fonts/**": {
         "headers": {
           "cache-control": "public, max-age=31536000, immutable"
@@ -794,6 +802,84 @@ const _inlineRuntimeConfig = {
     "debug": false,
     "credits": true,
     "groups": [
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [
+          "/private/",
+          "/admin/"
+        ],
+        "allow": [],
+        "userAgent": [
+          "*"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/private/",
+            "allow": false
+          },
+          {
+            "pattern": "/admin/",
+            "allow": false
+          }
+        ]
+      },
+      {
+        "comment": [],
+        "disallow": [],
+        "allow": [
+          "/"
+        ],
+        "userAgent": [
+          "Googlebot"
+        ],
+        "_indexable": true,
+        "_rules": [
+          {
+            "pattern": "/",
+            "allow": true
+          }
+        ]
+      },
       {
         "comment": [],
         "disallow": [

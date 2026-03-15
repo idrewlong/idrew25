@@ -38,5 +38,15 @@ export default defineNuxtConfig({
 		'nuxt-gtag',
 		'@nuxtjs/seo',
 	],
+	routeRules: {
+		'/resume.pdf': {
+			headers: {
+				'Content-Type': 'application/pdf',
+				'Content-Disposition': 'attachment; filename="andrew-long-resume.pdf"',
+				'X-Content-Type-Options': 'nosniff',
+				'Cache-Control': 'no-store',
+			},
+		},
+	},
 	compatibilityDate: '2025-01-08',
 });

@@ -226,6 +226,10 @@ onUnmounted(() => {
 	.mobile-toggle {
 		display: none;
 	}
+
+	.brand-logo {
+		height: 3.75rem;
+	}
 }
 
 .nav-item {

@@ -30,7 +30,7 @@
 						:aria-expanded="openIndex === i"
 						:aria-controls="`drawer-${i}`"
 						@click="toggleRow(i)"
-						@mouseenter="onRowEnter"
+						@mouseenter="onRowEnter($event)"
 						@mouseleave="onRowLeave"
 					>
 						<!-- Hover background sweep -->
@@ -337,6 +337,7 @@ const openIndex = ref(-1);
 const cursorEl = ref(null);
 const cursorRing = ref(null);
 let isCursorVisible = false;
+let hasValidPosition = false;
 let hideTimer = null;
 
 const hideCursor = () => {
@@ -352,6 +353,7 @@ const hideCursor = () => {
 
 const onMouseMove = (e) => {
 	if (!cursorEl.value) return;
+	hasValidPosition = true;
 	$gsap.to(cursorEl.value, {
 		x: e.clientX,
 		y: e.clientY,
@@ -361,9 +363,15 @@ const onMouseMove = (e) => {
 	});
 };
 
-const onRowEnter = () => {
+const onRowEnter = (e) => {
 	clearTimeout(hideTimer);
-	if (!isCursorVisible && cursorEl.value) {
+	// Snap cursor to actual mouse position before revealing —
+	// prevents the stuck-at-top-left bug when scroll brings a row under the cursor
+	if (e?.clientX != null && cursorEl.value) {
+		$gsap.set(cursorEl.value, { x: e.clientX, y: e.clientY });
+		hasValidPosition = true;
+	}
+	if (!isCursorVisible && cursorEl.value && hasValidPosition) {
 		isCursorVisible = true;
 		$gsap.to(cursorEl.value, {
 			opacity: 1,
@@ -381,6 +389,7 @@ const onRowLeave = () => {
 
 const onSectionLeave = () => {
 	clearTimeout(hideTimer);
+	hasValidPosition = false;
 	hideCursor();
 };
 
