@@ -31,6 +31,12 @@ export default defineNuxtConfig({
 		domains: ['www.idrewlong.com'],
 	},
 
+	fonts: {
+		defaults: {
+			fallbacks: false,
+		},
+	},
+
 	modules: [
 		'@nuxt/fonts',
 		'@nuxt/icon',

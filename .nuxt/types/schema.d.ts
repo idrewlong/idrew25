@@ -325,6 +325,20 @@ declare module 'nuxt/schema' {
       },
    },
 
+   "nuxt-schema-org": {
+      reactive: boolean,
+
+      minify: boolean,
+
+      scriptAttributes: {
+         "data-nuxt-schema-org": boolean,
+      },
+
+      identity: any,
+
+      version: string,
+   },
+
    "nuxt-site-config": {
       stack: Array<{
 
@@ -422,20 +436,6 @@ declare module 'nuxt/schema' {
       loadingStrategy: string,
 
       url: string,
-   },
-
-   "nuxt-schema-org": {
-      reactive: boolean,
-
-      minify: boolean,
-
-      scriptAttributes: {
-         "data-nuxt-schema-org": boolean,
-      },
-
-      identity: any,
-
-      version: string,
    },
 
    "seo-utils": {
