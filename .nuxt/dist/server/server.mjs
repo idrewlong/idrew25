@@ -639,7 +639,7 @@ const _routes = [
   {
     name: "contact",
     path: "/contact",
-    component: () => import("./_nuxt/index-C2mQa1h7.js")
+    component: () => import("./_nuxt/index-BAUm4wa_.js")
   },
   {
     name: "index",

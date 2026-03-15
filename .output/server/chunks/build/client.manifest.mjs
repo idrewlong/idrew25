@@ -4,7 +4,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CBvrYJyH.js",
+    "file": "DgnjfXoe.js",
     "name": "error-404",
     "src": "node_modules/nuxt/dist/app/components/error-404.vue",
     "isDynamicEntry": true,
@@ -24,7 +24,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DKuHVSP6.js",
+    "file": "CJiDc2MU.js",
     "name": "error-500",
     "src": "node_modules/nuxt/dist/app/components/error-500.vue",
     "isDynamicEntry": true,
@@ -44,7 +44,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "1Ext69-y.js",
+    "file": "DiimKLxd.js",
     "name": "entry",
     "src": "node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -53,13 +53,13 @@ const client_manifest = {
       "node_modules/nuxt/dist/app/components/error-500.vue"
     ],
     "css": [
-      "entry.CcGzcEuo.css"
+      "entry.D_5OLt5k.css"
     ],
     "assets": [],
     "_globalCSS": true
   },
-  "entry.CcGzcEuo.css": {
-    "file": "entry.CcGzcEuo.css",
+  "entry.D_5OLt5k.css": {
+    "file": "entry.D_5OLt5k.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -69,7 +69,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "C5EQlfdI.js",
+    "file": "BRHx4LZO.js",
     "name": "index",
     "src": "pages/contact/index.vue",
     "isDynamicEntry": true,
@@ -78,8 +78,8 @@ const client_manifest = {
     ],
     "css": []
   },
-  "index.DB_RcocL.css": {
-    "file": "index.DB_RcocL.css",
+  "index.BnAlYAoe.css": {
+    "file": "index.BnAlYAoe.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -89,7 +89,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "fFSnVzp3.js",
+    "file": "BREfA8D8.js",
     "name": "index",
     "src": "pages/index.vue",
     "isDynamicEntry": true,

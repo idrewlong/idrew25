@@ -33,7 +33,11 @@ export default defineNuxtConfig({
 
 	fonts: {
 		defaults: {
-			fallbacks: false,
+			fallbacks: {
+				'serif': [],
+				'sans-serif': [],
+				'monospace': [],
+			},
 		},
 	},
 

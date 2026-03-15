@@ -4032,7 +4032,7 @@ const _routes = [
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./index-C2mQa1h7.mjs')
+    component: () => import('./index-BAUm4wa_.mjs')
   },
   {
     name: "index",
