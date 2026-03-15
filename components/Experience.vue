@@ -88,43 +88,43 @@ const experiences = [
     title: 'Marketing Project Manager',
     company: 'Thompson Machinery',
     description:
-      'Led comprehensive marketing and data initiatives across multiple divisions while managing a small team and developing technical solutions.',
+      'Designed and developed campaign landing pages and full-stack marketing solutions while managing comprehensive marketing initiatives across multiple divisions.',
     achievements: [
-      'Spearheaded multi-channel advertising campaigns including email, PPC, and social media while building custom landing pages using Next.js, TailwindCSS, and WordPress.',
-      'Developed internal tools and automation using Microsoft Power Apps, .NET/C#, and Microsoft Dynamics to streamline workflows and customer journeys.',
+      'Designed and developed campaign landing pages using Next.js, Tailwind CSS, and Makeshift, while maintaining WordPress sites with PHP and JavaScript.',
+      'Strategized, managed and executed comprehensive marketing initiatives across sales and SITECH divisions, including SEO, SEM and email campaigns to drive engagement and results.',
     ],
   },
   {
-    period: 'September 2022 – December 2023',
-    title: 'Marketing Project Manager',
-    company: 'Finders Guide',
+    period: 'September 2022 – May 2024',
+    title: 'Web Developer',
+    company: "Finder's Guide",
     description:
-      'Led web development and digital marketing initiatives for multiple clients while managing remote teams and implementing comprehensive branding strategies.',
+      'Founded a marketing consultancy delivering custom web development and digital growth strategies for local and enterprise clients.',
     achievements: [
-      'Developed modern web solutions using React, Next.js, and Svelte.js while creating high-converting landing pages and implementing SEO strategies.',
-      'Established complete branding strategies for diverse clients including construction, VFX, and manufacturing companies.',
+      'Built scalable web applications using Next.js and Svelte.js integrating headless WordPress CMS and deploying on Digital Ocean droplets.',
+      'Increased organic search traffic by an average of 40% across 15+ client engagements through strategic SEO implementation.',
     ],
   },
   {
     period: 'March 2022 – January 2023',
-    title: 'Customer Support Specialist',
+    title: 'Associate Customer Support Specialist',
     company: 'Core Logic',
     description:
-      'Provided expert software support and customer service while collaborating with development teams to enhance product features and user experience.',
+      'Provided expert customer support for industry-specific software while collaborating cross-functionally to improve product quality and user experience.',
     achievements: [
-      'Maintained an exceptional 95% customer satisfaction score while providing specialized support for industry-specific software.',
-      'Facilitated effective communication between customers and development teams using Jira and Salesforce in an agile SCRUM environment.',
+      'Maintained a 95% CSAT score while handling 50-70 daily customer interactions across phone and messaging channels, consistently above team average.',
+      'Collaborated in a SCRUM environment using Salesforce and Jira, escalating complex issues to development teams and contributing to product improvement.',
     ],
   },
   {
     period: 'January 2018 – December 2020',
-    title: 'Media Coordinator',
+    title: 'Owner',
     company: 'LMC',
     description:
-      'Managed end-to-end video production projects while coordinating content strategy and advertising campaigns for diverse clients.',
+      'Seamlessly managed all project phases from pre-production and planning through cinematography, video production, and editing for diverse clients.',
     achievements: [
-      'Produced and edited over 100 media projects including music videos and commercials while ensuring consistent quality and client satisfaction.',
-      'Orchestrated social media content management using Hootsuite to enhance consumer engagement while maintaining strict project schedules.',
+      'Directed and edited over 100 music videos in a two-year period for a music production company.',
+      'Managed content across social media platforms with a focus on increasing consumer engagement while maintaining strict project schedules.',
     ],
   },
 ];

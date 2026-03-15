@@ -1,4 +1,0 @@
-const TechIcons_vue_vue_type_style_index_0_scoped_f4d30c1b_lang = ".magnetic-icon[data-v-f4d30c1b]{cursor:default;flex-direction:column;position:absolute;transform:translate(-50%,-50%);transition:none;will-change:transform;z-index:5}.icon-inner[data-v-f4d30c1b],.magnetic-icon[data-v-f4d30c1b]{align-items:center;display:flex}.icon-inner[data-v-f4d30c1b]{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:#ffffffb3;border:1px solid var(--border);border-radius:14px;height:52px;justify-content:center;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;width:52px}@media (max-width:767px){.magnetic-icon[data-v-f4d30c1b]{pointer-events:none}.icon-inner[data-v-f4d30c1b]{border-radius:10px;height:40px;width:40px}.icon-inner[data-v-f4d30c1b] svg{height:22px;width:22px}}";
-
-export { TechIcons_vue_vue_type_style_index_0_scoped_f4d30c1b_lang as T };
-//# sourceMappingURL=TechIcons-styles-1.mjs-B_Z-8ege.mjs.map

@@ -68,6 +68,10 @@ const rowEls = ref([]);
 
 const skillCategories = [
 	{
+		title: 'Languages',
+		skills: ['JavaScript', 'TypeScript', 'Golang', 'Python', 'PHP', 'SQL'],
+	},
+	{
 		title: 'Frontend',
 		skills: [
 			'React / Next.js',
@@ -81,23 +85,22 @@ const skillCategories = [
 	},
 	{
 		title: 'Backend',
-		skills: ['PHP', 'Laravel', 'Node.js', 'GraphQL', 'Golang', 'WP REST API'],
+		skills: ['Laravel', 'Node.js', 'GraphQL', 'PostgreSQL', 'Redis'],
 	},
 	{
 		title: 'Dev-Ops',
-		skills: ['Docker', 'CI/CD', 'Git', 'Digital Ocean', 'Vercel'],
+		skills: ['Docker', 'AWS', 'Digital Ocean', 'Cloudflare', 'Git', 'CI/CD'],
 	},
 	{
-		title: 'Data',
-		skills: ['Python', 'Pandas', 'NumPy', 'MySQL', 'PostgreSQL'],
+		title: 'Tools',
+		skills: ['VSCode', 'Cursor', 'Claude Code', 'Postman', 'JIRA', 'Power Apps', 'Power BI', 'Salesforce', 'Twilio'],
 	},
 	{
 		title: 'Design & SEO',
 		skills: [
 			'Figma',
-			'Adobe Suite',
-			'Screaming Frog',
-			'SEM Rush',
+			'Adobe Creative Suite',
+			'SEMRush',
 			'Google Analytics',
 			'Google Search Console',
 			'Google Tag Manager',
