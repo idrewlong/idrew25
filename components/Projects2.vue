@@ -8,21 +8,40 @@
 	>
 		<div class="max-w-6xl mx-auto px-4 sm:px-6">
 			<!-- Header -->
-			<div
-				class="flex items-center gap-4 mb-10 text-[11px] font-mono text-stone-400 uppercase tracking-widest"
-			>
-				<span>Selected Work</span>
-				<span class="flex-1 h-px bg-stone-200" aria-hidden="true"></span>
-				<span>{{ projects.length }} Projects</span>
+			<div class="mb-10">
+				<div class="flex items-center gap-4 mb-4 text-[11px] font-mono text-stone-400 uppercase tracking-widest">
+					<span>Selected Work</span>
+					<span class="flex-1 h-px bg-stone-200" aria-hidden="true"></span>
+					<span>{{ filteredProjects.length }} Projects</span>
+				</div>
+
+				<!-- Filter tabs -->
+				<div class="flex items-center gap-1">
+					<button
+						v-for="f in filters"
+						:key="f.value"
+						@click="setFilter(f.value)"
+						class="relative px-3 py-1 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200"
+						:class="activeFilter === f.value
+							? 'text-orange-500'
+							: 'text-stone-400 hover:text-stone-600'"
+					>
+						{{ f.label }}
+						<span
+							class="absolute bottom-0 left-3 right-3 h-px transition-all duration-300"
+							:class="activeFilter === f.value ? 'bg-orange-400 opacity-100' : 'bg-transparent opacity-0'"
+						></span>
+					</button>
+				</div>
 			</div>
 
 			<!-- Accordion rows -->
 			<div ref="accordionEl">
 				<div
-					v-for="(project, i) in projects"
+					v-for="(project, i) in filteredProjects"
 					:key="project.title"
 					class="accordion-row border-t border-stone-200"
-					:class="{ 'border-b border-stone-200': i === projects.length - 1 }"
+					:class="{ 'border-b border-stone-200': i === filteredProjects.length - 1 }"
 				>
 					<!-- Row header -->
 					<button
@@ -108,7 +127,6 @@
 					<!-- Drawer body -->
 					<div
 						:id="`drawer-${i}`"
-						ref="bodyEls"
 						style="height: 0; overflow: hidden"
 					>
 						<div class="pb-6 sm:pb-10 pt-1">
@@ -236,12 +254,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
 const { $gsap } = useNuxtApp();
 
-const projects = [
+const activeFilter = ref('all');
+const filters = [
+	{ label: 'All', value: 'all' },
+	{ label: 'Work', value: 'work' },
+	{ label: 'Personal', value: 'personal' },
+];
+
+const allProjects = [
 	{
 		title: 'Mad Genius - 5.0',
 		description:
@@ -330,10 +355,78 @@ const projects = [
 	},
 ];
 
+const filteredProjects = computed(() => {
+	if (activeFilter.value === 'work') return allProjects.filter(p => p.isRealWork);
+	if (activeFilter.value === 'personal') return allProjects.filter(p => !p.isRealWork);
+	return allProjects;
+});
+
+const setFilter = (value) => {
+	if (activeFilter.value === value) return;
+
+	const currentRows = accordionEl.value?.querySelectorAll('.accordion-row');
+	const openBody = openIndex.value !== -1 ? getBody(openIndex.value) : null;
+	openIndex.value = -1;
+
+	// Pin the accordion at its current pixel height so the page doesn't shift
+	if (accordionEl.value) {
+		$gsap.set(accordionEl.value, { height: accordionEl.value.offsetHeight });
+	}
+
+	// Collapse open drawer silently alongside the fade-out
+	if (openBody) {
+		$gsap.set(openBody, { overflow: 'hidden' });
+		$gsap.to(openBody, { height: 0, duration: 0.22, ease: 'power2.inOut' });
+	}
+
+	const doSwitch = () => {
+		activeFilter.value = value;
+		nextTick(() => {
+			const newRows = accordionEl.value?.querySelectorAll('.accordion-row');
+			if (!newRows?.length) return;
+
+			// Animate accordion to its new natural height while rows fade in
+			$gsap.to(accordionEl.value, {
+				height: 'auto',
+				duration: 0.4,
+				ease: 'power2.inOut',
+			});
+
+			$gsap.fromTo(
+				newRows,
+				{ opacity: 0, y: 12 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.35,
+					stagger: 0.07,
+					ease: 'power2.out',
+					onComplete: () => toggleRow(0),
+				}
+			);
+		});
+	};
+
+	// Fade current rows out, then swap content
+	if (currentRows?.length) {
+		$gsap.to(currentRows, {
+			opacity: 0,
+			y: -8,
+			duration: 0.2,
+			stagger: 0.04,
+			ease: 'power2.in',
+			onComplete: doSwitch,
+		});
+	} else {
+		doSwitch();
+	}
+};
+
 const sectionEl = ref(null);
 const accordionEl = ref(null);
-const bodyEls = ref([]);
 const openIndex = ref(-1);
+
+const getBody = (i) => accordionEl.value?.querySelectorAll('[id^="drawer-"]')[i] ?? null;
 const cursorEl = ref(null);
 const cursorRing = ref(null);
 let isCursorVisible = false;
@@ -394,7 +487,7 @@ const onSectionLeave = () => {
 };
 
 const openRow = (i) => {
-	const body = bodyEls.value[i];
+	const body = getBody(i);
 	if (!body) return;
 
 	$gsap.to(body, {
@@ -431,7 +524,7 @@ const openRow = (i) => {
 };
 
 const closeRow = (i) => {
-	const body = bodyEls.value[i];
+	const body = getBody(i);
 	if (!body) return;
 	$gsap.set(body, { overflow: 'hidden' });
 	$gsap.to(body, {

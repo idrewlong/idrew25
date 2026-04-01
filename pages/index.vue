@@ -9,6 +9,7 @@
 			<Marquee />
 			<Experience />
 
+			<Certs />
 			<Skills />
 			<!-- <Experience /> -->
 			<Education />
