@@ -6,6 +6,7 @@
 		>
 			<!-- <Stats /> -->
 			<About />
+			<Process />
 			<Marquee />
 			<Experience />
 
