@@ -14,7 +14,7 @@
 			class="text-lg sm:text-xl md:text-2xl font-mono italic text-stone-400 leading-relaxed mb-12 sm:mb-16 max-w-3xl"
 		>
 			"I don't follow a rigid process. I follow the problem and
-			<span class="text-orange-500 not-italic font-semibold">let context shape the approach.</span>"
+			<span class="text-orange-500">let context shape the approach.</span>"
 		</blockquote>
 
 		<!-- Desktop: horizontal accordion -->

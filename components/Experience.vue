@@ -93,7 +93,7 @@ const experiences = [
 		title: 'Senior Full Stack Developer',
 		company: 'Mad Genius',
 		description:
-			'Promoted to lead full-stack architecture and development across a diverse client portfolio, owning end-to-end technical decisions on web and mobile projects.',
+			'Lead full-stack architecture and development across a diverse client portfolio, owning end-to-end technical decisions on web and mobile projects.',
 		achievements: [
 			'Architect and deliver full-stack solutions using Nuxt, React, React Native, and Laravel for enterprise clients across construction, real estate, and public health sectors.',
 			'Drive technical strategy and mentor junior developers while maintaining high-velocity delivery on complex, multi-platform projects.',
