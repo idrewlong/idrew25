@@ -80,7 +80,6 @@ const skillCategories = [
 			'Tailwind CSS',
 			'GSAP',
 			'WordPress',
-			'Headless CMS',
 		],
 	},
 	{
@@ -88,12 +87,20 @@ const skillCategories = [
 		skills: ['Laravel', 'Node.js', 'GraphQL', 'PostgreSQL', 'Redis'],
 	},
 	{
-		title: 'Dev-Ops',
+		title: 'Infra',
 		skills: ['Docker', 'AWS', 'Digital Ocean', 'Cloudflare', 'Git', 'CI/CD'],
 	},
 	{
 		title: 'Tools',
-		skills: ['VSCode', 'Cursor', 'Claude Code', 'Postman', 'JIRA', 'Power Apps', 'Power BI', 'Salesforce', 'Twilio'],
+		skills: [
+			'VSCode',
+			'Cursor',
+			'Claude Code',
+			'Postman',
+			'JIRA',
+			'Salesforce',
+			'Twilio',
+		],
 	},
 	{
 		title: 'Design & SEO',
@@ -101,9 +108,7 @@ const skillCategories = [
 			'Figma',
 			'Adobe Creative Suite',
 			'SEMRush',
-			'Google Analytics',
-			'Google Search Console',
-			'Google Tag Manager',
+			'Google Analytics / Search Console / Tag Manager',
 		],
 	},
 ];

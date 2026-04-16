@@ -1,47 +1,47 @@
-import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, getRequestHost, getRequestProtocol, getQuery as getQuery$1, getRequestURL, setHeader, getHeader, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getResponseStatusText, H3Error } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/h3/dist/index.mjs';
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, getRequestHost, getRequestProtocol, getQuery as getQuery$1, getRequestURL, setHeader, getHeader, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getResponseStatusText, H3Error } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import fs, { mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parentPort, threadId } from 'node:worker_threads';
-import defu$1, { defu, defuFn, createDefu } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/defu/dist/defu.mjs';
-import { html as html$1 } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/satori-html/dist/index.js';
-import { withQuery, joinURL, withTrailingSlash, hasProtocol, withHttps, withoutTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL, withoutProtocol, withLeadingSlash, withBase, withoutLeadingSlash, parsePath, parseQuery, stringifyQuery, encodePath, stringifyParsedURL } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/ufo/dist/index.mjs';
-import sizeOf from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/image-size/dist/index.js';
-import { consola, createConsola } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/consola/dist/index.mjs';
-import { Launcher } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/chrome-launcher/dist/index.js';
-import playwrightCore from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/playwright-core/index.mjs';
-import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { stringify, parse, uneval } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/devalue/index.js';
-import destr from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/destr/dist/index.mjs';
-import { renderToString } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/vue/server-renderer/index.mjs';
-import { propsToString, renderSSRHead } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@unhead/ssr/dist/index.mjs';
-import { createServerHead as createServerHead$1, CapoPlugin, createHeadCore } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unhead/dist/index.mjs';
-import { isVNode, toValue, version, unref } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/vue/index.mjs';
-import { defineHeadPlugin } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@unhead/shared/dist/index.mjs';
-import { createHooks } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/hookable/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/ofetch/dist/node.mjs';
-import { createCall, createFetch } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unenv/runtime/fetch/index.mjs';
-import { klona } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/klona/dist/index.mjs';
-import { snakeCase } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/scule/dist/index.mjs';
-import { createStorage, prefixStorage, normalizeKey } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unstorage/drivers/fs.mjs';
-import { toRouteMatcher, createRouter } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/radix3/dist/index.mjs';
-import { getContext } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unctx/dist/index.mjs';
+import defu$1, { defu, defuFn, createDefu } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/defu/dist/defu.mjs';
+import { html as html$1 } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/satori-html/dist/index.js';
+import { withQuery, joinURL, withTrailingSlash, hasProtocol, withHttps, withoutTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL, withoutProtocol, withLeadingSlash, withBase, withoutLeadingSlash, parsePath, parseQuery, stringifyQuery, encodePath, stringifyParsedURL } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/ufo/dist/index.mjs';
+import sizeOf from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/image-size/dist/index.js';
+import { consola, createConsola } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/consola/dist/index.mjs';
+import { Launcher } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/chrome-launcher/dist/index.js';
+import playwrightCore from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/playwright-core/index.mjs';
+import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { stringify, parse, uneval } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/devalue/index.js';
+import destr from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/vue/server-renderer/index.mjs';
+import { propsToString, renderSSRHead } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@unhead/ssr/dist/index.mjs';
+import { createServerHead as createServerHead$1, CapoPlugin, createHeadCore } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unhead/dist/index.mjs';
+import { isVNode, toValue, version, unref } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/vue/index.mjs';
+import { defineHeadPlugin } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@unhead/shared/dist/index.mjs';
+import { createHooks } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/hookable/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/ofetch/dist/node.mjs';
+import { createCall, createFetch } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unenv/runtime/fetch/index.mjs';
+import { klona } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/klona/dist/index.mjs';
+import { snakeCase } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/scule/dist/index.mjs';
+import { createStorage, prefixStorage, normalizeKey } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/radix3/dist/index.mjs';
+import { getContext } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unctx/dist/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/errx/dist/index.js';
-import devalue from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@nuxt/devalue/dist/devalue.mjs';
-import { basename, isAbsolute } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/pathe/dist/index.mjs';
-import { getIcons } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@iconify/utils/lib/index.mjs';
-import { hash } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/ohash/dist/index.mjs';
-import { collections } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/.nuxt/nuxt-icon-server-bundle.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/errx/dist/index.js';
+import devalue from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@nuxt/devalue/dist/devalue.mjs';
+import { basename, isAbsolute } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/pathe/dist/index.mjs';
+import { getIcons } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@iconify/utils/lib/index.mjs';
+import { hash } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/ohash/dist/index.mjs';
+import { collections } from 'file:///Users/idrew/Desktop/git_repo/idrew25/.nuxt/nuxt-icon-server-bundle.mjs';
 import { fileURLToPath } from 'node:url';
-import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/ipx/dist/index.mjs';
-import lruCacheDriver from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unstorage/drivers/lru-cache.mjs';
-import { createGenerator } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@unocss/core/dist/index.mjs';
-import presetWind from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@unocss/preset-wind/dist/index.mjs';
-import { Resvg } from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/@resvg/resvg-js/index.js';
-import _satori from 'file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/satori/dist/index.js';
+import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/ipx/dist/index.mjs';
+import lruCacheDriver from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unstorage/drivers/lru-cache.mjs';
+import { createGenerator } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@unocss/core/dist/index.mjs';
+import presetWind from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@unocss/preset-wind/dist/index.mjs';
+import { Resvg } from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@resvg/resvg-js/index.js';
+import _satori from 'file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/satori/dist/index.js';
 
 function hasReqHeader(event, name, includes) {
   const value = getRequestHeader(event, name);
@@ -176,7 +176,7 @@ const errorHandler = (async function errorhandler(error, event) {
   return send(event, html);
 });
 
-const rootDir = "/Users/idrew/Desktop/git_repo/Personal Sites/idrew25";
+const rootDir = "/Users/idrew/Desktop/git_repo/idrew25";
 
 const appHead = {"link":[],"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"property":"og:type","content":"website"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{}};
 
@@ -195,7 +195,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : undefined
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _7jqOUjDZTo = (nitroApp) => {
+const _T5y0gOkoCW = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -335,7 +335,7 @@ function useSiteConfig(e, _options) {
   return e.context.siteConfig.get(options);
 }
 
-const _uImuh6Sy7U = defineNitroPlugin(async (nitroApp) => {
+const _xwczlxDxlW = defineNitroPlugin(async (nitroApp) => {
   nitroApp.hooks.hook("render:html", async (ctx, { event }) => {
     const routeOptions = getRouteRules(event);
     const isIsland = process.env.NUXT_COMPONENT_ISLANDS && event.path.startsWith("/__nuxt_island");
@@ -366,7 +366,7 @@ async function resolveRobotsTxtContext(e, nitro = useNitroApp()) {
   return generateRobotsTxtCtx;
 }
 
-const _0IhHev2vv5 = defineNitroPlugin(async (nitroApp) => {
+const _FUWcoetNaP = defineNitroPlugin(async (nitroApp) => {
   const { usingNuxtContent, robotsDisabledValue } = useRuntimeConfig()["nuxt-robots"];
   nitroApp._robots = {};
   await resolveRobotsTxtContext(undefined, nitroApp);
@@ -894,7 +894,7 @@ const _inlineRuntimeConfig = {
     "alias": {},
     "fs": {
       "dir": [
-        "/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/public"
+        "/Users/idrew/Desktop/git_repo/idrew25/public"
       ]
     },
     "http": {
@@ -957,7 +957,7 @@ function defineNitroPlugin(def) {
   return def;
 }
 
-const serverAssets = [{"baseName":"nuxt-og-image:fonts","dir":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/.nuxt/cache/nuxt-og-image@4.0.2/_fonts"},{"baseName":"server","dir":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/server/assets"}];
+const serverAssets = [{"baseName":"nuxt-og-image:fonts","dir":"/Users/idrew/Desktop/git_repo/idrew25/.nuxt/cache/nuxt-og-image@4.0.2/_fonts"},{"baseName":"server","dir":"/Users/idrew/Desktop/git_repo/idrew25/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -969,11 +969,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/.nuxt/cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/idrew/Desktop/git_repo/idrew25","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/idrew/Desktop/git_repo/idrew25/server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/idrew/Desktop/git_repo/idrew25/.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/idrew/Desktop/git_repo/idrew25/.nuxt/cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/idrew/Desktop/git_repo/idrew25/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -1942,7 +1942,7 @@ const logger$1 = createConsola({
   }
 });
 
-const componentNames = [{"hash":"eQ6ZSzmuSi","pascalName":"BrandedLogo","kebabName":"branded-logo","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/BrandedLogo.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"urK4vBHedV","pascalName":"Frame","kebabName":"frame","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Frame.vue","category":"community","credits":"@arashsheyda <https://github.com/arashsheyda>"},{"hash":"25HYRU2CwN","pascalName":"Nuxt","kebabName":"nuxt","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Nuxt.vue","category":"community","credits":"NuxtLabs <https://nuxtlabs.com/>"},{"hash":"QQP0wDr3q7","pascalName":"NuxtSeo","kebabName":"nuxt-seo","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/NuxtSeo.vue","category":"community","credits":"Nuxt SEO <https://nuxtseo.com/>"},{"hash":"Ti15ewGcfK","pascalName":"Pergel","kebabName":"pergel","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Pergel.vue","category":"community","credits":"Pergel <https://nuxtlabs.com/>"},{"hash":"mpvrSL80TM","pascalName":"SimpleBlog","kebabName":"simple-blog","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/SimpleBlog.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"PdTiW3yQ0N","pascalName":"UnJs","kebabName":"un-js","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/UnJs.vue","category":"community","credits":"UnJS <https://unjs.io/>"},{"hash":"dxElbCCT8d","pascalName":"Wave","kebabName":"wave","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Wave.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"GANho8xkgv","pascalName":"WithEmoji","kebabName":"with-emoji","path":"/Users/idrew/Desktop/git_repo/Personal Sites/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/WithEmoji.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"}];
+const componentNames = [{"hash":"eQ6ZSzmuSi","pascalName":"BrandedLogo","kebabName":"branded-logo","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/BrandedLogo.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"urK4vBHedV","pascalName":"Frame","kebabName":"frame","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Frame.vue","category":"community","credits":"@arashsheyda <https://github.com/arashsheyda>"},{"hash":"25HYRU2CwN","pascalName":"Nuxt","kebabName":"nuxt","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Nuxt.vue","category":"community","credits":"NuxtLabs <https://nuxtlabs.com/>"},{"hash":"QQP0wDr3q7","pascalName":"NuxtSeo","kebabName":"nuxt-seo","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/NuxtSeo.vue","category":"community","credits":"Nuxt SEO <https://nuxtseo.com/>"},{"hash":"Ti15ewGcfK","pascalName":"Pergel","kebabName":"pergel","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Pergel.vue","category":"community","credits":"Pergel <https://nuxtlabs.com/>"},{"hash":"mpvrSL80TM","pascalName":"SimpleBlog","kebabName":"simple-blog","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/SimpleBlog.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"PdTiW3yQ0N","pascalName":"UnJs","kebabName":"un-js","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/UnJs.vue","category":"community","credits":"UnJS <https://unjs.io/>"},{"hash":"dxElbCCT8d","pascalName":"Wave","kebabName":"wave","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/Wave.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"},{"hash":"GANho8xkgv","pascalName":"WithEmoji","kebabName":"with-emoji","path":"/Users/idrew/Desktop/git_repo/idrew25/node_modules/nuxt-og-image/dist/runtime/app/components/Templates/Community/WithEmoji.vue","category":"community","credits":"Full Stack Heroes <https://fullstackheroes.com/>"}];
 
 function normaliseOptions(_options) {
   const options = { ..._options };
@@ -2187,20 +2187,20 @@ async function fetchPathHtmlAndExtractOptions(e, path, key) {
   return payload;
 }
 
-const _HlqHlxJUDI = defineNitroPlugin(async (nitro) => {
+const _PTINhLk9ra = defineNitroPlugin(async (nitro) => {
   return;
 });
 
 const plugins = [
-  _7jqOUjDZTo,
-_uImuh6Sy7U,
-_0IhHev2vv5,
-_HlqHlxJUDI
+  _T5y0gOkoCW,
+_xwczlxDxlW,
+_FUWcoetNaP,
+_PTINhLk9ra
 ];
 
 const warnOnceSet = /* @__PURE__ */ new Set();
 const DEFAULT_ENDPOINT = "https://api.iconify.design";
-const _QlYikX = defineCachedEventHandler(async (event) => {
+const _MmVOb9 = defineCachedEventHandler(async (event) => {
   const url = getRequestURL(event);
   if (!url)
     return createError({ status: 400, message: "Invalid icon request" });
@@ -2258,7 +2258,7 @@ const _QlYikX = defineCachedEventHandler(async (event) => {
   // 1 week
 });
 
-const _xezhue = defineEventHandler(async (e) => {
+const _jIwBQY = defineEventHandler(async (e) => {
   if (e.context.siteConfig)
     return;
   const runtimeConfig = useRuntimeConfig(e);
@@ -2298,7 +2298,7 @@ const _xezhue = defineEventHandler(async (e) => {
   e.context.siteConfig = ctx.siteConfig;
 });
 
-const _pT06R0 = defineEventHandler(async (e) => {
+const _e0TQ5H = defineEventHandler(async (e) => {
   const siteConfig = useSiteConfig(e);
   const nitroOrigin = useNitroOrigin(e);
   const runtimeConfig = useRuntimeConfig(e);
@@ -2312,7 +2312,7 @@ const _pT06R0 = defineEventHandler(async (e) => {
   };
 });
 
-const _9nh1V4 = defineEventHandler(async (e) => {
+const _EukcTr = defineEventHandler(async (e) => {
   const nitro = useNitroApp();
   const { indexable, hints } = getSiteRobotConfig(e);
   const { credits, usingNuxtContent, cacheControl } = useRuntimeConfig(e)["nuxt-robots"];
@@ -2372,7 +2372,7 @@ const _9nh1V4 = defineEventHandler(async (e) => {
   return hookCtx.robotsTxt;
 });
 
-const _H3n5B4 = defineEventHandler(async (e) => {
+const _RbW6bz = defineEventHandler(async (e) => {
   if (e.path === "/robots.txt" || e.path.startsWith("/__") || e.path.startsWith("/api") || e.path.startsWith("/_nuxt"))
     return;
   const robotConfig = getPathRobotConfig(e);
@@ -2386,7 +2386,7 @@ const _H3n5B4 = defineEventHandler(async (e) => {
   }
 });
 
-const _iYTLCE = defineEventHandler(async (e) => {
+const _QMrVTr = defineEventHandler(async (e) => {
   const runtimeConfig = useRuntimeConfig(e)["nuxt-robots"];
   const { indexable, hints } = getSiteRobotConfig(e);
   const siteConfig = useSiteConfig(e);
@@ -2406,7 +2406,7 @@ const _iYTLCE = defineEventHandler(async (e) => {
   };
 });
 
-const _vAGWgc = defineEventHandler(async (e) => {
+const _fRMESP = defineEventHandler(async (e) => {
   const path = getQuery$1(e).path;
   return getPathRobotConfig(e, {
     path
@@ -2585,7 +2585,7 @@ async function resolveSitemapSources(sources, event) {
   )).flat();
 }
 
-const _rYM5SG = defineEventHandler(async (e) => {
+const _HK19l5 = defineEventHandler(async (e) => {
   const _runtimeConfig = useSimpleSitemapRuntimeConfig();
   const { sitemaps: _sitemaps } = _runtimeConfig;
   const runtimeConfig = { ..._runtimeConfig };
@@ -2607,7 +2607,7 @@ const _rYM5SG = defineEventHandler(async (e) => {
   };
 });
 
-const _smGAIX = defineEventHandler(async (e) => {
+const _wvGSUF = defineEventHandler(async (e) => {
   const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
   const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSimpleSitemapRuntimeConfig();
   setHeader(e, "Content-Type", "application/xslt+xml");
@@ -3348,7 +3348,7 @@ async function createSitemap(event, definition, runtimeConfig) {
   return ctx.sitemap;
 }
 
-const _KINi8R = defineEventHandler(async (e) => {
+const _1HScNN = defineEventHandler(async (e) => {
   const runtimeConfig = useSimpleSitemapRuntimeConfig();
   const { sitemaps } = runtimeConfig;
   if ("index" in sitemaps) {
@@ -3364,7 +3364,7 @@ function useSchemaOrgConfig(e) {
   });
 }
 
-const _hXXXG3 = defineEventHandler(async (e) => {
+const _uo9C5e = defineEventHandler(async (e) => {
   const nitroOrigin = useNitroOrigin(e);
   return {
     nitroOrigin,
@@ -3374,7 +3374,7 @@ const _hXXXG3 = defineEventHandler(async (e) => {
 
 const fileMapping = {};
 
-const _IZnJtm = defineEventHandler(async (e) => {
+const _Yn2ft2 = defineEventHandler(async (e) => {
   const path = parseURL(e.path).pathname;
   if (fileMapping[path]) {
     if (path.endsWith(".svg"))
@@ -3387,7 +3387,7 @@ const _IZnJtm = defineEventHandler(async (e) => {
   }
 });
 
-const _Kc8QpU = lazyEventHandler(() => {
+const _D5c2Lw = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : undefined;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : undefined;
@@ -3405,34 +3405,34 @@ const _Kc8QpU = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
-const _lazy_M5vIBI = () => Promise.resolve().then(function () { return contact_post$1; });
-const _lazy_BGCcpm = () => Promise.resolve().then(function () { return renderer$1; });
-const _lazy_jjtVbb = () => Promise.resolve().then(function () { return font$1; });
-const _lazy_7UtrE3 = () => Promise.resolve().then(function () { return debug_json$1; });
-const _lazy_5DTKce = () => Promise.resolve().then(function () { return image$1; });
+const _lazy_cMMBxa = () => Promise.resolve().then(function () { return contact_post$1; });
+const _lazy_3KnYvG = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_CXnhwx = () => Promise.resolve().then(function () { return font$1; });
+const _lazy_KcNabt = () => Promise.resolve().then(function () { return debug_json$1; });
+const _lazy_QNvwZ3 = () => Promise.resolve().then(function () { return image$1; });
 
 const handlers = [
-  { route: '/api/contact', handler: _lazy_M5vIBI, lazy: true, middleware: false, method: "post" },
-  { route: '/__nuxt_error', handler: _lazy_BGCcpm, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _QlYikX, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _xezhue, lazy: false, middleware: true, method: undefined },
-  { route: '/__site-config__/debug.json', handler: _pT06R0, lazy: false, middleware: false, method: undefined },
-  { route: '/robots.txt', handler: _9nh1V4, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _H3n5B4, lazy: false, middleware: true, method: undefined },
-  { route: '/__robots__/debug.json', handler: _iYTLCE, lazy: false, middleware: false, method: undefined },
-  { route: '/__robots__/debug-path.json', handler: _vAGWgc, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/debug.json', handler: _rYM5SG, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/style.xsl', handler: _smGAIX, lazy: false, middleware: false, method: undefined },
-  { route: '/sitemap.xml', handler: _KINi8R, lazy: false, middleware: false, method: undefined },
-  { route: '/__og-image__/font/**', handler: _lazy_jjtVbb, lazy: true, middleware: false, method: undefined },
-  { route: '/__og-image__/debug.json', handler: _lazy_7UtrE3, lazy: true, middleware: false, method: undefined },
-  { route: '/__og-image__/image/**', handler: _lazy_5DTKce, lazy: true, middleware: false, method: undefined },
-  { route: '/__og-image__/static/**', handler: _lazy_5DTKce, lazy: true, middleware: false, method: undefined },
-  { route: '/__schema-org__/debug.json', handler: _hXXXG3, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _IZnJtm, lazy: false, middleware: true, method: undefined },
-  { route: '/_ipx/**', handler: _Kc8QpU, lazy: false, middleware: false, method: undefined },
-  { route: '/_fonts/**', handler: _lazy_BGCcpm, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_BGCcpm, lazy: true, middleware: false, method: undefined }
+  { route: '/api/contact', handler: _lazy_cMMBxa, lazy: true, middleware: false, method: "post" },
+  { route: '/__nuxt_error', handler: _lazy_3KnYvG, lazy: true, middleware: false, method: undefined },
+  { route: '/api/_nuxt_icon/:collection', handler: _MmVOb9, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _jIwBQY, lazy: false, middleware: true, method: undefined },
+  { route: '/__site-config__/debug.json', handler: _e0TQ5H, lazy: false, middleware: false, method: undefined },
+  { route: '/robots.txt', handler: _EukcTr, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _RbW6bz, lazy: false, middleware: true, method: undefined },
+  { route: '/__robots__/debug.json', handler: _QMrVTr, lazy: false, middleware: false, method: undefined },
+  { route: '/__robots__/debug-path.json', handler: _fRMESP, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/debug.json', handler: _HK19l5, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _wvGSUF, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _1HScNN, lazy: false, middleware: false, method: undefined },
+  { route: '/__og-image__/font/**', handler: _lazy_CXnhwx, lazy: true, middleware: false, method: undefined },
+  { route: '/__og-image__/debug.json', handler: _lazy_KcNabt, lazy: true, middleware: false, method: undefined },
+  { route: '/__og-image__/image/**', handler: _lazy_QNvwZ3, lazy: true, middleware: false, method: undefined },
+  { route: '/__og-image__/static/**', handler: _lazy_QNvwZ3, lazy: true, middleware: false, method: undefined },
+  { route: '/__schema-org__/debug.json', handler: _uo9C5e, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _Yn2ft2, lazy: false, middleware: true, method: undefined },
+  { route: '/_ipx/**', handler: _D5c2Lw, lazy: false, middleware: false, method: undefined },
+  { route: '/_fonts/**', handler: _lazy_3KnYvG, lazy: true, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_3KnYvG, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -3680,11 +3680,11 @@ async function useSatori() {
   return satoriInstance.instance.satori;
 }
 async function useSharp() {
-  sharpInstance.instance = sharpInstance.instance || await import('file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unenv/runtime/mock/empty.mjs').then((m) => m.default);
+  sharpInstance.instance = sharpInstance.instance || await import('file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unenv/runtime/mock/empty.mjs').then((m) => m.default);
   return sharpInstance.instance;
 }
 async function useCssInline() {
-  cssInlineInstance.instance = cssInlineInstance.instance || await import('file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/node_modules/unenv/runtime/mock/empty.mjs').then((m) => m.default);
+  cssInlineInstance.instance = cssInlineInstance.instance || await import('file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/unenv/runtime/mock/empty.mjs').then((m) => m.default);
   await cssInlineInstance.instance.initWasmPromise;
   return cssInlineInstance.instance.cssInline;
 }
@@ -7948,8 +7948,8 @@ const renderSSRHeadOptions = {"omitLineBreaks":false};
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
-const getClientManifest = () => import('file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file:///Users/idrew/Desktop/git_repo/Personal%20Sites/idrew25/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file:///Users/idrew/Desktop/git_repo/idrew25/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file:///Users/idrew/Desktop/git_repo/idrew25/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();

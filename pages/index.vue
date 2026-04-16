@@ -6,9 +6,11 @@
 		>
 			<!-- <Stats /> -->
 			<About />
+			<Process />
 			<Marquee />
 			<Experience />
 
+			<Certs />
 			<Skills />
 			<!-- <Experience /> -->
 			<Education />

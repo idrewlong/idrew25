@@ -23,13 +23,13 @@
 			<!-- Left: Bio -->
 			<div ref="bioEl" class="space-y-5">
 				<p class="text-sm md:text-base leading-relaxed text-stone-500">
-					Andrew Long, an Ole Miss graduate living in Long Beach, MS with my
-					wife, and our dog Bo. At Mad Genius, I work as a full-stack developer
-					and SEO strategist with a focus on backend systems: designing
-					databases, building and integrating APIs, connecting CMS platforms,
-					and developing the architecture that holds apps together. I also bring
-					strong frontend experience through various Javascript frameworks and
-					WordPress development.
+					Hi, I'm Andrew Long, an Ole Miss alum living in Long Beach, MS with my
+					wife and our dog Bo. At Mad Genius, I work as a full-stack developer
+					and contribute as an SEO strategist occasionally. My focus is on full
+					stack builds: designing databases, building and integrating APIs,
+					connecting CMS platforms, and developing the architecture that powers
+					applications. I also bring strong frontend experience across various
+					JavaScript frameworks and WordPress development.
 				</p>
 				<p class="text-sm md:text-base leading-relaxed text-stone-500">
 					What differentiates me is how I think beyond the code. I understand
