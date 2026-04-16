@@ -79,6 +79,7 @@ const skillCategories = [
 			'Svelte / SvelteKit',
 			'Tailwind CSS',
 			'GSAP',
+			'WordPress',
 		],
 	},
 	{
@@ -91,7 +92,15 @@ const skillCategories = [
 	},
 	{
 		title: 'Tools',
-		skills: ['VSCode', 'Cursor', 'Claude Code', 'Postman', 'JIRA', 'Salesforce', 'Twilio'],
+		skills: [
+			'VSCode',
+			'Cursor',
+			'Claude Code',
+			'Postman',
+			'JIRA',
+			'Salesforce',
+			'Twilio',
+		],
 	},
 	{
 		title: 'Design & SEO',

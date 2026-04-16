@@ -38,10 +38,10 @@
 			<!-- Accordion rows -->
 			<div ref="accordionEl">
 				<div
-					v-for="(project, i) in filteredProjects"
+					v-for="(project, i) in visibleProjects"
 					:key="project.title"
 					class="accordion-row border-t border-stone-200"
-					:class="{ 'border-b border-stone-200': i === filteredProjects.length - 1 }"
+					:class="{ 'border-b border-stone-200': i === visibleProjects.length - 1 && !hasMore }"
 				>
 					<!-- Row header -->
 					<button
@@ -188,6 +188,19 @@
 					</div>
 				</div>
 			</div>
+			<!-- Show more -->
+			<div v-if="hasMore" class="border-t border-stone-200">
+				<button
+					@click="showMore"
+					class="w-full py-4 flex items-center justify-center gap-2 text-[11px] font-mono uppercase tracking-widest text-stone-400 hover:text-orange-500 transition-colors duration-200 group"
+				>
+					Show more
+					<Icon
+						icon="heroicons:arrow-down-20-solid"
+						class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-y-0.5"
+					/>
+				</button>
+			</div>
 		</div>
 
 		<!-- Circular "SEE THE WORK" cursor (desktop only) -->
@@ -329,6 +342,16 @@ const allProjects = [
 		],
 	},
 	{
+		title: 'El Fornino Pizzeria',
+		description:
+			'Marketing site for a Neapolitan pizza restaurant in Biloxi, MS.',
+		image: '/images/elfornino.webp',
+		link: 'https://elfornino.com/',
+		workTypes: ['Web Development', 'Web Design'],
+		isRealWork: false,
+		technologies: ['logos:nuxt-icon', 'logos:tailwindcss-icon'],
+	},
+	{
 		title: 'idrewfilm',
 		description:
 			'Photography portfolio; optimized imagery and page transitions. Digital Ocean Droplet, hosted on Cloudflare.',
@@ -342,6 +365,16 @@ const allProjects = [
 			'logos:wordpress-icon',
 			'logos:graphql',
 		],
+	},
+	{
+		title: 'Shrinkr',
+		description:
+			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds — hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
+		image: '/images/shrinkr.webp',
+		link: 'https://cli.shrinkr.app/',
+		workTypes: ['Developer Tool', 'Open Source'],
+		isRealWork: false,
+		technologies: ['logos:go'],
 	},
 	{
 		title: 'Taylor Trolley',
@@ -361,8 +394,30 @@ const filteredProjects = computed(() => {
 	return allProjects;
 });
 
+const visibleCount = ref(5);
+const visibleProjects = computed(() => filteredProjects.value.slice(0, visibleCount.value));
+const hasMore = computed(() => filteredProjects.value.length > visibleCount.value);
+
+const showMore = () => {
+	const prevCount = visibleCount.value;
+	visibleCount.value = Math.min(visibleCount.value + 5, filteredProjects.value.length);
+	nextTick(() => {
+		const rows = accordionEl.value?.querySelectorAll('.accordion-row');
+		if (!rows?.length) return;
+		const newRows = Array.from(rows).slice(prevCount);
+		if (newRows.length) {
+			$gsap.fromTo(
+				newRows,
+				{ opacity: 0, y: 12 },
+				{ opacity: 1, y: 0, duration: 0.35, stagger: 0.07, ease: 'power2.out' }
+			);
+		}
+	});
+};
+
 const setFilter = (value) => {
 	if (activeFilter.value === value) return;
+	visibleCount.value = 5;
 
 	const currentRows = accordionEl.value?.querySelectorAll('.accordion-row');
 	const openBody = openIndex.value !== -1 ? getBody(openIndex.value) : null;
