@@ -41,7 +41,7 @@
 					<p
 						class="text-[10px] tracking-[0.18em] uppercase text-stone-700 font-mono"
 					>
-						Fullstack Developer
+						Senior Fullstack Developer
 					</p>
 					<p
 						class="text-[10px] tracking-[0.12em] uppercase text-stone-400 font-mono mt-1.5 leading-relaxed max-w-[18rem]"

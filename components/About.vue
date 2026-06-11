@@ -23,13 +23,11 @@
 			<!-- Left: Bio -->
 			<div ref="bioEl" class="space-y-5">
 				<p class="text-sm md:text-base leading-relaxed text-stone-500">
-					Hi, I'm Andrew Long, an Ole Miss alum living in Long Beach, MS with my
-					wife and our dog Bo. At Mad Genius, I work as a full-stack developer
-					and contribute as an SEO strategist occasionally. My focus is on full
-					stack builds: designing databases, building and integrating APIs,
-					connecting CMS platforms, and developing the architecture that powers
-					applications. I also bring strong frontend experience across various
-					JavaScript frameworks and WordPress development.
+					Hi, I'm Andrew Long. At Mad Genius I work across the full stack —
+					designing databases, building and integrating APIs, connecting CMS
+					platforms, and shaping the architecture that ties an application
+					together. I'm equally at home on the frontend with modern JavaScript
+					frameworks and WordPress.
 				</p>
 				<p class="text-sm md:text-base leading-relaxed text-stone-500">
 					What differentiates me is how I think beyond the code. I understand
@@ -119,11 +117,11 @@ const currently = [
 	{ label: 'Based in', value: 'Long Beach, MS' },
 	{
 		label: 'Day job',
-		value: 'Full-stack Dev & SEO · Mad Genius',
+		value: 'Senior Full Stack Developer · Mad Genius',
 		link: 'https://madg.com/people/andrew-long/',
 	},
 	{ label: 'Building', value: 'Many Things' },
-	{ label: 'Hobbies', value: 'Photography & being outdoors' },
+	{ label: 'Hobbies', value: 'Photography and Stocks' },
 ];
 
 onMounted(() => {

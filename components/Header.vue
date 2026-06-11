@@ -41,6 +41,7 @@
 			<button
 				type="button"
 				class="mobile-toggle"
+				:class="{ 'is-open': showMenu }"
 				:aria-expanded="showMenu"
 				aria-controls="mobile-nav"
 				@click="toggleNavbar"
@@ -48,51 +49,50 @@
 				<span class="sr-only">{{
 					showMenu ? 'Close menu' : 'Open menu'
 				}}</span>
-				<Icon
-					:name="showMenu ? 'heroicons:x-mark' : 'heroicons:bars-3'"
-					class="w-5 h-5"
-					aria-hidden="true"
-				/>
+				<span class="hamburger" aria-hidden="true">
+					<span class="hamburger-line" />
+					<span class="hamburger-line" />
+					<span class="hamburger-line" />
+				</span>
 			</button>
 		</div>
 
 		<!-- Mobile Navigation -->
-		<Transition
-			enter-active-class="transition-all duration-200 ease-out"
-			enter-from-class="opacity-0 -translate-y-1"
-			enter-to-class="opacity-100 translate-y-0"
-			leave-active-class="transition-all duration-150 ease-in"
-			leave-from-class="opacity-100 translate-y-0"
-			leave-to-class="opacity-0 -translate-y-1"
+		<div
+			id="mobile-nav"
+			class="mobile-nav-wrapper"
+			:class="{ 'is-open': showMenu }"
 		>
-			<div v-show="showMenu" id="mobile-nav" class="mobile-nav">
-				<NuxtLink
-					v-for="link in navigationLinks"
-					:key="link.to"
-					:to="link.to"
-					class="mobile-nav-item"
-					@click="closeNavbar"
-				>
-					{{ link.label }}
-				</NuxtLink>
-
-				<div class="mobile-divider" />
-
-				<div class="mobile-socials">
-					<a
-						v-for="social in socialLinks"
-						:key="social.url"
-						:href="social.url"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="mobile-social-item"
+			<div class="mobile-nav-inner">
+				<nav class="mobile-nav" aria-label="Mobile navigation">
+					<NuxtLink
+						v-for="link in navigationLinks"
+						:key="link.to"
+						:to="link.to"
+						class="mobile-nav-item"
+						@click="closeNavbar"
 					>
-						<Icon :name="social.icon" class="w-4 h-4" aria-hidden="true" />
-						<span>{{ social.label }}</span>
-					</a>
-				</div>
+						{{ link.label }}
+					</NuxtLink>
+
+					<div class="mobile-divider" />
+
+					<div class="mobile-socials">
+						<a
+							v-for="social in socialLinks"
+							:key="social.url"
+							:href="social.url"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="mobile-social-item"
+						>
+							<Icon :name="social.icon" class="w-4 h-4" aria-hidden="true" />
+							<span>{{ social.label }}</span>
+						</a>
+					</div>
+				</nav>
 			</div>
-		</Transition>
+		</div>
 	</header>
 </template>
 
@@ -218,12 +218,51 @@ onUnmounted(() => {
 	color: var(--text);
 }
 
+/* Animated hamburger / close icon */
+.hamburger {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 18px;
+	height: 14px;
+}
+
+.hamburger-line {
+	display: block;
+	width: 100%;
+	height: 2px;
+	border-radius: 2px;
+	background: currentColor;
+	transform-origin: center;
+	transition:
+		transform 0.3s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.2s ease;
+}
+
+.mobile-toggle.is-open .hamburger-line:nth-child(1) {
+	transform: translateY(6px) rotate(45deg);
+}
+
+.mobile-toggle.is-open .hamburger-line:nth-child(2) {
+	opacity: 0;
+	transform: scaleX(0.4);
+}
+
+.mobile-toggle.is-open .hamburger-line:nth-child(3) {
+	transform: translateY(-6px) rotate(-45deg);
+}
+
 @media (min-width: 768px) {
 	.desktop-nav {
 		display: flex;
 	}
 
 	.mobile-toggle {
+		display: none;
+	}
+
+	.mobile-nav-wrapper {
 		display: none;
 	}
 
@@ -279,7 +318,32 @@ onUnmounted(() => {
 	color: var(--text);
 }
 
-/* Mobile nav */
+/* Mobile nav — height + fade animated via grid-template-rows */
+.mobile-nav-wrapper {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav-wrapper.is-open {
+	grid-template-rows: 1fr;
+}
+
+.mobile-nav-inner {
+	overflow: hidden;
+	min-height: 0;
+	opacity: 0;
+	transform: translateY(-4px);
+	transition:
+		opacity 0.2s ease,
+		transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav-wrapper.is-open .mobile-nav-inner {
+	opacity: 1;
+	transform: translateY(0);
+}
+
 .mobile-nav {
 	border-top: 1px solid var(--border);
 	background: rgba(247, 246, 243, 0.98);
@@ -296,6 +360,14 @@ onUnmounted(() => {
 	transition:
 		background 0.12s ease,
 		color 0.12s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hamburger-line,
+	.mobile-nav-wrapper,
+	.mobile-nav-inner {
+		transition: none;
+	}
 }
 
 .mobile-nav-item:hover {
