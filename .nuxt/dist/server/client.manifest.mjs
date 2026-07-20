@@ -1,1 +1,0 @@
-export { default } from "file:///Users/idrew/Desktop/git_repo/idrew25/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
