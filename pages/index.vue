@@ -4,7 +4,6 @@
 		<main
 			class="w-full py-8 sm:py-12 flex flex-col justify-center gap-y-14 sm:gap-y-20"
 		>
-			<!-- <Stats /> -->
 			<About />
 			<Process />
 			<Marquee />
@@ -12,7 +11,6 @@
 
 			<Certs />
 			<Skills />
-			<!-- <Experience /> -->
 			<Education />
 			<div class="w-full">
 				<Projects2 />
