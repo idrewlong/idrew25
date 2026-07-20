@@ -30,11 +30,6 @@ module.exports = {
           'monospace',
         ],
       },
-      colors: {
-        canvas: '#0d0d0d',
-        surface: '#161616',
-        elevated: '#1e1e1e',
-      },
       maxWidth: {
         content: '50rem',
         'wide-content': '62rem',
