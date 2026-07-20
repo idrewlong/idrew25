@@ -2,6 +2,24 @@ export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig();
 	const body = await readBody(event);
 
+	const { name, email, message } = body ?? {};
+
+	if (
+		typeof name !== 'string' ||
+		typeof email !== 'string' ||
+		typeof message !== 'string' ||
+		name.trim().length < 1 ||
+		name.length > 100 ||
+		!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+		message.trim().length < 1 ||
+		message.length > 5000
+	) {
+		throw createError({
+			statusCode: 400,
+			message: 'Invalid form submission',
+		});
+	}
+
 	try {
 		return await $fetch('https://api.web3forms.com/submit', {
 			method: 'POST',
