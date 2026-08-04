@@ -21,9 +21,15 @@
 }
 
 html {
-	scroll-behavior: smooth;
 	background: var(--bg);
 	overflow-x: hidden;
+}
+
+/* Fallback for when Lenis is off (reduced motion); lenis.css overrides it otherwise. */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
 }
 
 body {

@@ -205,10 +205,15 @@ onUnmounted(() => {
 	align-items: center;
 	justify-content: center;
 	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.7);
+	background: rgba(255, 255, 255, 0.92);
 	border: 1px solid var(--border);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
+	/* Lift the cards off the photo plate so they stay legible
+	   where they overlap it */
+	box-shadow:
+		0 6px 16px -8px rgba(28, 25, 23, 0.28),
+		0 2px 4px -2px rgba(28, 25, 23, 0.08);
 	transition:
 		border-color 0.2s ease,
 		box-shadow 0.2s ease,

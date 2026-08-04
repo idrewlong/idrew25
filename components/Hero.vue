@@ -1,35 +1,45 @@
 <template>
-	<section ref="heroSection" class="hero-section">
+	<section class="hero-section">
+		<!-- Paper grain — carries the Preloader texture into the page -->
+		<div class="hero-grain" aria-hidden="true"></div>
+
+		<!-- Column rules — the Preloader's grid, dissolved to a whisper -->
+		<div class="hero-rules" aria-hidden="true">
+			<span class="hero-rule" style="left: 25%"></span>
+			<span class="hero-rule" style="left: 50%"></span>
+			<span class="hero-rule" style="left: 75%"></span>
+		</div>
+
 		<div class="hero-container max-w-6xl mx-auto px-4 sm:px-6">
-			<!-- Section label — matches rest of site -->
-			<div ref="labelEl" class="flex items-center gap-3 mb-6 sm:mb-10 md:mb-14">
-				<span
-					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-					>Portfolio</span
-				>
-				<div class="flex-1 h-px bg-stone-200"></div>
-				<span
-					class="text-[9px] font-mono tracking-[0.15em] uppercase text-stone-300"
-					>2026</span
-				>
+			<!-- ── Masthead rail ────────────────────────────── -->
+			<div ref="mastheadEl" class="hero-masthead">
+				<span class="masthead-cell masthead-cell--name">Andrew Long</span>
+				<span class="masthead-cell">Portfolio</span>
+				<span class="masthead-cell">Long Beach, MS</span>
+				<span class="masthead-cell masthead-cell--issue">2026</span>
 			</div>
 
-			<!-- Editorial split layout -->
+			<!-- ── Cover spread ─────────────────────────────── -->
 			<div class="hero-grid">
-				<!-- Left: Typography -->
+				<!-- Left: type -->
 				<div class="hero-content">
 					<div ref="greeting" class="hero-greeting">
+						<span class="hero-star" aria-hidden="true">✦</span>
 						<span
-							class="text-[9px] font-mono tracking-[0.25em] uppercase text-orange-400"
-							>Hi, I'm Andrew</span
+							class="text-[9px] font-mono tracking-[0.25em] uppercase text-stone-400"
+							>Senior Full Stack Dev &middot; Mad Genius</span
 						>
 					</div>
 
 					<h1 ref="title" class="hero-title font-serif">
-						I like to build<br />
-						amazing
-						<span class="typewriter text-orange-500">{{ currentWord }}</span>
+						<span class="hero-title-line">I like to build</span>
+						<span class="hero-title-line">
+							amazing<span class="hero-space">&nbsp;</span>
+							<span class="typewriter">{{ currentWord }}</span>
+						</span>
 					</h1>
+
+					<div ref="ruleEl" class="hero-rule-heavy" aria-hidden="true"></div>
 
 					<p ref="description" class="hero-description text-stone-500">
 						TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack
@@ -37,7 +47,6 @@
 						Node.js, and PHP. Have written a Python bot or two.
 					</p>
 
-					<!-- CTA Buttons — editorial style matching Cta.vue -->
 					<div ref="buttons" class="hero-buttons">
 						<NuxtLink to="/contact" class="hero-btn-primary group">
 							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
@@ -49,10 +58,10 @@
 								aria-hidden="true"
 							/>
 						</NuxtLink>
-						<NuxtLink
-							to="#projects"
+						<a
+							href="#projects"
 							class="hero-btn-secondary group"
-							@click.prevent="scrollToProjects"
+							@click.prevent="scrollTo('projects')"
 						>
 							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
 								>View Projects</span
@@ -62,40 +71,52 @@
 								class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5"
 								aria-hidden="true"
 							/>
-						</NuxtLink>
+						</a>
 					</div>
 				</div>
 
-				<!-- Right: Photo + floating tech icons -->
+				<!-- Right: plate + photo + floating tech icons -->
 				<div ref="photoEl" class="hero-image-area">
+					<div class="hero-glow" aria-hidden="true"></div>
+
+					<!-- Plate: the surface the photo stands on. Sits above the
+					     glow but below the icons and photo, so the icons read as
+					     floating in the space between viewer and backdrop. -->
+					<div class="hero-plate" aria-hidden="true"></div>
+
 					<TechIcons />
+
 					<div class="hero-photo-wrapper">
 						<img
 							src="/images/me_1.webp"
-							alt="Andrew's photo"
+							alt="Andrew Long"
 							class="hero-photo"
-							loading="lazy"
+							width="1200"
+							height="1800"
+							fetchpriority="high"
 						/>
 					</div>
+
 				</div>
 			</div>
 
-			<!-- Scroll indicator -->
-			<div ref="scrollIndicator" class="hero-scroll hidden md:flex">
-				<span
-					class="text-[9px] font-mono tracking-[0.3em] uppercase text-stone-400"
-					>Scroll</span
-				>
-				<div class="flex flex-col items-center gap-1">
-					<div
-						class="w-px h-8 bg-gradient-to-b from-stone-300 to-transparent"
-					></div>
-					<Icon
-						name="heroicons:chevron-down-20-solid"
-						class="w-3 h-3 text-stone-300"
-					/>
-				</div>
-			</div>
+			<!-- ── Index strip: the handoff into the page ───── -->
+			<nav ref="indexEl" class="hero-index" aria-label="Page sections">
+				<ul class="index-list">
+					<li v-for="(entry, i) in indexEntries" :key="entry.id">
+						<a
+							:href="`#${entry.id}`"
+							class="index-item"
+							@click="onIndexClick($event, entry)"
+						>
+							<span class="index-num">{{
+								String(i + 1).padStart(2, '0')
+							}}</span>
+							<span class="index-name">{{ entry.label }}</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	</section>
 </template>
@@ -103,49 +124,64 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
-const { $gsap } = useNuxtApp();
+const { $gsap, $scroll } = useNuxtApp();
 
-const currentWord = ref('');
 const words = ['tools', 'apps', 'sites', 'bots'];
-let typewriterTimeout;
+const currentWord = ref('');
+
+const indexEntries = [
+	{ id: 'about', label: 'About' },
+	{ id: 'process', label: 'Process' },
+	{ id: 'experience', label: 'Experience' },
+	{ id: 'certifications', label: 'Certifications' },
+	{ id: 'skills', label: 'Skills' },
+	{ id: 'education', label: 'Education' },
+	{ id: 'projects', label: 'Work' },
+	{ id: 'articles', label: 'Articles' },
+	{ id: 'contact', label: 'Contact' },
+];
 
 // Template refs
-const labelEl = ref(null);
+const mastheadEl = ref(null);
 const greeting = ref(null);
 const title = ref(null);
+const ruleEl = ref(null);
 const description = ref(null);
 const buttons = ref(null);
 const photoEl = ref(null);
-const scrollIndicator = ref(null);
+const indexEl = ref(null);
 
-// Typewriter state
-let wordIndex = 0;
+let reduceMotion = false;
+
+/* ── Typewriter ───────────────────────────────────────── */
+let typewriterTimeout = null;
+let wordIdx = 0;
 let letterIndex = 0;
 let isDeleting = false;
 
 const typewriterEffect = () => {
-	const currentTargetWord = words[wordIndex];
+	const target = words[wordIdx];
 	let newWord = '';
 	let delay = 100;
 
 	if (isDeleting) {
-		newWord = currentTargetWord.substring(0, letterIndex - 1);
+		newWord = target.substring(0, letterIndex - 1);
 		letterIndex--;
 		delay = 100;
 	} else {
-		newWord = currentTargetWord.substring(0, letterIndex + 1);
+		newWord = target.substring(0, letterIndex + 1);
 		letterIndex++;
 		delay = 75;
 	}
 
 	currentWord.value = newWord;
 
-	if (!isDeleting && newWord === currentTargetWord) {
+	if (!isDeleting && newWord === target) {
 		isDeleting = true;
 		delay = 2500;
 	} else if (isDeleting && newWord === '') {
 		isDeleting = false;
-		wordIndex = (wordIndex + 1) % words.length;
+		wordIdx = (wordIdx + 1) % words.length;
 		letterIndex = 0;
 		delay = 500;
 	}
@@ -153,96 +189,105 @@ const typewriterEffect = () => {
 	typewriterTimeout = setTimeout(typewriterEffect, delay);
 };
 
-const scrollToProjects = () => {
-	const projectsSection = document.getElementById('projects');
-	if (projectsSection) {
-		projectsSection.scrollIntoView({ behavior: 'smooth' });
+const startTypewriter = () => {
+	if (reduceMotion) {
+		// Hold a single word rather than typing on a loop
+		currentWord.value = words[0];
+		return;
 	}
+	typewriterEffect();
 };
 
-const updateScroll = () => {
-	requestAnimationFrame(() => {
-		if (scrollIndicator.value) {
-			scrollIndicator.value.style.opacity = String(
-				Math.max(0, 1 - window.scrollY / 120)
-			);
-		}
-	});
+/* ── Navigation ──────────────────────────────────────── */
+/* Header offset + easing live in plugins/lenis.client.ts. */
+const scrollTo = (id) => {
+	const el = document.getElementById(id);
+	if (!el) return;
+	$scroll.to(el);
 };
 
+const onIndexClick = (event, entry) => {
+	if (!document.getElementById(entry.id)) return; // let the anchor do its thing
+	event.preventDefault();
+	scrollTo(entry.id);
+};
+
+/* ── Entrance ────────────────────────────────────────── */
 const initAnimations = () => {
-	// Label
-	$gsap.set(labelEl.value, { opacity: 0, y: 16 });
-	$gsap.set([greeting.value, title.value, description.value, buttons.value], {
+	const cells = mastheadEl.value?.querySelectorAll('.masthead-cell') ?? [];
+
+	$gsap.set(mastheadEl.value, { opacity: 0 });
+	$gsap.set(cells, { opacity: 0, y: 10 });
+	$gsap.set([greeting.value, description.value, buttons.value], {
 		opacity: 0,
-		y: 40,
+		y: 24,
 	});
-	$gsap.set(photoEl.value, { opacity: 0, scale: 0.92, y: 20 });
+	$gsap.set(title.value?.querySelectorAll('.hero-title-line') ?? [], {
+		opacity: 0,
+		y: 44,
+	});
+	$gsap.set(title.value, { opacity: 1 });
+	$gsap.set(ruleEl.value, { scaleX: 0, transformOrigin: 'left center' });
+	$gsap.set(photoEl.value, { opacity: 0, scale: 0.94, y: 24 });
+	$gsap.set(indexEl.value, { opacity: 0, y: 16 });
 
 	const tl = $gsap.timeline({ delay: 0.15 });
 
-	tl.to(labelEl.value, {
-		opacity: 1,
-		y: 0,
-		duration: 0.6,
-		ease: 'power2.out',
-	})
+	tl.to(mastheadEl.value, { opacity: 1, duration: 0.3 })
+		.to(cells, {
+			opacity: 1,
+			y: 0,
+			duration: 0.5,
+			stagger: 0.06,
+			ease: 'power2.out',
+		})
 		.to(
 			greeting.value,
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.7,
-				ease: 'power2.out',
-			},
-			'-=0.3'
+			{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+			'-=0.25'
 		)
 		.to(
-			title.value,
+			title.value.querySelectorAll('.hero-title-line'),
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.9,
+				duration: 1,
+				stagger: 0.1,
 				ease: 'expo.out',
 			},
-			'-=0.5'
+			'-=0.35'
+		)
+		.to(
+			ruleEl.value,
+			{ scaleX: 1, duration: 0.9, ease: 'expo.out' },
+			'-=0.65'
 		)
 		.to(
 			description.value,
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.8,
-				ease: 'power2.out',
-			},
-			'-=0.6'
+			{ opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+			'-=0.7'
 		)
 		.to(
 			buttons.value,
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.7,
-				ease: 'power2.out',
-			},
+			{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
 			'-=0.5'
 		)
 		.to(
 			photoEl.value,
-			{
-				opacity: 1,
-				scale: 1,
-				y: 0,
-				duration: 1.1,
-				ease: 'expo.out',
-			},
-			'-=0.8'
+			{ opacity: 1, scale: 1, y: 0, duration: 1.2, ease: 'expo.out' },
+			'-=1.1'
+		)
+		.to(
+			indexEl.value,
+			{ opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+			'-=0.5'
 		);
 };
 
 onMounted(() => {
-	window.addEventListener('scroll', updateScroll, { passive: true });
-	typewriterEffect();
+	reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	startTypewriter();
 
 	nextTick(() => {
 		initAnimations();
@@ -250,53 +295,153 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	window.removeEventListener('scroll', updateScroll);
 	if (typewriterTimeout) clearTimeout(typewriterTimeout);
 });
 </script>
 
 <style scoped>
+/* ══ Shell ═══════════════════════════════════════════ */
 .hero-section {
 	position: relative;
-	padding-top: 2rem;
-	padding-bottom: 3rem;
-	min-height: calc(100vh - 56px);
 	display: flex;
-	align-items: flex-start;
-}
-
-@media (min-width: 480px) {
-	.hero-section {
-		padding-top: 3rem;
-		padding-bottom: 4rem;
-	}
+	flex-direction: column;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	isolation: isolate;
 }
 
 @media (min-width: 768px) {
 	.hero-section {
-		padding-top: 4rem;
-		padding-bottom: 6rem;
-		align-items: center;
+		min-height: min(calc(100svh - 64px), 940px);
+		padding-top: 2.25rem;
+		padding-bottom: 1.75rem;
 	}
 }
 
 .hero-container {
 	position: relative;
 	width: 100%;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	z-index: 2;
 }
 
-/* Grid: text left, image right */
+/* Paper grain — same texture as the Preloader */
+.hero-grain {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	opacity: 0.028;
+	pointer-events: none;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+	background-size: 128px 128px;
+}
+
+/* Column rules — fade out top and bottom so they dissolve into the page */
+.hero-rules {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	max-width: 72rem;
+	z-index: 1;
+	pointer-events: none;
+	display: none;
+}
+
+@media (min-width: 768px) {
+	.hero-rules {
+		display: block;
+	}
+}
+
+.hero-rule {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: linear-gradient(
+		to bottom,
+		transparent,
+		var(--border) 12%,
+		var(--border) 62%,
+		transparent 96%
+	);
+	opacity: 0.55;
+}
+
+/* ══ Masthead rail ═══════════════════════════════════ */
+.hero-masthead {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	border-top: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+	margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+	.hero-masthead {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 768px) {
+	.hero-masthead {
+		margin-bottom: 2rem;
+	}
+}
+
+.masthead-cell {
+	padding: 0.6rem 0.75rem;
+	font-family: 'Geist Mono', monospace;
+	font-size: 9px;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-left: 1px solid var(--border);
+}
+
+.masthead-cell:first-child {
+	border-left: 0;
+	padding-left: 0;
+}
+
+.masthead-cell:nth-child(3) {
+	border-left: 0;
+	padding-left: 0;
+}
+
+@media (min-width: 640px) {
+	.masthead-cell:nth-child(3) {
+		border-left: 1px solid var(--border);
+		padding-left: 0.75rem;
+	}
+}
+
+.masthead-cell--name {
+	color: var(--text);
+	font-weight: 500;
+}
+
+.masthead-cell--issue {
+	color: var(--accent);
+	text-align: right;
+	padding-right: 0;
+}
+
+/* ══ Cover spread ════════════════════════════════════ */
 .hero-grid {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
-}
-
-@media (min-width: 480px) {
-	.hero-grid {
-		gap: 3rem;
-	}
+	gap: 2.5rem;
+	flex: 1;
 }
 
 @media (min-width: 768px) {
@@ -307,40 +452,62 @@ onUnmounted(() => {
 	}
 }
 
-/* Left content */
 .hero-content {
 	flex: 1;
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
-	gap: 1.25rem;
+	align-items: flex-start;
 	position: relative;
 	z-index: 10;
-}
-
-@media (min-width: 480px) {
-	.hero-content {
-		gap: 1.75rem;
-	}
 }
 
 .hero-greeting {
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.6rem;
+	margin-bottom: 1.5rem;
 }
 
+.hero-star {
+	color: var(--accent);
+	font-size: 10px;
+	line-height: 1;
+}
+
+/* ── Headline ── */
 .hero-title {
-	font-size: clamp(2.25rem, 7vw, 5.5rem);
-	font-weight: 700;
-	line-height: 0.92;
-	letter-spacing: -0.02em;
+	font-size: clamp(2.5rem, 7.4vw, 5.75rem);
+	font-weight: 400;
+	line-height: 1;
+	letter-spacing: -0.03em;
 	color: var(--text);
+}
+
+.hero-title-line {
+	display: block;
+	will-change: transform, opacity;
+}
+
+.hero-space {
+	/* keeps the space between "amazing" and the typed word from collapsing */
+	display: inline;
+}
+
+/* Heavy rule under the headline — same device as the Cta name block */
+.hero-rule-heavy {
+	height: 2px;
+	width: 100%;
+	max-width: 30rem; /* aligns with the description block below it */
+	background: var(--text);
+	margin-top: 1.75rem;
 }
 
 .hero-description {
 	font-size: 0.875rem;
-	line-height: 1.75;
-	max-width: 28rem;
+	line-height: 1.8;
+	max-width: 30rem;
+	margin-top: 1.75rem;
 }
 
 @media (min-width: 768px) {
@@ -349,43 +516,84 @@ onUnmounted(() => {
 	}
 }
 
-/* Buttons — matching CTA component style */
+/* ── Typewriter ── */
+.typewriter {
+	display: inline-block;
+	min-width: 60px;
+	font-style: italic;
+	color: var(--accent);
+	border-right: 2.5px solid var(--accent);
+	padding-right: 3px;
+	animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+	from,
+	to {
+		border-color: transparent;
+	}
+	50% {
+		border-color: var(--accent);
+	}
+}
+
+/* ── Buttons ── */
 .hero-buttons {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
+	width: 100%;
 	max-width: 20rem;
-	padding-top: 0.5rem;
+	margin-top: 2rem;
 }
 
 @media (min-width: 480px) {
 	.hero-buttons {
 		flex-direction: row;
+		width: auto;
 		max-width: none;
 	}
 }
 
-.hero-btn-primary {
+.hero-btn-primary,
+.hero-btn-secondary {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1.5rem;
-	padding: 0.875rem 1.25rem;
-	background: var(--text);
-	color: #fafaf9;
-	transition: background 0.2s ease;
+	padding: 0.9rem 1.25rem;
+	overflow: hidden;
 }
 
-.hero-btn-primary:hover {
-	background: #44403c;
+.hero-btn-primary {
+	background: var(--text);
+	color: #fafaf9;
+}
+
+/* Swipe fill on hover instead of a flat colour change */
+.hero-btn-primary::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--accent);
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+	z-index: 0;
+}
+
+.hero-btn-primary:hover::before,
+.hero-btn-primary:focus-visible::before {
+	transform: scaleX(1);
+}
+
+.hero-btn-primary > * {
+	position: relative;
+	z-index: 1;
 }
 
 .hero-btn-secondary {
-	display: inline-flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1.5rem;
-	padding: 0.875rem 1.25rem;
 	border: 1px solid #d6d3d1;
 	color: #57534e;
 	transition:
@@ -393,12 +601,13 @@ onUnmounted(() => {
 		color 0.2s ease;
 }
 
-.hero-btn-secondary:hover {
+.hero-btn-secondary:hover,
+.hero-btn-secondary:focus-visible {
 	border-color: var(--text);
 	color: var(--text);
 }
 
-/* Right: image area */
+/* ══ Photo plate ═════════════════════════════════════ */
 .hero-image-area {
 	position: relative;
 	flex-shrink: 0;
@@ -425,6 +634,93 @@ onUnmounted(() => {
 @media (min-width: 976px) {
 	.hero-image-area {
 		width: 420px;
+	}
+}
+
+/* Warm bloom so the icons read against something */
+.hero-glow {
+	position: absolute;
+	left: 50%;
+	bottom: 4%;
+	width: 130%;
+	aspect-ratio: 1;
+	transform: translateX(-50%);
+	background: radial-gradient(
+		circle at center,
+		rgba(249, 115, 22, 0.07) 0%,
+		rgba(249, 115, 22, 0.03) 38%,
+		transparent 68%
+	);
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* Plate — the lifted surface the photo stands on. The soft drop
+   shadow plus the inset highlight is what reads as depth: the
+   photo breaks out over its top edge and the icons float in
+   front of it, giving three distinct planes. */
+.hero-plate {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+	width: 240px;
+	height: 62%;
+	z-index: 1;
+	pointer-events: none;
+	/* No border or drop shadow — the edges are feathered away so it
+	   reads as a soft pool of light rather than a box, and the photo's
+	   own white backdrop dissolves into it instead of seaming. Depth
+	   comes from the icons' shadows sitting in front of it. */
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.92) 0%,
+		rgba(255, 255, 255, 0.72) 55%,
+		rgba(255, 255, 255, 0.5) 100%
+	);
+	mask-image:
+		linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 20%,
+			black 84%,
+			transparent 100%
+		),
+		linear-gradient(
+			to right,
+			transparent 0%,
+			black 16%,
+			black 84%,
+			transparent 100%
+		);
+	mask-composite: intersect;
+	-webkit-mask-image:
+		linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 20%,
+			black 84%,
+			transparent 100%
+		),
+		linear-gradient(
+			to right,
+			transparent 0%,
+			black 16%,
+			black 84%,
+			transparent 100%
+		);
+	-webkit-mask-composite: source-in;
+}
+
+@media (min-width: 480px) {
+	.hero-plate {
+		width: 300px;
+	}
+}
+
+@media (min-width: 768px) {
+	.hero-plate {
+		width: 322px;
 	}
 }
 
@@ -457,39 +753,113 @@ onUnmounted(() => {
 	height: 100%;
 	object-fit: cover;
 	object-position: top center;
-	mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-	-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
 }
 
-/* Scroll indicator */
-.hero-scroll {
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	flex-direction: column;
+/* ══ Index strip — the handoff ═══════════════════════ */
+.hero-index {
+	margin-top: 2.75rem;
+	padding-top: 0.85rem;
+	border-top: 1px solid var(--border);
+	display: flex;
 	align-items: center;
-	gap: 0.5rem;
-	pointer-events: none;
-	z-index: 10;
+	gap: 1rem;
+	overflow-x: auto;
+	scrollbar-width: none;
 }
 
-/* Typewriter cursor */
-.typewriter {
-	display: inline-block;
-	min-width: 60px;
-	border-right: 2.5px solid var(--accent);
-	padding-right: 3px;
-	animation: blink 0.75s step-end infinite;
+.hero-index::-webkit-scrollbar {
+	display: none;
 }
 
-@keyframes blink {
-	from,
-	to {
-		border-color: transparent;
+@media (min-width: 768px) {
+	.hero-index {
+		margin-top: auto;
+		gap: 2rem;
 	}
-	50% {
-		border-color: var(--accent);
+}
+
+.index-list {
+	display: flex;
+	align-items: center;
+	gap: 1.15rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	flex-shrink: 0;
+}
+
+@media (min-width: 976px) {
+	.index-list {
+		width: 100%;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+}
+
+.index-item {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.4rem;
+	padding-bottom: 2px;
+	border-bottom: 1px solid transparent;
+	transition:
+		border-color 0.2s ease,
+		color 0.2s ease;
+	white-space: nowrap;
+}
+
+.index-num {
+	font-family: 'Geist Mono', monospace;
+	font-size: 9px;
+	font-variant-numeric: tabular-nums;
+	color: #d6d3d1;
+	transition: color 0.2s ease;
+}
+
+.index-name {
+	font-family: 'Instrument Serif', Georgia, serif;
+	font-size: 1rem;
+	color: var(--text-muted);
+	transition: color 0.2s ease;
+}
+
+@media (min-width: 976px) {
+	.index-name {
+		font-size: 1.0625rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.index-name {
+		font-size: 1.1875rem;
+	}
+}
+
+.index-item:hover,
+.index-item:focus-visible {
+	border-bottom-color: var(--text);
+}
+
+.index-item:hover .index-name,
+.index-item:focus-visible .index-name {
+	color: var(--text);
+	font-style: italic;
+}
+
+.index-item:hover .index-num,
+.index-item:focus-visible .index-num {
+	color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-btn-primary::before {
+		transition: none;
+	}
+
+	.typewriter {
+		animation: none;
 	}
 }
 </style>

@@ -342,6 +342,21 @@ const allProjects = [
 		],
 	},
 	{
+		title: 'Lessley Aviation',
+		description:
+			'Marketing site for a flight school in Winona, MS; headless WordPress backend with a Nuxt frontend.',
+		image: '/images/lessleyaviation.webp',
+		link: 'https://lessleyaviation.com/',
+		workTypes: ['Web Development', 'Web Design'],
+		isRealWork: false,
+		technologies: [
+			'logos:nuxt-icon',
+			'logos:tailwindcss-icon',
+			'logos:wordpress-icon',
+			'logos:graphql',
+		],
+	},
+	{
 		title: 'El Fornino Pizzeria',
 		description:
 			'Marketing site for a Neapolitan pizza restaurant in Biloxi, MS.',
@@ -376,22 +391,35 @@ const allProjects = [
 		isRealWork: false,
 		technologies: ['logos:go'],
 	},
-	{
-		title: 'Taylor Trolley',
-		description:
-			'Brand and marketing site for a charter trolley service in Oxford/Taylor, MS.',
-		image: '/images/taylortrolley.webp',
-		link: 'https://taylortrolley.vercel.app/',
-		workTypes: ['Web Development', 'Web Design', 'Branding'],
-		isRealWork: false,
-		technologies: ['logos:nuxt-icon', 'logos:tailwindcss-icon'],
-	},
+	// {
+	// 	title: 'Taylor Trolley',
+	// 	description:
+	// 		'Brand and marketing site for a charter trolley service in Oxford/Taylor, MS.',
+	// 	image: '/images/taylortrolley.webp',
+	// 	link: 'https://taylortrolley.vercel.app/',
+	// 	workTypes: ['Web Development', 'Web Design', 'Branding'],
+	// 	isRealWork: false,
+	// 	technologies: ['logos:nuxt-icon', 'logos:tailwindcss-icon'],
+	// },
 ];
+
+const shuffle = (arr) => {
+	const shuffled = [...arr];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+};
+
+// Deterministic on first render so SSR output matches client hydration;
+// actual shuffling happens client-side in onMounted (see below).
+const shuffledAllProjects = ref([...allProjects]);
 
 const filteredProjects = computed(() => {
 	if (activeFilter.value === 'work') return allProjects.filter(p => p.isRealWork);
 	if (activeFilter.value === 'personal') return allProjects.filter(p => !p.isRealWork);
-	return allProjects;
+	return shuffledAllProjects.value;
 });
 
 const visibleCount = ref(5);
@@ -435,6 +463,7 @@ const setFilter = (value) => {
 	}
 
 	const doSwitch = () => {
+		if (value === 'all') shuffledAllProjects.value = shuffle(allProjects);
 		activeFilter.value = value;
 		nextTick(() => {
 			const newRows = accordionEl.value?.querySelectorAll('.accordion-row');
@@ -601,6 +630,12 @@ const toggleRow = (i) => {
 };
 
 onMounted(() => {
+	// Shuffle client-side only, after hydration, so SSR and the initial
+	// client render agree on order (avoids a hydration mismatch).
+	if (activeFilter.value === 'all') {
+		shuffledAllProjects.value = shuffle(allProjects);
+	}
+
 	nextTick(() => {
 		if (!sectionEl.value || !accordionEl.value) return;
 

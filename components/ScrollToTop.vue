@@ -44,6 +44,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
+const { $scroll } = useNuxtApp();
+
 const showButton = ref(false);
 const isAnimating = ref(false);
 const scrollProgress = ref(0);
@@ -65,7 +67,7 @@ const checkScroll = () => {
 
 const handleClick = () => {
 	isAnimating.value = true;
-	window.scrollTo({ top: 0, behavior: 'smooth' });
+	$scroll.to(0);
 	setTimeout(() => {
 		isAnimating.value = false;
 	}, 600);
