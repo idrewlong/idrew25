@@ -382,6 +382,20 @@ const allProjects = [
 		],
 	},
 	{
+		title: 'The Summit Room',
+		description:
+			'Marketing site for a Nashville, TN recording studio; studio tour, gear list, and session booking flow.',
+		image: '/images/summitroomstudio-com-index.webp',
+		link: 'https://www.summitroomstudio.com/',
+		workTypes: ['Web Development', 'Web Design', 'SEO'],
+		isRealWork: false,
+		technologies: [
+			'logos:nuxt-icon',
+			'logos:tailwindcss-icon',
+			'logos:vercel-icon',
+		],
+	},
+	{
 		title: 'Shrinkr',
 		description:
 			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds — hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
