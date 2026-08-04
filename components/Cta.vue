@@ -1,5 +1,5 @@
 <template>
-	<div ref="ctaSection" class="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
+	<div id="contact" ref="ctaSection" class="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Notion-style section label — matches About/Experience/Skills -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span
@@ -101,7 +101,7 @@
 						/>
 					</NuxtLink>
 
-					<a href="/resume.pdf" download class="cta-button-secondary group">
+					<a href="/Andrew%20Long%20Resume.pdf" download class="cta-button-secondary group">
 						<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
 							>Download Resume</span
 						>

@@ -1,5 +1,5 @@
 <template>
-	<section ref="expSection" class="max-w-6xl mx-auto px-4 sm:px-6">
+	<section id="experience" ref="expSection" class="max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Notion-style section label -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-12">
 			<span

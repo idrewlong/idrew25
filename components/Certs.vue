@@ -1,5 +1,5 @@
 <template>
-	<section ref="certsSection" class="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+	<section id="certifications" ref="certsSection" class="max-w-6xl mx-auto px-4 sm:px-6 w-full">
 		<!-- Section label -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"

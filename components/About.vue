@@ -1,5 +1,5 @@
 <template>
-	<section ref="aboutSection" class="max-w-6xl mx-auto px-4 sm:px-6">
+	<section id="about" ref="aboutSection" class="max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Section label -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span
@@ -121,7 +121,7 @@ const currently = [
 		link: 'https://madg.com/people/andrew-long/',
 	},
 	{ label: 'Building', value: 'Many Things' },
-	{ label: 'Hobbies', value: 'Photography and Stocks' },
+	{ label: 'Hobbies', value: 'Soon to be Dad.' },
 ];
 
 onMounted(() => {

@@ -275,7 +275,7 @@ onMounted(() => {
         <div class="h-px bg-stone-900 my-7"></div>
 
         <!-- Resume download -->
-        <a href="/resume.pdf" download class="resume-btn group">
+        <a href="/Andrew%20Long%20Resume.pdf" download class="resume-btn group">
           <span class="text-[10px] tracking-[0.25em] uppercase font-mono">Download Resume</span>
           <Icon
             name="heroicons:arrow-down-tray"

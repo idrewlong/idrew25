@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: false },
-	css: ['~/assets/css/main.css'],
+	css: ['lenis/dist/lenis.css', '~/assets/css/main.css'],
 	runtimeConfig: {
 		ACCESS_KEY: process.env.ACCESS_KEY,
 	},
@@ -49,7 +49,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/seo',
 	],
 	routeRules: {
-		'/resume.pdf': {
+		'/Andrew%20Long%20Resume.pdf': {
 			headers: {
 				'Content-Type': 'application/pdf',
 				'Content-Disposition': 'attachment; filename="andrew-long-resume.pdf"',
