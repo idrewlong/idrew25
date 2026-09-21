@@ -234,15 +234,30 @@ const components: PortableTextComponents = {
 			const title = value?.title
 				? `<p class="callout-title">${escapeHtml(String(value.title))}</p>`
 				: '';
-			return `<aside class="callout callout--${tone}">${title}<p>${escapeHtml(text)}</p></aside>`;
+			// The textarea lets authors type blank lines between paragraphs;
+			// split on them so each becomes its own <p> instead of one
+			// run-on paragraph (the .callout p + p style rule anticipates
+			// this).
+			const paragraphs = text
+				.split(/\n\s*\n/)
+				.map((part) => part.trim())
+				.filter(Boolean)
+				.map((part) => `<p>${escapeHtml(part)}</p>`)
+				.join('');
+			return `<aside class="callout callout--${tone}">${title}${paragraphs}</aside>`;
 		},
 		videoEmbed: ({ value }) => {
 			const src = videoEmbedSrc(String(value?.url ?? ''));
 			if (!src) return '';
-			const caption = value?.caption
-				? `<figcaption>${escapeHtml(String(value.caption))}</figcaption>`
+			const captionText = value?.caption ? String(value.caption) : '';
+			const caption = captionText
+				? `<figcaption>${escapeHtml(captionText)}</figcaption>`
 				: '';
-			return `<figure class="video-embed"><iframe src="${escapeHtml(src)}" title="Embedded video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>${caption}</figure>`;
+			// A caption gives screen-reader users a way to tell multiple
+			// video frames on the same page apart; fall back to the generic
+			// title only when there is none.
+			const title = escapeHtml(captionText || 'Embedded video');
+			return `<figure class="video-embed"><iframe src="${escapeHtml(src)}" title="${title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>${caption}</figure>`;
 		},
 		// Dividers carry no content; the block's presence is the content.
 		divider: () => '<hr class="body-divider" />',

@@ -55,13 +55,13 @@ defineProps<{ html: string }>();
 .post-body :deep(.body-divider) {
 	margin: 2.5em 0;
 	border: 0;
-	border-top: 1px solid var(--border, #e7e5e4);
+	border-top: 1px solid var(--border, #e7e5e0);
 }
 
 .post-body :deep(.callout) {
 	margin: 1.8em 0;
 	padding: 1.1rem 1.25rem;
-	border-left: 3px solid var(--border, #e7e5e4);
+	border-left: 3px solid var(--border, #e7e5e0);
 	border-radius: 0 0.5rem 0.5rem 0;
 	background: #fafaf9;
 }
@@ -81,6 +81,7 @@ defineProps<{ html: string }>();
 
 .post-body :deep(.callout--note) {
 	border-left-color: #78716c;
+	background: #ece9e2;
 }
 
 .post-body :deep(.callout--warning) {
@@ -160,7 +161,7 @@ defineProps<{ html: string }>();
 
 .post-body :deep(.code-block) {
 	margin: 1.8em 0;
-	border: 1px solid var(--border, #e7e5e4);
+	border: 1px solid var(--border, #e7e5e0);
 	border-radius: 0.75rem;
 	overflow: hidden;
 }
@@ -168,7 +169,7 @@ defineProps<{ html: string }>();
 .post-body :deep(.code-filename) {
 	padding: 0.5rem 1rem;
 	background: #fafaf9;
-	border-bottom: 1px solid var(--border, #e7e5e4);
+	border-bottom: 1px solid var(--border, #e7e5e0);
 	font-family: 'Geist Mono', monospace;
 	font-size: 10px;
 	letter-spacing: 0.15em;

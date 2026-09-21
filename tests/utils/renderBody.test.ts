@@ -258,6 +258,34 @@ describe('renderBody', () => {
 		expect(html).not.toContain('callout--explode');
 	});
 
+	it('splits callout text on blank lines into separate paragraphs', async () => {
+		const html = await renderBody([
+			{
+				_type: 'callout',
+				_key: 'c1',
+				tone: 'note',
+				text: 'First paragraph.\n\nSecond paragraph.',
+			},
+		]);
+		expect(html).toContain(
+			'<p>First paragraph.</p><p>Second paragraph.</p>'
+		);
+	});
+
+	it('escapes each paragraph when splitting callout text', async () => {
+		const html = await renderBody([
+			{
+				_type: 'callout',
+				_key: 'c1',
+				tone: 'note',
+				text: '<b>one</b>\n\n<b>two</b>',
+			},
+		]);
+		expect(html).not.toContain('<b>one</b>');
+		expect(html).toContain('<p>&lt;b&gt;one&lt;/b&gt;</p>');
+		expect(html).toContain('<p>&lt;b&gt;two&lt;/b&gt;</p>');
+	});
+
 	it('embeds a YouTube watch URL by constructing the embed src', async () => {
 		const html = await renderBody([
 			{
@@ -280,6 +308,43 @@ describe('renderBody', () => {
 		expect(html).toContain(
 			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
 		);
+	});
+
+	it('uses the caption as the video iframe title when present', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://youtu.be/dQw4w9WgXcQ',
+				caption: 'A demo clip',
+			},
+		]);
+		expect(html).toContain('title="A demo clip"');
+		expect(html).not.toContain('title="Embedded video"');
+	});
+
+	it('falls back to a generic iframe title when there is no caption', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://youtu.be/dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain('title="Embedded video"');
+	});
+
+	it('escapes the caption used as the video iframe title', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://youtu.be/dQw4w9WgXcQ',
+				caption: '"><script>alert(1)</script>',
+			},
+		]);
+		expect(html).not.toContain('<script>alert(1)</script>');
+		expect(html).not.toContain('title="">');
 	});
 
 	it('embeds a Vimeo URL', async () => {
