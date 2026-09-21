@@ -11,6 +11,7 @@ export const blockContent = defineType({
 				{ title: 'Normal', value: 'normal' },
 				{ title: 'Heading 2', value: 'h2' },
 				{ title: 'Heading 3', value: 'h3' },
+				{ title: 'Heading 4', value: 'h4' },
 				{ title: 'Quote', value: 'blockquote' },
 			],
 			lists: [
@@ -22,6 +23,8 @@ export const blockContent = defineType({
 					{ title: 'Strong', value: 'strong' },
 					{ title: 'Emphasis', value: 'em' },
 					{ title: 'Code', value: 'code' },
+					{ title: 'Underline', value: 'underline' },
+					{ title: 'Strike', value: 'strike-through' },
 				],
 				annotations: [
 					{
@@ -51,6 +54,20 @@ export const blockContent = defineType({
 				},
 				{ name: 'caption', type: 'string', title: 'Caption' },
 			],
+		}),
+		defineArrayMember({
+			name: 'divider',
+			type: 'object',
+			title: 'Divider',
+			fields: [
+				{
+					name: 'note',
+					type: 'string',
+					hidden: true,
+					description: 'Dividers carry no content.',
+				},
+			],
+			preview: { prepare: () => ({ title: '— Divider —' }) },
 		}),
 		defineArrayMember({
 			type: 'code',

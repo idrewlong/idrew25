@@ -101,6 +101,8 @@ const components: PortableTextComponents = {
 			`<h2 id="${slugifyHeading(headingText(value))}">${children}</h2>`,
 		h3: ({ children, value }) =>
 			`<h3 id="${slugifyHeading(headingText(value))}">${children}</h3>`,
+		h4: ({ children, value }) =>
+			`<h4 id="${slugifyHeading(headingText(value))}">${children}</h4>`,
 		blockquote: ({ children }) => `<blockquote>${children}</blockquote>`,
 	},
 	list: {
@@ -113,6 +115,8 @@ const components: PortableTextComponents = {
 	},
 	marks: {
 		code: ({ children }) => `<code class="inline-code">${children}</code>`,
+		underline: ({ children }) => `<u>${children}</u>`,
+		'strike-through': ({ children }) => `<s>${children}</s>`,
 		link: ({ children, value }) => {
 			const classification = classifyHref(String(value?.href ?? ''));
 			if (!classification.safe) return `<a>${children}</a>`;
@@ -123,6 +127,8 @@ const components: PortableTextComponents = {
 		},
 	},
 	types: {
+		// Dividers carry no content; the block's presence is the content.
+		divider: () => '<hr class="body-divider" />',
 		code: ({ value }) => {
 			const filename = value?.filename
 				? `<figcaption class="code-filename">${escapeHtml(String(value.filename))}</figcaption>`

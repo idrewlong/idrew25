@@ -34,6 +34,30 @@ defineProps<{ html: string }>();
 	scroll-margin-top: 5rem;
 }
 
+.post-body :deep(h4) {
+	margin: 1.8em 0 0.5em;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	scroll-margin-top: 5rem;
+}
+
+.post-body :deep(u) {
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.post-body :deep(s) {
+	text-decoration: line-through;
+	color: var(--text-muted, #78716c);
+}
+
+.post-body :deep(.body-divider) {
+	margin: 2.5em 0;
+	border: 0;
+	border-top: 1px solid var(--border, #e7e5e4);
+}
+
 .post-body :deep(a) {
 	color: #f97316;
 	text-decoration: underline;

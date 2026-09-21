@@ -180,6 +180,46 @@ describe('renderBody', () => {
 		expect(html).toContain('&lt;script&gt;');
 	});
 
+	it('renders h4 with a slugified id', async () => {
+		const html = await renderBody([block('Smaller Heading', 'h4')]);
+		expect(html).toContain('<h4 id="smaller-heading">Smaller Heading</h4>');
+	});
+
+	it('renders the underline decorator', async () => {
+		const html = await renderBody([
+			{
+				_type: 'block',
+				_key: 'k1',
+				style: 'normal',
+				markDefs: [],
+				children: [
+					{ _type: 'span', _key: 's1', text: 'under', marks: ['underline'] },
+				],
+			},
+		]);
+		expect(html).toContain('<u>under</u>');
+	});
+
+	it('renders the strikethrough decorator', async () => {
+		const html = await renderBody([
+			{
+				_type: 'block',
+				_key: 'k1',
+				style: 'normal',
+				markDefs: [],
+				children: [
+					{ _type: 'span', _key: 's1', text: 'gone', marks: ['strike-through'] },
+				],
+			},
+		]);
+		expect(html).toContain('<s>gone</s>');
+	});
+
+	it('renders a divider block', async () => {
+		const html = await renderBody([{ _type: 'divider', _key: 'd1' }]);
+		expect(html).toContain('<hr class="body-divider" />');
+	});
+
 	it('renders body images with dimensions and lazy loading', async () => {
 		const html = await renderBody([
 			{
