@@ -289,6 +289,110 @@ describe('renderBody', () => {
 		expect(html).toContain('src="https://player.vimeo.com/video/123456789"');
 	});
 
+	it('embeds an unlisted Vimeo URL and carries the privacy hash through as ?h=', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://vimeo.com/123456789/abc123def4',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://player.vimeo.com/video/123456789?h=abc123def4"'
+		);
+	});
+
+	it('embeds a YouTube Shorts URL', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube.com/shorts/dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a YouTube /embed/ URL', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a YouTube /live/ URL', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube.com/live/dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a music.youtube.com watch URL', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://music.youtube.com/watch?v=dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a youtube-nocookie.com embed URL', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a youtu.be URL with a trailing slash', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://youtu.be/dQw4w9WgXcQ/',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a youtu.be URL with an extra path segment', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://youtu.be/dQw4w9WgXcQ/extra',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
 	it('renders nothing for a video on an unknown host', async () => {
 		for (const url of [
 			'https://evil.com/watch?v=abc',
@@ -296,6 +400,33 @@ describe('renderBody', () => {
 			'javascript:alert(1)',
 			'not a url at all',
 			'',
+		]) {
+			const html = await renderBody([
+				{ _type: 'videoEmbed', _key: 'v1', url },
+			]);
+			expect(html).not.toContain('<iframe');
+		}
+	});
+
+	it('resists host-spoofing, scheme and homograph tricks for video embeds', async () => {
+		for (const url of [
+			// userinfo trick: hostname actually resolves to evil.com
+			'https://youtube.com@evil.com/watch?v=dQw4w9WgXcQ',
+			// no dot after "www" — not the stripped prefix
+			'https://wwwyoutube.com/watch?v=dQw4w9WgXcQ',
+			// IDN homograph of youtube.com (Cyrillic characters)
+			'https://xn--ytube-4ve.com/watch?v=dQw4w9WgXcQ',
+			// trailing dot on an otherwise-allowlisted host
+			'https://youtube.com./watch?v=dQw4w9WgXcQ',
+			'https://vimeo.com./123456789',
+			'blob:https://youtube.com/dQw4w9WgXcQ',
+			'data:text/html,<iframe src=https://youtube.com>',
+			// protocol-relative — no scheme for `new URL` to parse
+			'//youtube.com/watch?v=dQw4w9WgXcQ',
+			// vimeo lookalike host
+			'https://vimeo.com.evil.com/123456789',
+			// youtube-nocookie lookalike host
+			'https://evil-youtube-nocookie.com/embed/dQw4w9WgXcQ',
 		]) {
 			const html = await renderBody([
 				{ _type: 'videoEmbed', _key: 'v1', url },

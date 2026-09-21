@@ -101,6 +101,27 @@ const CALLOUT_TONES = ['note', 'warning', 'tip'];
 // carrying quotes, spaces or markup fails before it reaches an attribute.
 const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
 const VIMEO_ID = /^[0-9]{6,12}$/;
+// Vimeo's unlisted-video privacy hash, as appended to Share-button URLs
+// (e.g. vimeo.com/123456789/abc123def4). Alphanumeric only, so it is safe
+// to interpolate into the constructed query string unescaped.
+const VIMEO_HASH = /^[A-Za-z0-9]{6,20}$/;
+
+// Exact-match allowlists (after stripping a leading "www."). Kept as
+// literal Sets/strings rather than any kind of prefix/suffix/substring
+// check, so lookalikes like "youtube.com.evil.com", "wwwyoutube.com" or a
+// trailing-dot host never pass.
+const YOUTUBE_HOSTS = new Set([
+	'youtube.com',
+	'm.youtube.com',
+	'music.youtube.com',
+]);
+const YOUTUBE_NOCOOKIE_HOST = 'youtube-nocookie.com';
+
+function buildYouTubeSrc(id: string): string | null {
+	return VIDEO_ID.test(id)
+		? `https://www.youtube-nocookie.com/embed/${id}`
+		: null;
+}
 
 // The author's URL is NEVER passed through to the iframe. It is parsed, the
 // host is checked against an allowlist, the id is extracted and validated, and
@@ -117,26 +138,48 @@ function videoEmbedSrc(rawUrl: string): string | null {
 	if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
 
 	const host = url.hostname.replace(/^www\./, '');
+	const segments = url.pathname.split('/').filter(Boolean);
 
-	if (host === 'youtube.com' || host === 'm.youtube.com') {
-		const id = url.searchParams.get('v') ?? '';
-		return VIDEO_ID.test(id)
-			? `https://www.youtube-nocookie.com/embed/${id}`
-			: null;
+	if (YOUTUBE_HOSTS.has(host)) {
+		const vParam = url.searchParams.get('v');
+		if (vParam) return buildYouTubeSrc(vParam);
+
+		// /shorts/<id>, /embed/<id>, /live/<id>
+		if (
+			segments.length >= 2 &&
+			(segments[0] === 'shorts' ||
+				segments[0] === 'embed' ||
+				segments[0] === 'live')
+		) {
+			return buildYouTubeSrc(segments[1]);
+		}
+		return null;
+	}
+
+	if (host === YOUTUBE_NOCOOKIE_HOST) {
+		if (segments.length >= 2 && segments[0] === 'embed') {
+			return buildYouTubeSrc(segments[1]);
+		}
+		return null;
 	}
 
 	if (host === 'youtu.be') {
-		const id = url.pathname.slice(1);
-		return VIDEO_ID.test(id)
-			? `https://www.youtube-nocookie.com/embed/${id}`
-			: null;
+		// A trailing slash or an extra path segment after the id (as some
+		// share flows append) is tolerated — only the first segment is the id.
+		return buildYouTubeSrc(segments[0] ?? '');
 	}
 
 	if (host === 'vimeo.com' || host === 'player.vimeo.com') {
-		const id = url.pathname.split('/').filter(Boolean).pop() ?? '';
-		return VIMEO_ID.test(id)
-			? `https://player.vimeo.com/video/${id}`
-			: null;
+		// Scan for the first path segment that looks like a video id, rather
+		// than blindly popping the last one — an unlisted-video Share URL
+		// (vimeo.com/<id>/<privacy-hash>) puts the hash AFTER the id.
+		const idIndex = segments.findIndex((segment) => VIMEO_ID.test(segment));
+		if (idIndex === -1) return null;
+		const id = segments[idIndex];
+		const hashSegment = segments[idIndex + 1];
+		const hash =
+			hashSegment && VIMEO_HASH.test(hashSegment) ? hashSegment : null;
+		return `https://player.vimeo.com/video/${id}${hash ? `?h=${hash}` : ''}`;
 	}
 
 	return null;
