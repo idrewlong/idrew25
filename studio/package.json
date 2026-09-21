@@ -1,0 +1,19 @@
+{
+	"name": "idrewlong-studio",
+	"private": true,
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "sanity dev",
+		"build": "sanity build",
+		"deploy": "sanity deploy"
+	},
+	"dependencies": {
+		"@sanity/code-input": "^5.1.2",
+		"@sanity/vision": "^6.15.0",
+		"react": "^19.2.2",
+		"react-dom": "^19.2.2",
+		"sanity": "^6.15.0",
+		"styled-components": "^6.1.15"
+	}
+}
