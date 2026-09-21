@@ -68,7 +68,7 @@ const isScrolled = ref(false);
 
 // Contact lives in its own CTA button, not in this list.
 const navigationLinks = [
-	// { to: '/blog', label: 'Blog' },
+	{ to: '/blog', label: 'Blog' },
 ];
 
 const socialLinks = [
