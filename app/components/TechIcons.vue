@@ -20,7 +20,7 @@
 				<Icon
 					:name="icon.logo"
 					class="w-8 h-8 sm:w-9 sm:h-9"
-					aria-hidden="true"
+					::aria-hidden="true"
 				/>
 			</div>
 		</div>

@@ -170,6 +170,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@reference '../assets/css/main.css';
+
 .cta-name {
 	font-size: clamp(3.5rem, 10vw, 9rem);
 }

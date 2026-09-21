@@ -12,7 +12,7 @@
 		<!-- Notion database table card -->
 		<div
 			ref="educationContainer"
-			class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm w-full"
+			class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-xs w-full"
 		>
 			<!-- Column header row -->
 			<div class="hidden md:flex border-b border-stone-100 bg-stone-50/80">

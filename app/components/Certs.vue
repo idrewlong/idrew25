@@ -74,7 +74,7 @@
 						<span
 							v-for="tag in cert.tags"
 							:key="tag"
-							class="text-[9px] font-mono tracking-[0.12em] uppercase text-stone-400 bg-stone-50 px-2 py-0.5 rounded"
+							class="text-[9px] font-mono tracking-[0.12em] uppercase text-stone-400 bg-stone-50 px-2 py-0.5 rounded-sm"
 						>{{ tag }}</span>
 					</div>
 				</div>

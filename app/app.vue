@@ -2,7 +2,7 @@
 	<div class="min-h-screen flex flex-col">
 		<Preloader v-if="showPreloader" @done="showPreloader = false" />
 		<Header />
-		<main class="flex-grow">
+		<main class="grow">
 			<NuxtPage />
 		</main>
 		<Footer />

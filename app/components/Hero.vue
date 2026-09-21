@@ -55,7 +55,7 @@
 							<Icon
 								name="heroicons:arrow-up-right-20-solid"
 								class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-								aria-hidden="true"
+								:aria-hidden="true"
 							/>
 						</NuxtLink>
 						<a
@@ -69,7 +69,7 @@
 							<Icon
 								name="heroicons:arrow-down-20-solid"
 								class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5"
-								aria-hidden="true"
+								:aria-hidden="true"
 							/>
 						</a>
 					</div>

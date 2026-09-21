@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['lenis/dist/lenis.css', '~/assets/css/main.css'],
@@ -15,15 +17,16 @@ export default defineNuxtConfig({
 		id: 'G-J7YM70XLHW',
 	},
 
+	// Pages set a static ogImage (/images/OG.webp), so the runtime OG image
+	// renderer is dead weight -- it only pulls in a native renderer dependency.
+	ogImage: { enabled: false },
+
 	app: {
 		pageTransition: { name: 'page', mode: 'out-in' },
 	},
 
-	postcss: {
-		plugins: {
-			tailwindcss: {},
-			autoprefixer: {},
-		},
+	vite: {
+		plugins: [tailwindcss()],
 	},
 
 	image: {

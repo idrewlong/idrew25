@@ -61,7 +61,7 @@
 						<!-- Image peek (right edge, closed rows only) -->
 						<div
 							v-if="openIndex !== i"
-							class="absolute right-0 top-0 bottom-0 w-44 z-[1] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+							class="absolute right-0 top-0 bottom-0 w-44 z-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
 							aria-hidden="true"
 						>
 							<img
@@ -72,7 +72,7 @@
 							/>
 							<!-- Fade left edge into row background -->
 							<div
-								class="absolute inset-0 bg-gradient-to-r from-stone-100 via-stone-100/60 to-transparent"
+								class="absolute inset-0 bg-linear-to-r from-stone-100 via-stone-100/60 to-transparent"
 							></div>
 						</div>
 
@@ -208,7 +208,7 @@
 			<Teleport to="body">
 				<div
 					ref="cursorEl"
-					class="fixed top-0 left-0 pointer-events-none z-[9999] select-none hidden md:flex items-center justify-center"
+					class="fixed top-0 left-0 pointer-events-none z-9999 select-none hidden md:flex items-center justify-center"
 					style="opacity: 0; will-change: transform; width: 112px; height: 112px; margin: -56px 0 0 -56px;"
 					aria-hidden="true"
 				>

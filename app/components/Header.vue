@@ -31,7 +31,7 @@
 					class="icon-item"
 					:aria-label="social.label"
 				>
-					<Icon :name="social.icon" class="w-4 h-4" aria-hidden="true" />
+					<Icon :name="social.icon" class="w-4 h-4" ::aria-hidden="true" />
 				</a>
 
 				<div class="nav-divider" aria-hidden="true" />
@@ -41,7 +41,7 @@
 					<Icon
 						name="heroicons:arrow-up-right-20-solid"
 						class="header-cta-icon"
-						aria-hidden="true"
+						:aria-hidden="true"
 					/>
 				</NuxtLink>
 			</nav>
@@ -53,7 +53,7 @@
 					<Icon
 						name="heroicons:arrow-up-right-20-solid"
 						class="header-cta-icon"
-						aria-hidden="true"
+						:aria-hidden="true"
 					/>
 				</NuxtLink>
 			</div>

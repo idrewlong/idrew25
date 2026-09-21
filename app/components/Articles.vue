@@ -33,7 +33,7 @@
       <article
         v-for="article in articles"
         :key="article.url"
-        class="article-card group snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] bg-white rounded-2xl overflow-hidden border border-stone-200 hover:border-stone-300 shadow-sm hover:shadow-md transition-all duration-300"
+        class="article-card group snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] bg-white rounded-2xl overflow-hidden border border-stone-200 hover:border-stone-300 shadow-xs hover:shadow-md transition-all duration-300"
       >
         <a
           :href="article.url"
@@ -43,7 +43,7 @@
         >
           <!-- Image Container with Fixed Height -->
           <div
-            class="relative h-[180px] sm:h-[240px] overflow-hidden bg-gradient-to-b"
+            class="relative h-[180px] sm:h-[240px] overflow-hidden bg-linear-to-b"
             :class="article.bgColor"
           >
             <img
@@ -54,7 +54,7 @@
           </div>
 
           <!-- Content Container with Fixed Height -->
-          <div class="p-6 flex flex-col flex-grow">
+          <div class="p-6 flex flex-col grow">
             <div class="flex items-start justify-between gap-4 mb-3">
               <h2
                 class="text-base font-serif font-bold text-stone-900 group-hover:text-orange-500 transition-colors line-clamp-2"
@@ -68,7 +68,7 @@
                 {{ formatDate(article.date) }}
               </time>
             </div>
-            <p class="text-stone-500 text-sm mb-4 line-clamp-2 flex-grow">
+            <p class="text-stone-500 text-sm mb-4 line-clamp-2 grow">
               {{ article.description }}
             </p>
             <div

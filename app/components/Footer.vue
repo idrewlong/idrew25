@@ -1,6 +1,6 @@
 <!-- components/Footer.vue -->
 <template>
-	<footer class="w-full border-t border-stone-200 bg-[var(--bg)]">
+	<footer class="w-full border-t border-stone-200 bg-(--bg)">
 		<div class="max-w-6xl mx-auto px-4 sm:px-6">
 			<div class="flex items-center justify-between py-4">
 				<span class="footer-text">Long Beach // MS</span>
@@ -45,6 +45,8 @@ const year = new Date().getFullYear();
 </script>
 
 <style scoped>
+@reference '../assets/css/main.css';
+
 .footer-text {
 	@apply text-[9px] tracking-[0.2em] uppercase text-stone-400 font-mono;
 }

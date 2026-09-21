@@ -84,7 +84,7 @@
 							<Icon
 								icon="heroicons:arrow-up-right-20-solid"
 								class="w-3.5 h-3.5 shrink-0 text-stone-400 group-hover:text-orange-400 transition-colors duration-200"
-								aria-hidden="true"
+								:aria-hidden="true"
 							/>
 						</a>
 						<span
