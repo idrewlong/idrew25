@@ -9,11 +9,11 @@ Source for [idrewlong.com](https://www.idrewlong.com), Andrew Long's portfolio s
 - [@nuxt/fonts](https://fonts.nuxt.com), [@nuxt/icon](https://github.com/nuxt/icon), [@nuxt/image](https://image.nuxt.com)
 - [@nuxtjs/seo](https://nuxtseo.com) (meta tags, sitemap, robots.txt)
 - GSAP for animation
-- Web3Forms for the contact form ([server/api/contact.post.ts](server/api/contact.post.ts))
+- [Web3Forms](https://web3forms.com) for the contact form (submitted client-side from [app/pages/contact/index.vue](app/pages/contact/index.vue))
 
 ## Setup
 
-Requires an `ACCESS_KEY` environment variable — a [Web3Forms](https://web3forms.com) access key used by the contact form endpoint. Copy `.env.example` to `.env` and fill it in:
+Requires a `NUXT_PUBLIC_WEB3FORMS_ACCESS_KEY` environment variable — a [Web3Forms](https://web3forms.com) access key. Web3Forms' free plan only accepts submissions from the browser, so the form posts to their API directly and this key is exposed in the client bundle by design. Copy `.env.example` to `.env` and fill it in:
 
 ```bash
 cp .env.example .env

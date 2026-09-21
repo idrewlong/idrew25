@@ -17,8 +17,12 @@ useSeoMeta({
     'Connect with Andrew Long, a full stack developer specializing in web development and marketing. Reach out for collaboration, or just to say hello!.',
 });
 
+// Public by design -- see the note in nuxt.config.ts.
+const accessKey = useRuntimeConfig().public.web3formsAccessKey;
+
 // Form state
 const form = ref({ name: '', email: '', message: '' });
+const botcheck = ref(false);
 const isSubmitting = ref(false);
 const result = ref('');
 const status = ref('');
@@ -30,39 +34,88 @@ const headingEl = ref(null);
 const formEl = ref(null);
 const sidebarEl = ref(null);
 
+const clearStatusSoon = () => {
+  setTimeout(() => {
+    result.value = '';
+    status.value = '';
+  }, 5000);
+};
+
+// Web3Forms' free plan rejects server-side calls, so the request goes
+// straight from the browser -- these checks mirror the rules the old
+// /api/contact route enforced before it was removed.
+const validate = () => {
+  const { name, email, message } = form.value;
+  if (name.trim().length < 1) return 'Please enter your name.';
+  if (name.length > 100) return 'Name is too long (100 characters max).';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return 'Please enter a valid email address.';
+  if (message.trim().length < 1) return 'Please enter a message.';
+  if (message.length > 5000)
+    return 'Message is too long (5000 characters max).';
+  return null;
+};
+
 const submitForm = async () => {
   if (isSubmitting.value) return;
+
+  const validationError = validate();
+  if (validationError) {
+    status.value = 'error';
+    result.value = validationError;
+    clearStatusSoon();
+    return;
+  }
+
   isSubmitting.value = true;
   result.value = 'Sending message...';
   status.value = 'info';
 
-  try {
-    const response = await $fetch<{ success: boolean }>('/api/contact', {
-      method: 'POST',
-      body: {
-        name: form.value.name,
-        email: form.value.email,
-        message: form.value.message,
-      },
-    });
+  // Sent as FormData, not JSON, and deliberately so: multipart/form-data is
+  // a CORS-safelisted content type, so this is a "simple request" with no
+  // preflight. An application/json body forces an OPTIONS preflight that
+  // api.web3forms.com does not answer, and the POST never leaves the browser.
+  const payload = new FormData();
+  payload.append('access_key', accessKey);
+  payload.append('name', form.value.name);
+  payload.append('email', form.value.email);
+  payload.append('message', form.value.message);
+  // Only appended when actually checked. An unchecked checkbox is absent from
+  // a native FormData submission entirely, and Web3Forms treats *any* present
+  // value -- including the string "false" -- as the honeypot being tripped.
+  if (botcheck.value) payload.append('botcheck', 'on');
+  payload.append(
+    'subject',
+    `New contact form submission from ${form.value.name} - idrewlong.com`
+  );
 
-    if (response.success) {
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: payload,
+    });
+    const data: { success?: boolean; message?: string } = await response
+      .json()
+      .catch(() => ({}));
+
+    if (data.success) {
       status.value = 'success';
       result.value = "Message sent — I'll be in touch soon.";
       form.value = { name: '', email: '', message: '' };
     } else {
+      // Surface what Web3Forms actually said rather than a generic string --
+      // swallowing this is what made the original failure so hard to diagnose.
+      console.error('[contact] Web3Forms rejected the submission:', response.status, data);
       status.value = 'error';
-      result.value = 'Something went wrong. Please try again.';
+      result.value = data.message || 'Something went wrong. Please try again.';
     }
-  } catch {
+  } catch (error) {
+    console.error('[contact] Request to Web3Forms failed:', error);
     status.value = 'error';
     result.value = 'Failed to send message. Please try again later.';
   } finally {
     isSubmitting.value = false;
-    setTimeout(() => {
-      result.value = '';
-      status.value = '';
-    }, 5000);
+    clearStatusSoon();
   }
 };
 
@@ -160,7 +213,16 @@ onMounted(() => {
           </div>
 
           <!-- Honeypot -->
-          <input type="checkbox" name="botcheck" class="hidden" style="display: none" />
+          <input
+            v-model="botcheck"
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
 
           <!-- Status -->
           <Transition

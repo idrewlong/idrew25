@@ -5,7 +5,11 @@ export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['lenis/dist/lenis.css', '~/assets/css/main.css'],
 	runtimeConfig: {
-		ACCESS_KEY: process.env.ACCESS_KEY,
+		public: {
+			// Public by design: Web3Forms' free plan only accepts submissions
+			// from the browser, so this key ships in the client bundle.
+			web3formsAccessKey: process.env.NUXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+		},
 	},
 	site: {
 		url: 'https://www.idrewlong.com',
