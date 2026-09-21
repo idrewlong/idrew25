@@ -9,6 +9,14 @@ const block = (text: string, style = 'normal') => ({
 	children: [{ _type: 'span', _key: 's1', text, marks: [] }],
 });
 
+const linkBlock = (href: string, text = 'link') => ({
+	_type: 'block',
+	_key: 'k1',
+	style: 'normal',
+	markDefs: [{ _key: 'l1', _type: 'link', href }],
+	children: [{ _type: 'span', _key: 's1', text, marks: ['l1'] }],
+});
+
 describe('slugifyHeading', () => {
 	it('lowercases and hyphenates', () => {
 		expect(slugifyHeading('My Great Heading')).toBe('my-great-heading');
@@ -51,6 +59,32 @@ describe('renderBody', () => {
 		]);
 		expect(html).toContain('rel="noopener noreferrer"');
 		expect(html).toContain('target="_blank"');
+	});
+
+	it('refuses to emit an unsafe href scheme', async () => {
+		const html = await renderBody([linkBlock('javascript:alert(1)')]);
+		expect(html).not.toContain('href="javascript:');
+		expect(html).toContain('link');
+	});
+
+	it('opens absolute https links in a new tab', async () => {
+		const html = await renderBody([linkBlock('https://example.com')]);
+		expect(html).toContain('target="_blank"');
+		expect(html).toContain('rel="noopener noreferrer"');
+	});
+
+	it('keeps relative links in the same tab', async () => {
+		const html = await renderBody([linkBlock('/blog/other/')]);
+		expect(html).toContain('href="/blog/other/"');
+		expect(html).not.toContain('target="_blank"');
+	});
+
+	it('treats a lookalike hostname as external, not a substring match', async () => {
+		const html = await renderBody([
+			linkBlock('https://idrewlong.com.evil.com/x'),
+		]);
+		expect(html).toContain('target="_blank"');
+		expect(html).toContain('rel="noopener noreferrer"');
 	});
 
 	it('highlights code and keeps the filename', async () => {

@@ -29,6 +29,35 @@ function getHighlighter(): Promise<Highlighter> {
 	return highlighterPromise;
 }
 
+const SITE_HOSTNAMES = new Set(['idrewlong.com', 'www.idrewlong.com']);
+
+// Only these link shapes are safe to emit an href for: absolute http(s),
+// mailto, and same-site relative/anchor links. Anything else (javascript:,
+// data:, vbscript:, etc.) is rendered as plain text with no href.
+function isSafeHref(href: string): boolean {
+	if (href.startsWith('/') || href.startsWith('#')) return true;
+	if (/^mailto:/i.test(href)) return true;
+	try {
+		const url = new URL(href);
+		return url.protocol === 'http:' || url.protocol === 'https:';
+	} catch {
+		return false;
+	}
+}
+
+// Substring matching on the href (e.g. `.includes('idrewlong.com')`) is
+// spoofable by `idrewlong.com.evil.com`, so the hostname is parsed and
+// compared exactly instead.
+function isExternalHref(href: string): boolean {
+	try {
+		const url = new URL(href);
+		if (url.protocol !== 'http:' && url.protocol !== 'https:') return false;
+		return !SITE_HOSTNAMES.has(url.hostname);
+	} catch {
+		return false;
+	}
+}
+
 function escapeHtml(value: string): string {
 	return value
 		.replace(/&/g, '&amp;')
@@ -75,9 +104,8 @@ const components: PortableTextComponents = {
 		code: ({ children }) => `<code class="inline-code">${children}</code>`,
 		link: ({ children, value }) => {
 			const href = String(value?.href ?? '');
-			const isExternal =
-				/^https?:\/\//.test(href) && !href.includes('idrewlong.com');
-			const attrs = isExternal
+			if (!isSafeHref(href)) return `<a>${children}</a>`;
+			const attrs = isExternalHref(href)
 				? ' target="_blank" rel="noopener noreferrer"'
 				: '';
 			return `<a href="${escapeHtml(href)}"${attrs}>${children}</a>`;
