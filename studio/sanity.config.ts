@@ -12,12 +12,8 @@ export default defineConfig({
 	title: 'idrewlong.com',
 	projectId: 'q2wxb7pr',
 	dataset: 'production',
+	icon: Logo,
 	plugins: [structureTool({ structure }), visionTool(), codeInput()],
 	schema: { types: schemaTypes },
 	theme,
-	studio: {
-		components: {
-			logo: Logo,
-		},
-	},
 });
