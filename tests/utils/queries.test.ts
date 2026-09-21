@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
 	postsQuery,
 	POST_BY_SLUG_QUERY,
-	FEATURES_QUERY,
 	POST_SLUGS_QUERY,
 	TAGS_QUERY,
 } from '../../server/utils/queries';
@@ -36,12 +35,6 @@ describe('POST_BY_SLUG_QUERY', () => {
 
 	it('expands image assets inside body so the renderer needs no URL builder', () => {
 		expect(POST_BY_SLUG_QUERY).toContain('_type == "image" =>');
-	});
-});
-
-describe('FEATURES_QUERY', () => {
-	it('defaults the accent colour so cards never render with undefined', () => {
-		expect(FEATURES_QUERY).toContain('coalesce(accentColor');
 	});
 });
 

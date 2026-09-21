@@ -14,7 +14,7 @@ export const structure: StructureResolver = (S) =>
 						.title('Drafts')
 						.apiVersion('2024-09-26')
 						.filter(
-							'_id in path("drafts.**") && _type in ["post", "feature"]'
+							'_id in path("drafts.**") && _type in ["post"]'
 						)
 						.defaultOrdering([
 							{ field: '_updatedAt', direction: 'desc' },
@@ -27,16 +27,6 @@ export const structure: StructureResolver = (S) =>
 				.child(
 					S.documentTypeList('post')
 						.title('Posts')
-						.defaultOrdering([
-							{ field: 'publishedAt', direction: 'desc' },
-						])
-				),
-			S.listItem()
-				.title('Features')
-				.id('features')
-				.child(
-					S.documentTypeList('feature')
-						.title('Published elsewhere')
 						.defaultOrdering([
 							{ field: 'publishedAt', direction: 'desc' },
 						])

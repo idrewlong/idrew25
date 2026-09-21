@@ -10,8 +10,7 @@
 			:style="{ backgroundColor: feature.accentColor }"
 		>
 			<img
-				v-if="feature.image"
-				:src="`${feature.image.url}?w=800&fm=webp&q=80`"
+				:src="feature.image.url"
 				:alt="feature.image.alt"
 				loading="lazy"
 				decoding="async"
@@ -56,9 +55,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Feature } from '~~/server/utils/types';
+import type { FeaturedArticle } from '~/utils/featuredArticles';
 
-defineProps<{ feature: Feature }>();
+defineProps<{ feature: FeaturedArticle }>();
 
 </script>
 

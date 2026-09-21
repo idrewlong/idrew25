@@ -42,17 +42,6 @@ export const POST_BY_SLUG_QUERY = `*[_type == "post" && slug.current == $slug][0
 	}
 }`;
 
-export const FEATURES_QUERY = `*[_type == "feature"] | order(publishedAt desc){
-	title,
-	publisher,
-	externalUrl,
-	publishedAt,
-	description,
-	"image": image${IMAGE_PROJECTION},
-	"accentColor": coalesce(accentColor, "#f5f5f4"),
-	${TAGS_PROJECTION}
-}`;
-
 export const POST_SLUGS_QUERY = `*[_type == "post" && defined(slug.current)]{
 	"slug": slug.current,
 	"lastmod": coalesce(_updatedAt, publishedAt)

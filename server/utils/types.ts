@@ -22,14 +22,3 @@ export interface PostSummary {
 export interface Post extends PostSummary {
 	bodyHtml: string;
 }
-
-export interface Feature {
-	title: string;
-	publisher: string;
-	externalUrl: string;
-	publishedAt: string;
-	description: string;
-	image: SanityImage | null;
-	accentColor: string;
-	tags: Tag[];
-}

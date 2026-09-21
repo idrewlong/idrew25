@@ -70,8 +70,8 @@ const activeTag = computed(() =>
 const { data: posts } = await useFetch('/api/blog/posts', {
 	query: { tag: activeTag },
 });
-const { data: features } = await useFetch('/api/blog/features');
 const { data: tags } = await useFetch('/api/blog/tags');
+const features = featuredArticles;
 
 useSeoMeta({
 	title: 'Blog',
