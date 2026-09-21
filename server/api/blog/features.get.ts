@@ -3,7 +3,10 @@ import type { SanityConfig } from '../../utils/sanity';
 
 export default defineEventHandler(async (event): Promise<Feature[]> => {
 	const runtime = useRuntimeConfig();
-	const preview = hasPreviewCookie(getRequestHeader(event, 'cookie'));
+	const preview = hasPreviewCookie(
+		getRequestHeader(event, 'cookie'),
+		runtime.previewSecret
+	);
 	const client = createSanityClient(runtime.sanity as SanityConfig, {
 		preview,
 	});

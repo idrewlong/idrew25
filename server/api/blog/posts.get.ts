@@ -9,7 +9,10 @@ export default defineEventHandler(async (event): Promise<PostSummary[]> => {
 			: undefined;
 
 	const runtime = useRuntimeConfig();
-	const preview = hasPreviewCookie(getRequestHeader(event, 'cookie'));
+	const preview = hasPreviewCookie(
+		getRequestHeader(event, 'cookie'),
+		runtime.previewSecret
+	);
 	const client = createSanityClient(runtime.sanity as SanityConfig, {
 		preview,
 	});
