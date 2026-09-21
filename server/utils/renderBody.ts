@@ -97,6 +97,13 @@ function plainCodeBlock(code: string): string {
 
 const CALLOUT_TONES = ['note', 'warning', 'tip'];
 
+// This host + id logic is mirrored in studio/schemas/blockContent.ts
+// (isEmbeddableVideoUrl, used by videoEmbed.url's rule.custom()) so an
+// unembeddable URL is rejected at authoring time instead of saving fine
+// and rendering nothing live. The Studio cannot import from the Nuxt app,
+// so that copy is hand-kept — update both when changing a supported host
+// or id shape here.
+//
 // YouTube ids are 11 chars; the range is deliberately tight so anything
 // carrying quotes, spaces or markup fails before it reaches an attribute.
 const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;

@@ -12,6 +12,7 @@ export const structure: StructureResolver = (S) =>
 				.child(
 					S.documentList()
 						.title('Drafts')
+						.apiVersion('2024-09-26')
 						.filter(
 							'_id in path("drafts.**") && _type in ["post", "feature"]'
 						)

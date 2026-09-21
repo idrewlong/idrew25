@@ -10,10 +10,11 @@ export function ColorInput(props: StringInputProps) {
 
 	const handleChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
+			if (elementProps.readOnly) return;
 			const next = event.currentTarget.value;
 			onChange(next ? set(next) : unset());
 		},
-		[onChange]
+		[onChange, elementProps.readOnly]
 	);
 
 	return (
@@ -23,6 +24,7 @@ export function ColorInput(props: StringInputProps) {
 				aria-label="Pick accent colour"
 				value={HEX.test(value) ? value : FALLBACK}
 				onChange={handleChange}
+				disabled={elementProps.readOnly}
 				style={{
 					width: 44,
 					height: 35,
@@ -30,7 +32,8 @@ export function ColorInput(props: StringInputProps) {
 					border: '1px solid #E7E5E0',
 					borderRadius: 4,
 					background: 'none',
-					cursor: 'pointer',
+					cursor: elementProps.readOnly ? 'not-allowed' : 'pointer',
+					opacity: elementProps.readOnly ? 0.5 : 1,
 				}}
 			/>
 			{/* The text field stays alongside the swatch on purpose: a native

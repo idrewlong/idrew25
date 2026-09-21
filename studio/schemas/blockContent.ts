@@ -1,5 +1,63 @@
 import { defineArrayMember, defineType } from 'sanity';
 
+// Mirrors the host + id checks in videoEmbedSrc, server/utils/renderBody.ts.
+// The Studio cannot import from the Nuxt app, so this is a hand-kept
+// duplicate — an unembeddable URL here saves fine and renders nothing live,
+// so this exists to catch it at authoring time instead. Keep both in sync
+// when adding or changing a supported host or id shape.
+const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
+const VIMEO_ID = /^[0-9]{6,12}$/;
+const YOUTUBE_HOSTS = new Set([
+	'youtube.com',
+	'm.youtube.com',
+	'music.youtube.com',
+]);
+const YOUTUBE_NOCOOKIE_HOST = 'youtube-nocookie.com';
+
+function isEmbeddableVideoUrl(raw: string): boolean {
+	let url: URL;
+	try {
+		url = new URL(raw);
+	} catch {
+		return false;
+	}
+
+	if (url.protocol !== 'https:' && url.protocol !== 'http:') return false;
+
+	const host = url.hostname.replace(/^www\./, '');
+	const segments = url.pathname.split('/').filter(Boolean);
+
+	if (YOUTUBE_HOSTS.has(host)) {
+		const vParam = url.searchParams.get('v');
+		if (vParam) return VIDEO_ID.test(vParam);
+		return (
+			segments.length >= 2 &&
+			(segments[0] === 'shorts' ||
+				segments[0] === 'embed' ||
+				segments[0] === 'live') &&
+			VIDEO_ID.test(segments[1])
+		);
+	}
+
+	if (host === YOUTUBE_NOCOOKIE_HOST) {
+		return (
+			segments.length >= 2 &&
+			segments[0] === 'embed' &&
+			VIDEO_ID.test(segments[1])
+		);
+	}
+
+	if (host === 'youtu.be') {
+		return VIDEO_ID.test(segments[0] ?? '');
+	}
+
+	if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+		return segments.some((segment) => VIMEO_ID.test(segment));
+	}
+
+	return false;
+}
+
 export const blockContent = defineType({
 	name: 'blockContent',
 	title: 'Body',
@@ -103,7 +161,13 @@ export const blockContent = defineType({
 					title: 'YouTube or Vimeo URL',
 					description:
 						'Only YouTube and Vimeo are embedded. Other hosts render nothing.',
-					validation: (rule) => rule.required(),
+					validation: (rule) =>
+						rule.required().custom((value) => {
+							if (!value) return true;
+							return isEmbeddableVideoUrl(value)
+								? true
+								: 'This URL will not embed. Use a YouTube watch, shorts, embed, live or youtu.be link (youtube.com, m.youtube.com, music.youtube.com, youtube-nocookie.com or youtu.be), or a Vimeo link (vimeo.com or player.vimeo.com).';
+						}),
 				},
 				{ name: 'caption', type: 'string', title: 'Caption' },
 			],

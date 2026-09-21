@@ -33,7 +33,7 @@ export const post = defineType({
 		}),
 		defineField({
 			name: 'description',
-			group: 'meta',
+			group: 'content',
 			type: 'text',
 			rows: 3,
 			description: 'Used as the meta description and card summary.',
