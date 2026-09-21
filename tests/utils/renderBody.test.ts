@@ -79,6 +79,13 @@ describe('renderBody', () => {
 		expect(html).not.toContain('target="_blank"');
 	});
 
+	it('rejects protocol-relative hrefs instead of treating them as internal', async () => {
+		const html = await renderBody([linkBlock('//evil.com/x')]);
+		expect(html).not.toContain('href="//evil.com/x"');
+		expect(html).not.toContain('href="');
+		expect(html).toContain('link');
+	});
+
 	it('treats a lookalike hostname as external, not a substring match', async () => {
 		const html = await renderBody([
 			linkBlock('https://idrewlong.com.evil.com/x'),

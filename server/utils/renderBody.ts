@@ -35,6 +35,7 @@ const SITE_HOSTNAMES = new Set(['idrewlong.com', 'www.idrewlong.com']);
 // mailto, and same-site relative/anchor links. Anything else (javascript:,
 // data:, vbscript:, etc.) is rendered as plain text with no href.
 function isSafeHref(href: string): boolean {
+	if (href.startsWith('//')) return false;
 	if (href.startsWith('/') || href.startsWith('#')) return true;
 	if (/^mailto:/i.test(href)) return true;
 	try {
