@@ -4,20 +4,28 @@ export const post = defineType({
 	name: 'post',
 	title: 'Post',
 	type: 'document',
+	groups: [
+		{ name: 'content', title: 'Content', default: true },
+		{ name: 'media', title: 'Media' },
+		{ name: 'meta', title: 'Meta' },
+	],
 	fields: [
 		defineField({
 			name: 'title',
+			group: 'content',
 			type: 'string',
 			validation: (rule) => rule.required(),
 		}),
 		defineField({
 			name: 'slug',
+			group: 'meta',
 			type: 'slug',
 			options: { source: 'title', maxLength: 96 },
 			validation: (rule) => rule.required(),
 		}),
 		defineField({
 			name: 'publishedAt',
+			group: 'meta',
 			title: 'Published at',
 			type: 'datetime',
 			initialValue: () => new Date().toISOString(),
@@ -25,6 +33,7 @@ export const post = defineType({
 		}),
 		defineField({
 			name: 'description',
+			group: 'meta',
 			type: 'text',
 			rows: 3,
 			description: 'Used as the meta description and card summary.',
@@ -32,6 +41,7 @@ export const post = defineType({
 		}),
 		defineField({
 			name: 'coverImage',
+			group: 'media',
 			title: 'Cover image',
 			type: 'image',
 			options: { hotspot: true },
@@ -46,10 +56,15 @@ export const post = defineType({
 		}),
 		defineField({
 			name: 'tags',
+			group: 'meta',
 			type: 'array',
 			of: [{ type: 'reference', to: [{ type: 'tag' }] }],
 		}),
-		defineField({ name: 'body', type: 'blockContent' }),
+		defineField({
+			name: 'body',
+			group: 'content',
+			type: 'blockContent',
+		}),
 	],
 	orderings: [
 		{
