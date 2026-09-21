@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { ColorInput } from '../components/ColorInput';
 
 export const feature = defineType({
 	name: 'feature',
@@ -55,6 +56,7 @@ export const feature = defineType({
 			description: 'Hex value for the card background, e.g. #de6daa',
 			validation: (rule) =>
 				rule.regex(/^#[0-9a-fA-F]{6}$/, { name: 'hex colour' }),
+			components: { input: ColorInput },
 		}),
 		defineField({
 			name: 'tags',
