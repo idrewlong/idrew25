@@ -56,6 +56,63 @@ export const blockContent = defineType({
 			],
 		}),
 		defineArrayMember({
+			name: 'callout',
+			type: 'object',
+			title: 'Callout',
+			fields: [
+				{
+					name: 'tone',
+					type: 'string',
+					title: 'Tone',
+					initialValue: 'note',
+					options: {
+						list: [
+							{ title: 'Note', value: 'note' },
+							{ title: 'Warning', value: 'warning' },
+							{ title: 'Tip', value: 'tip' },
+						],
+						layout: 'radio',
+					},
+					validation: (rule) => rule.required(),
+				},
+				{ name: 'title', type: 'string', title: 'Title' },
+				{
+					name: 'text',
+					type: 'text',
+					rows: 3,
+					title: 'Text',
+					validation: (rule) => rule.required(),
+				},
+			],
+			preview: {
+				select: { title: 'title', subtitle: 'text' },
+				prepare: ({ title, subtitle }) => ({
+					title: title || 'Callout',
+					subtitle,
+				}),
+			},
+		}),
+		defineArrayMember({
+			name: 'videoEmbed',
+			type: 'object',
+			title: 'Video',
+			fields: [
+				{
+					name: 'url',
+					type: 'url',
+					title: 'YouTube or Vimeo URL',
+					description:
+						'Only YouTube and Vimeo are embedded. Other hosts render nothing.',
+					validation: (rule) => rule.required(),
+				},
+				{ name: 'caption', type: 'string', title: 'Caption' },
+			],
+			preview: {
+				select: { subtitle: 'url' },
+				prepare: ({ subtitle }) => ({ title: 'Video', subtitle }),
+			},
+		}),
+		defineArrayMember({
 			name: 'divider',
 			type: 'object',
 			title: 'Divider',

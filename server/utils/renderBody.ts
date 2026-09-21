@@ -94,6 +94,54 @@ function plainCodeBlock(code: string): string {
 	return `<pre class="shiki plain"><code>${escapeHtml(code)}</code></pre>`;
 }
 
+
+const CALLOUT_TONES = ['note', 'warning', 'tip'];
+
+// YouTube ids are 11 chars; the range is deliberately tight so anything
+// carrying quotes, spaces or markup fails before it reaches an attribute.
+const VIDEO_ID = /^[A-Za-z0-9_-]{6,20}$/;
+const VIMEO_ID = /^[0-9]{6,12}$/;
+
+// The author's URL is NEVER passed through to the iframe. It is parsed, the
+// host is checked against an allowlist, the id is extracted and validated, and
+// the embed URL is CONSTRUCTED from that id. Passing the raw URL through would
+// let any URL stored in the CMS become an arbitrary embedded frame.
+function videoEmbedSrc(rawUrl: string): string | null {
+	let url: URL;
+	try {
+		url = new URL(rawUrl);
+	} catch {
+		return null;
+	}
+
+	if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+
+	const host = url.hostname.replace(/^www\./, '');
+
+	if (host === 'youtube.com' || host === 'm.youtube.com') {
+		const id = url.searchParams.get('v') ?? '';
+		return VIDEO_ID.test(id)
+			? `https://www.youtube-nocookie.com/embed/${id}`
+			: null;
+	}
+
+	if (host === 'youtu.be') {
+		const id = url.pathname.slice(1);
+		return VIDEO_ID.test(id)
+			? `https://www.youtube-nocookie.com/embed/${id}`
+			: null;
+	}
+
+	if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+		const id = url.pathname.split('/').filter(Boolean).pop() ?? '';
+		return VIMEO_ID.test(id)
+			? `https://player.vimeo.com/video/${id}`
+			: null;
+	}
+
+	return null;
+}
+
 const components: PortableTextComponents = {
 	block: {
 		normal: ({ children }) => `<p>${children}</p>`,
@@ -127,6 +175,25 @@ const components: PortableTextComponents = {
 		},
 	},
 	types: {
+		callout: ({ value }) => {
+			const text = String(value?.text ?? '');
+			if (!text) return '';
+			const tone = CALLOUT_TONES.includes(String(value?.tone))
+				? String(value.tone)
+				: 'note';
+			const title = value?.title
+				? `<p class="callout-title">${escapeHtml(String(value.title))}</p>`
+				: '';
+			return `<aside class="callout callout--${tone}">${title}<p>${escapeHtml(text)}</p></aside>`;
+		},
+		videoEmbed: ({ value }) => {
+			const src = videoEmbedSrc(String(value?.url ?? ''));
+			if (!src) return '';
+			const caption = value?.caption
+				? `<figcaption>${escapeHtml(String(value.caption))}</figcaption>`
+				: '';
+			return `<figure class="video-embed"><iframe src="${escapeHtml(src)}" title="Embedded video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>${caption}</figure>`;
+		},
 		// Dividers carry no content; the block's presence is the content.
 		divider: () => '<hr class="body-divider" />',
 		code: ({ value }) => {

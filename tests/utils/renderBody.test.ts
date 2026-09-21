@@ -220,6 +220,101 @@ describe('renderBody', () => {
 		expect(html).toContain('<hr class="body-divider" />');
 	});
 
+	it('renders a callout with its tone, title and text', async () => {
+		const html = await renderBody([
+			{
+				_type: 'callout',
+				_key: 'c1',
+				tone: 'warning',
+				title: 'Careful',
+				text: 'This deletes things.',
+			},
+		]);
+		expect(html).toContain('callout--warning');
+		expect(html).toContain('Careful');
+		expect(html).toContain('This deletes things.');
+	});
+
+	it('escapes HTML inside a callout', async () => {
+		const html = await renderBody([
+			{
+				_type: 'callout',
+				_key: 'c1',
+				tone: 'note',
+				title: '<script>a</script>',
+				text: '<img onerror=alert(1)>',
+			},
+		]);
+		expect(html).not.toContain('<script>a</script>');
+		expect(html).not.toContain('<img onerror');
+		expect(html).toContain('&lt;script&gt;');
+	});
+
+	it('falls back to the note tone for an unknown tone', async () => {
+		const html = await renderBody([
+			{ _type: 'callout', _key: 'c1', tone: 'explode', text: 'hi' },
+		]);
+		expect(html).toContain('callout--note');
+		expect(html).not.toContain('callout--explode');
+	});
+
+	it('embeds a YouTube watch URL by constructing the embed src', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+			},
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+		// The author's original URL must never reach the iframe src.
+		expect(html).not.toContain('watch?v=');
+	});
+
+	it('embeds a youtu.be short URL', async () => {
+		const html = await renderBody([
+			{ _type: 'videoEmbed', _key: 'v1', url: 'https://youtu.be/dQw4w9WgXcQ' },
+		]);
+		expect(html).toContain(
+			'src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"'
+		);
+	});
+
+	it('embeds a Vimeo URL', async () => {
+		const html = await renderBody([
+			{ _type: 'videoEmbed', _key: 'v1', url: 'https://vimeo.com/123456789' },
+		]);
+		expect(html).toContain('src="https://player.vimeo.com/video/123456789"');
+	});
+
+	it('renders nothing for a video on an unknown host', async () => {
+		for (const url of [
+			'https://evil.com/watch?v=abc',
+			'https://youtube.com.evil.com/watch?v=abc',
+			'javascript:alert(1)',
+			'not a url at all',
+			'',
+		]) {
+			const html = await renderBody([
+				{ _type: 'videoEmbed', _key: 'v1', url },
+			]);
+			expect(html).not.toContain('<iframe');
+		}
+	});
+
+	it('rejects a video id containing unexpected characters', async () => {
+		const html = await renderBody([
+			{
+				_type: 'videoEmbed',
+				_key: 'v1',
+				url: 'https://www.youtube.com/watch?v=abc"onload="alert(1)',
+			},
+		]);
+		expect(html).not.toContain('<iframe');
+	});
+
 	it('renders body images with dimensions and lazy loading', async () => {
 		const html = await renderBody([
 			{

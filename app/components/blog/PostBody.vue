@@ -58,6 +58,61 @@ defineProps<{ html: string }>();
 	border-top: 1px solid var(--border, #e7e5e4);
 }
 
+.post-body :deep(.callout) {
+	margin: 1.8em 0;
+	padding: 1.1rem 1.25rem;
+	border-left: 3px solid var(--border, #e7e5e4);
+	border-radius: 0 0.5rem 0.5rem 0;
+	background: #fafaf9;
+}
+
+.post-body :deep(.callout p) {
+	margin: 0;
+}
+
+.post-body :deep(.callout p + p) {
+	margin-top: 0.4em;
+}
+
+.post-body :deep(.callout-title) {
+	font-weight: 700;
+	font-size: 0.9375rem;
+}
+
+.post-body :deep(.callout--note) {
+	border-left-color: #78716c;
+}
+
+.post-body :deep(.callout--warning) {
+	border-left-color: #d97706;
+	background: #fffbeb;
+}
+
+.post-body :deep(.callout--tip) {
+	border-left-color: #f97316;
+	background: #fff7ed;
+}
+
+.post-body :deep(.video-embed) {
+	margin: 2em 0;
+}
+
+.post-body :deep(.video-embed iframe) {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	height: auto;
+	border: 0;
+	border-radius: 0.75rem;
+	background: #1c1917;
+}
+
+.post-body :deep(.video-embed figcaption) {
+	margin-top: 0.6rem;
+	font-size: 0.8rem;
+	color: var(--text-muted, #78716c);
+}
+
 .post-body :deep(a) {
 	color: #f97316;
 	text-decoration: underline;
