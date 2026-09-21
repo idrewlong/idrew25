@@ -59,6 +59,23 @@ export const post = defineType({
 		},
 	],
 	preview: {
-		select: { title: 'title', subtitle: 'publishedAt', media: 'coverImage' },
+		select: {
+			title: 'title',
+			publishedAt: 'publishedAt',
+			media: 'coverImage',
+		},
+		prepare({ title, publishedAt, media }) {
+			return {
+				title,
+				subtitle: publishedAt
+					? new Date(publishedAt).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'short',
+							day: 'numeric',
+						})
+					: 'No date',
+				media,
+			};
+		},
 	},
 });

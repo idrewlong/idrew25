@@ -63,6 +63,24 @@ export const feature = defineType({
 		}),
 	],
 	preview: {
-		select: { title: 'title', subtitle: 'publisher', media: 'image' },
+		select: {
+			title: 'title',
+			publisher: 'publisher',
+			publishedAt: 'publishedAt',
+			media: 'image',
+		},
+		prepare({ title, publisher, publishedAt, media }) {
+			const date = publishedAt
+				? new Date(publishedAt).toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'short',
+					})
+				: '';
+			return {
+				title,
+				subtitle: [publisher, date].filter(Boolean).join(' · '),
+				media,
+			};
+		},
 	},
 });
