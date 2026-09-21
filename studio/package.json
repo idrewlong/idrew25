@@ -9,7 +9,7 @@
 		"deploy": "sanity deploy"
 	},
 	"dependencies": {
-		"@sanity/code-input": "^5.1.2",
+		"@sanity/code-input": "^7.3.8",
 		"@sanity/vision": "^6.15.0",
 		"react": "^19.2.2",
 		"react-dom": "^19.2.2",
