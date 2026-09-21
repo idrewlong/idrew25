@@ -29,34 +29,44 @@ function getHighlighter(): Promise<Highlighter> {
 	return highlighterPromise;
 }
 
+const SITE_ORIGIN = 'https://www.idrewlong.com';
 const SITE_HOSTNAMES = new Set(['idrewlong.com', 'www.idrewlong.com']);
 
-// Only these link shapes are safe to emit an href for: absolute http(s),
-// mailto, and same-site relative/anchor links. Anything else (javascript:,
-// data:, vbscript:, etc.) is rendered as plain text with no href.
-function isSafeHref(href: string): boolean {
-	if (href.startsWith('//')) return false;
-	if (href.startsWith('/') || href.startsWith('#')) return true;
-	if (/^mailto:/i.test(href)) return true;
-	try {
-		const url = new URL(href);
-		return url.protocol === 'http:' || url.protocol === 'https:';
-	} catch {
-		return false;
-	}
+interface HrefClassification {
+	safe: boolean;
+	external: boolean;
+	href: string;
 }
 
-// Substring matching on the href (e.g. `.includes('idrewlong.com')`) is
-// spoofable by `idrewlong.com.evil.com`, so the hostname is parsed and
-// compared exactly instead.
-function isExternalHref(href: string): boolean {
+// A browser resolves every href against the PAGE's URL, so testing the raw
+// string (prefix checks, `new URL(href)` with no base) checks something the
+// browser never does — WHATWG's URL parser normalises backslashes to
+// forward slashes for special schemes, so spellings like `/\evil.com` or
+// `\\evil.com` resolve off-site even though they don't look like it as a
+// string. Resolving against the site's own origin, the way a browser
+// would, is the only classification that agrees with what actually
+// renders. `SITE_ORIGIN` doubles as the base for that resolution.
+function classifyHref(href: string): HrefClassification {
+	let resolved: URL;
 	try {
-		const url = new URL(href);
-		if (url.protocol !== 'http:' && url.protocol !== 'https:') return false;
-		return !SITE_HOSTNAMES.has(url.hostname);
+		resolved = new URL(href, SITE_ORIGIN);
 	} catch {
-		return false;
+		return { safe: false, external: false, href };
 	}
+	if (resolved.protocol === 'mailto:') {
+		return { safe: true, external: false, href };
+	}
+	if (resolved.protocol !== 'http:' && resolved.protocol !== 'https:') {
+		// javascript:, data:, vbscript:, etc. — still rejected, since they
+		// parse to their own scheme even with a base supplied.
+		return { safe: false, external: false, href };
+	}
+	const external = !SITE_HOSTNAMES.has(resolved.hostname);
+	// Internal links keep the author's original (possibly relative) href.
+	// External links emit the resolved absolute URL, so a link that
+	// actually leaves the site says so in the markup rather than reading
+	// like a same-site path.
+	return { safe: true, external, href: external ? resolved.href : href };
 }
 
 function escapeHtml(value: string): string {
@@ -104,12 +114,12 @@ const components: PortableTextComponents = {
 	marks: {
 		code: ({ children }) => `<code class="inline-code">${children}</code>`,
 		link: ({ children, value }) => {
-			const href = String(value?.href ?? '');
-			if (!isSafeHref(href)) return `<a>${children}</a>`;
-			const attrs = isExternalHref(href)
+			const classification = classifyHref(String(value?.href ?? ''));
+			if (!classification.safe) return `<a>${children}</a>`;
+			const attrs = classification.external
 				? ' target="_blank" rel="noopener noreferrer"'
 				: '';
-			return `<a href="${escapeHtml(href)}"${attrs}>${children}</a>`;
+			return `<a href="${escapeHtml(classification.href)}"${attrs}>${children}</a>`;
 		},
 	},
 	types: {

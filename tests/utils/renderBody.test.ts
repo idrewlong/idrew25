@@ -79,11 +79,61 @@ describe('renderBody', () => {
 		expect(html).not.toContain('target="_blank"');
 	});
 
-	it('rejects protocol-relative hrefs instead of treating them as internal', async () => {
+	it('resolves a protocol-relative href to its absolute external URL', async () => {
 		const html = await renderBody([linkBlock('//evil.com/x')]);
 		expect(html).not.toContain('href="//evil.com/x"');
-		expect(html).not.toContain('href="');
+		expect(html).toContain('href="https://evil.com/x"');
+		expect(html).toContain('target="_blank"');
+		expect(html).toContain('rel="noopener noreferrer"');
+	});
+
+	it('resolves a slash-backslash href to its absolute external URL', async () => {
+		// '/' + '\' + 'evil.com' — the WHATWG URL parser normalises the
+		// backslash to a slash for http(s), so this resolves off-site even
+		// though it reads like a same-site path.
+		const slashBackslash = '/\\evil.com';
+		const html = await renderBody([linkBlock(slashBackslash)]);
+		expect(html).not.toContain(`href="${slashBackslash}"`);
+		expect(html).toContain('href="https://evil.com/"');
+		expect(html).toContain('target="_blank"');
+		expect(html).toContain('rel="noopener noreferrer"');
+	});
+
+	it('resolves a double-backslash href to its absolute external URL', async () => {
+		// '\' + '\' + 'evil.com' — no leading slash at all, but two leading
+		// backslashes behave like '//' for http(s).
+		const doubleBackslash = '\\\\evil.com';
+		const html = await renderBody([linkBlock(doubleBackslash)]);
+		expect(html).not.toContain(`href="${doubleBackslash}"`);
+		expect(html).toContain('href="https://evil.com/"');
+		expect(html).toContain('target="_blank"');
+		expect(html).toContain('rel="noopener noreferrer"');
+	});
+
+	it('rejects data: URIs', async () => {
+		const html = await renderBody([linkBlock('data:text/html,x')]);
+		expect(html).not.toContain('href="data:');
 		expect(html).toContain('link');
+	});
+
+	it('keeps anchor links internal', async () => {
+		const html = await renderBody([linkBlock('#anchor')]);
+		expect(html).toContain('href="#anchor"');
+		expect(html).not.toContain('target="_blank"');
+	});
+
+	it('treats the www hostname as internal, not external', async () => {
+		const html = await renderBody([
+			linkBlock('https://www.idrewlong.com/contact/'),
+		]);
+		expect(html).toContain('href="https://www.idrewlong.com/contact/"');
+		expect(html).not.toContain('target="_blank"');
+	});
+
+	it('keeps a mailto href', async () => {
+		const html = await renderBody([linkBlock('mailto:hello@idrewlong.com')]);
+		expect(html).toContain('href="mailto:hello@idrewlong.com"');
+		expect(html).not.toContain('target="_blank"');
 	});
 
 	it('treats a lookalike hostname as external, not a substring match', async () => {
