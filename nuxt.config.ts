@@ -5,6 +5,13 @@ export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['lenis/dist/lenis.css', '~/assets/css/main.css'],
 	runtimeConfig: {
+		sanity: {
+			projectId: process.env.SANITY_PROJECT_ID,
+			dataset: process.env.SANITY_DATASET,
+			apiVersion: process.env.SANITY_API_VERSION,
+			readToken: process.env.SANITY_READ_TOKEN,
+		},
+		previewSecret: process.env.BLOG_PREVIEW_SECRET,
 		public: {
 			// Public by design: Web3Forms' free plan only accepts submissions
 			// from the browser, so this key ships in the client bundle.
@@ -64,6 +71,14 @@ export default defineNuxtConfig({
 				'Cache-Control': 'no-store',
 			},
 		},
+		'/blog/**': { isr: 60 },
+		'/preview/**': {
+			headers: { 'X-Robots-Tag': 'noindex, nofollow' },
+		},
+	},
+	sitemap: {
+		sources: ['/api/__sitemap__/urls'],
+		exclude: ['/preview/**'],
 	},
 	compatibilityDate: '2025-01-08',
 });

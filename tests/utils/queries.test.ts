@@ -4,6 +4,7 @@ import {
 	POST_BY_SLUG_QUERY,
 	FEATURES_QUERY,
 	POST_SLUGS_QUERY,
+	TAGS_QUERY,
 } from '../../server/utils/queries';
 
 describe('postsQuery', () => {
@@ -47,5 +48,15 @@ describe('FEATURES_QUERY', () => {
 describe('POST_SLUGS_QUERY', () => {
 	it('returns a lastmod for sitemap entries', () => {
 		expect(POST_SLUGS_QUERY).toContain('lastmod');
+	});
+});
+
+describe('TAGS_QUERY', () => {
+	it('only returns tags that are actually used by a post', () => {
+		expect(TAGS_QUERY).toContain('references(^._id)');
+	});
+
+	it('orders alphabetically', () => {
+		expect(TAGS_QUERY).toContain('order(title asc)');
 	});
 });

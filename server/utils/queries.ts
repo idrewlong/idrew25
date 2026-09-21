@@ -57,3 +57,7 @@ export const POST_SLUGS_QUERY = `*[_type == "post" && defined(slug.current)]{
 	"slug": slug.current,
 	"lastmod": coalesce(_updatedAt, publishedAt)
 }`;
+
+export const TAGS_QUERY = `*[
+	_type == "tag" && count(*[_type == "post" && references(^._id)]) > 0
+]{ title, "slug": slug.current } | order(title asc)`;
