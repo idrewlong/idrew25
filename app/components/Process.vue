@@ -1,7 +1,7 @@
 <template>
 	<section id="process" ref="sectionEl" class="max-w-6xl mx-auto px-4 sm:px-6">
 		<!-- Section label -->
-		<div ref="labelEl" class="flex items-center gap-3 mb-10">
+		<div v-if="showLabel" ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
 				Process
 			</span>
@@ -136,6 +136,11 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+
+// The /process page renders its own page header, so it hides this one.
+defineProps({
+	showLabel: { type: Boolean, default: true },
+});
 
 const { $gsap } = useNuxtApp();
 
@@ -381,7 +386,7 @@ onMounted(() => {
 		initPanelStates();
 
 		// Entrance animation
-		$gsap.set(labelEl.value, { opacity: 0, y: 20 });
+		if (labelEl.value) $gsap.set(labelEl.value, { opacity: 0, y: 20 });
 		$gsap.set(quoteEl.value, { opacity: 0, y: 30 });
 
 		const desktopPanels = panelEls.value.filter(Boolean);
@@ -404,17 +409,20 @@ onMounted(() => {
 			},
 		});
 
-		tl.to(labelEl.value, {
-			opacity: 1,
-			y: 0,
-			duration: 0.5,
-			ease: 'power2.out',
-		})
-			.to(
-				quoteEl.value,
-				{ opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' },
-				'-=0.3'
-			)
+		if (labelEl.value) {
+			tl.to(labelEl.value, {
+				opacity: 1,
+				y: 0,
+				duration: 0.5,
+				ease: 'power2.out',
+			});
+		}
+
+		tl.to(
+			quoteEl.value,
+			{ opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' },
+			labelEl.value ? '-=0.3' : 0
+		)
 			.to(
 				desktopPanels,
 				{

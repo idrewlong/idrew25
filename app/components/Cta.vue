@@ -1,5 +1,9 @@
 <template>
-	<div id="contact" ref="ctaSection" class="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
+	<div
+		id="contact"
+		ref="ctaSection"
+		class="relative w-full max-w-6xl mx-auto px-4 sm:px-6"
+	>
 		<!-- Notion-style section label — matches About/Experience/Skills -->
 		<div ref="labelEl" class="flex items-center gap-3 mb-10">
 			<span
@@ -31,22 +35,20 @@
 			>
 				<!-- Role chip -->
 				<div>
-					<div class="flex items-center gap-2 mb-2">
-						<span class="text-orange-500 text-[10px]">✦</span>
-						<span
-							class="text-[9px] tracking-[0.25em] uppercase text-stone-400 font-mono"
-							>Status</span
+					<div class="flex items-center gap-2">
+						<span class="text-emerald-500 text-[10px] pulse-dot" aria-hidden="true"
+							>✦</span
 						>
+						<p class="text-[10px] tracking-[0.18em] uppercase font-mono">
+							<span class="text-stone-400">Status:</span>
+							<span class="text-stone-700">Open To Opportunities</span>
+						</p>
 					</div>
-					<p
-						class="text-[10px] tracking-[0.18em] uppercase text-stone-700 font-mono"
-					>
-						Senior Fullstack Developer
-					</p>
 					<p
 						class="text-[10px] tracking-[0.12em] uppercase text-stone-400 font-mono mt-1.5 leading-relaxed max-w-[18rem]"
 					>
-						Building solutions to complex problems.
+						Software, Platform, DevSecOps and cleared roles. Huntsville or
+						remote.
 					</p>
 				</div>
 
@@ -101,7 +103,11 @@
 						/>
 					</NuxtLink>
 
-					<a href="/Andrew%20Long%20Resume.pdf" download class="cta-button-secondary group">
+					<a
+						href="/Andrew%20Long%20Resume.pdf"
+						download
+						class="cta-button-secondary group"
+					>
 						<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
 							>Download Resume</span
 						>
@@ -189,5 +195,26 @@ onMounted(() => {
 .cta-button-secondary {
 	@apply inline-flex items-center justify-between w-full border border-stone-300 text-stone-700
          px-5 py-4 hover:border-stone-900 hover:text-stone-900 transition-colors duration-200;
+}
+
+/* Status dot, same pulse as the contact page */
+.pulse-dot {
+	animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.25;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pulse-dot {
+		animation: none;
+	}
 }
 </style>

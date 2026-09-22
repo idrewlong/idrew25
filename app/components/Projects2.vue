@@ -275,19 +275,32 @@ const { $gsap } = useNuxtApp();
 const activeFilter = ref('all');
 const filters = [
 	{ label: 'All', value: 'all' },
-	{ label: 'Work', value: 'work' },
-	{ label: 'Personal', value: 'personal' },
+	{ label: 'Tools', value: 'tool' },
+	{ label: 'Websites', value: 'website' },
 ];
 
+// Tools lead: they're the strongest engineering signal on the page.
 const allProjects = [
+	{
+		title: 'Shrinkr',
+		description:
+			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds. It hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
+		image: '/images/shrinkr.webp',
+		link: 'https://cli.shrinkr.app/',
+		workTypes: ['Developer Tool', 'Open Source'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:go'],
+	},
 	{
 		title: 'Mad Genius - 5.0',
 		description:
-			'Creative agency site redesign; assisted in rebuilding architecture for optimized GSAP transitions and stronger SEO.',
+			'Helped rebuild the agency site: headless WordPress feeding a TypeScript Nuxt frontend over GraphQL, with GSAP page transitions and technical SEO fixes.',
 		image: '/images/madgcover.webp',
 		link: 'https://madg.com/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:typescript-icon',
@@ -299,11 +312,12 @@ const allProjects = [
 	{
 		title: 'Yates Construction',
 		description:
-			'Corporate website for a national construction firm; modular templates and performance/SEO improvements.',
+			'Built a modular template system on headless WordPress and Nuxt (GraphQL, WP Engine) and improved page performance and technical SEO for a national construction firm.',
 		image: '/images/Yates.webp',
 		link: 'https://wgyates.com/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:tailwindcss-icon',
@@ -315,11 +329,12 @@ const allProjects = [
 	{
 		title: 'Regional Homes',
 		description:
-			'Marketing site for a home builder; flexible components and streamlined lead-gen pages. Over 50 sites total.',
+			'Built a reusable component library and lead-gen page templates on headless WordPress and Nuxt, rolled out across 50+ sites for a regional home builder.',
 		image: '/images/Regional.webp',
 		link: 'https://regionalhomes.net/',
 		workTypes: ['Web Development', 'SEO'],
 		isRealWork: true,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:tailwindcss-icon',
@@ -330,11 +345,13 @@ const allProjects = [
 	},
 	{
 		title: 'Eley Guild Hardy',
-		description: 'Architecture portfolio; optimized imagery and page transitions.',
+		description:
+			'Optimized image delivery and built page transitions for an architecture firm\'s portfolio on WordPress, hosted on WP Engine.',
 		image: '/images/EGH.webp',
 		link: 'https://eleyguildhardy.com/',
 		workTypes: ['Web Development'],
 		isRealWork: true,
+		category: 'website',
 		technologies: [
 			'logos:wordpress-icon',
 			'logos:tailwindcss-icon',
@@ -344,11 +361,12 @@ const allProjects = [
 	{
 		title: 'Lessley Aviation',
 		description:
-			'Marketing site for a flight school in Winona, MS; headless WordPress backend with a Nuxt frontend.',
+			'Designed and built the site end to end: a headless WordPress CMS serving a Nuxt frontend over GraphQL, so the school edits content without touching code.',
 		image: '/images/lessleyaviation.webp',
 		link: 'https://lessleyaviation.com/',
 		workTypes: ['Web Development', 'Web Design'],
 		isRealWork: false,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:tailwindcss-icon',
@@ -359,21 +377,23 @@ const allProjects = [
 	{
 		title: 'El Fornino Pizzeria',
 		description:
-			'Marketing site for a Neapolitan pizza restaurant in Biloxi, MS.',
+			'Designed and built the site in Nuxt and Tailwind for a Biloxi, MS restaurant.',
 		image: '/images/elfornino.webp',
 		link: 'https://elfornino.com/',
 		workTypes: ['Web Development', 'Web Design'],
 		isRealWork: false,
+		category: 'website',
 		technologies: ['logos:nuxt-icon', 'logos:tailwindcss-icon'],
 	},
 	{
 		title: 'idrewfilm',
 		description:
-			'Photography portfolio; optimized imagery and page transitions. Digital Ocean Droplet, hosted on Cloudflare.',
+			'Designed, built and self-host my photography portfolio: headless WordPress and Nuxt on a Digital Ocean droplet behind Cloudflare, with optimized image delivery.',
 		image: '/images/idrewfilm.webp',
 		link: 'https://idrewfilm.com/',
 		workTypes: ['Web Development', 'Web Design', 'Branding', 'SEO'],
 		isRealWork: false,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:tailwindcss-icon',
@@ -384,26 +404,17 @@ const allProjects = [
 	{
 		title: 'The Summit Room',
 		description:
-			'Marketing site for a Nashville, TN recording studio; studio tour, gear list, and session booking flow.',
+			'Designed and built the site, including a studio tour, gear list and session booking flow, in Nuxt deployed on Vercel.',
 		image: '/images/summitroomstudio-com-index.webp',
 		link: 'https://www.summitroomstudio.com/',
 		workTypes: ['Web Development', 'Web Design', 'SEO'],
 		isRealWork: false,
+		category: 'website',
 		technologies: [
 			'logos:nuxt-icon',
 			'logos:tailwindcss-icon',
 			'logos:vercel-icon',
 		],
-	},
-	{
-		title: 'Shrinkr',
-		description:
-			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds — hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
-		image: '/images/shrinkr.webp',
-		link: 'https://cli.shrinkr.app/',
-		workTypes: ['Developer Tool', 'Open Source'],
-		isRealWork: false,
-		technologies: ['logos:go'],
 	},
 	// {
 	// 	title: 'Taylor Trolley',
@@ -417,23 +428,11 @@ const allProjects = [
 	// },
 ];
 
-const shuffle = (arr) => {
-	const shuffled = [...arr];
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-	}
-	return shuffled;
-};
-
-// Deterministic on first render so SSR output matches client hydration;
-// actual shuffling happens client-side in onMounted (see below).
-const shuffledAllProjects = ref([...allProjects]);
-
 const filteredProjects = computed(() => {
-	if (activeFilter.value === 'work') return allProjects.filter(p => p.isRealWork);
-	if (activeFilter.value === 'personal') return allProjects.filter(p => !p.isRealWork);
-	return shuffledAllProjects.value;
+	if (activeFilter.value !== 'all') {
+		return allProjects.filter(p => p.category === activeFilter.value);
+	}
+	return allProjects;
 });
 
 const visibleCount = ref(5);
@@ -477,7 +476,6 @@ const setFilter = (value) => {
 	}
 
 	const doSwitch = () => {
-		if (value === 'all') shuffledAllProjects.value = shuffle(allProjects);
 		activeFilter.value = value;
 		nextTick(() => {
 			const newRows = accordionEl.value?.querySelectorAll('.accordion-row');
@@ -644,12 +642,6 @@ const toggleRow = (i) => {
 };
 
 onMounted(() => {
-	// Shuffle client-side only, after hydration, so SSR and the initial
-	// client render agree on order (avoids a hydration mismatch).
-	if (activeFilter.value === 'all') {
-		shuffledAllProjects.value = shuffle(allProjects);
-	}
-
 	nextTick(() => {
 		if (!sectionEl.value || !accordionEl.value) return;
 

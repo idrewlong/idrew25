@@ -23,7 +23,7 @@
 			<!-- Left: Bio -->
 			<div ref="bioEl" class="space-y-5">
 				<p class="text-sm md:text-base leading-relaxed text-stone-500">
-					Hi, I'm Andrew Long. At Mad Genius I work across the full stack —
+					Hi, I'm Andrew Long. At Mad Genius I work across the full stack:
 					designing databases, building and integrating APIs, connecting CMS
 					platforms, and shaping the architecture that ties an application
 					together. I'm equally at home on the frontend with modern JavaScript
@@ -114,13 +114,13 @@ const sidebarEl = ref(null);
 const sidebarItemsEl = ref(null);
 
 const currently = [
+	{ label: 'Status', value: 'U.S. Citizen' },
 	{ label: 'Based in', value: 'Long Beach, MS' },
 	{
 		label: 'Day job',
 		value: 'Senior Full Stack Developer · Mad Genius',
 		link: 'https://madg.com/people/andrew-long/',
 	},
-	{ label: 'Building', value: 'Many Things' },
 	{ label: 'Hobbies', value: 'Soon to be Dad.' },
 ];
 

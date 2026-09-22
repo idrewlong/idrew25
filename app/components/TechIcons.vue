@@ -19,8 +19,9 @@
 			<div class="icon-inner">
 				<Icon
 					:name="icon.logo"
-					class="w-8 h-8 sm:w-9 sm:h-9"
-					::aria-hidden="true"
+					class="tech-logo"
+					:style="{ '--icon-scale': icon.scale ?? 1 }"
+					aria-hidden="true"
 				/>
 			</div>
 		</div>
@@ -40,17 +41,20 @@ let isMouseInField = false;
 let rafId = null;
 let positions = [];
 
+// Add `scale` to an entry to size that logo up or down (1 = default,
+// 1.2 = 20% bigger). Wide wordmark logos read smaller than square ones,
+// so they're the usual candidates.
 const techIcons = [
 	{ logo: 'logos:react' },
 	{ logo: 'logos:vue' },
-	{ logo: 'logos:nuxt-icon' },
+	{ logo: 'logos:nuxt-icon', scale: 0.9 },
 	{ logo: 'logos:typescript-icon' },
-	{ logo: 'logos:tailwindcss-icon' },
+	{ logo: 'logos:tailwindcss-icon', scale: 0.9 },
 	{ logo: 'logos:laravel' },
 	{ logo: 'logos:python' },
 	// { logo: 'logos:javascript' },
 
-	{ logo: 'logos:go' },
+	{ logo: 'logos:go', scale: 0.9 },
 	{ logo: 'logos:svelte-icon' },
 	{ logo: 'logos:docker-icon' },
 	{ logo: 'logos:php' },
@@ -220,6 +224,12 @@ onUnmounted(() => {
 		background 0.2s ease;
 }
 
+/* @nuxt/icon's own .iconify rule sizes logos at 1em, which beats Tailwind's
+   w-/h- utilities, so size them through font-size here instead. */
+.icon-inner :deep(.tech-logo) {
+	font-size: calc(28px * var(--icon-scale, 1));
+}
+
 @media (max-width: 767px) {
 	.magnetic-icon {
 		pointer-events: none;
@@ -229,9 +239,8 @@ onUnmounted(() => {
 		height: 40px;
 		border-radius: 10px;
 	}
-	.icon-inner :deep(svg) {
-		width: 22px;
-		height: 22px;
+	.icon-inner :deep(.tech-logo) {
+		font-size: calc(20px * var(--icon-scale, 1));
 	}
 }
 </style>

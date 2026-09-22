@@ -16,7 +16,7 @@
 				Writing
 			</h1>
 			<p class="mt-5 text-sm text-stone-500 leading-relaxed max-w-md">
-				Notes on building things for the web — development, strategy, and
+				Notes on building things for the web: development, strategy, and
 				whatever I'm currently arguing with.
 			</p>
 		</div>
@@ -76,10 +76,10 @@ const features = featuredArticles;
 useSeoMeta({
 	title: 'Blog',
 	description:
-		'Notes on web development, strategy, and building things — by Andrew Long.',
-	ogTitle: 'Blog — Andrew Long',
+		'Notes on web development, strategy, and building things, by Andrew Long.',
+	ogTitle: 'Blog | Andrew Long',
 	ogDescription:
-		'Notes on web development, strategy, and building things — by Andrew Long.',
+		'Notes on web development, strategy, and building things, by Andrew Long.',
 	ogImage: '/images/OG.webp',
 });
 

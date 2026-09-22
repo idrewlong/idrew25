@@ -34,7 +34,7 @@
 					<h1 ref="title" class="hero-title font-serif">
 						<span class="hero-title-line">I like to build</span>
 						<span class="hero-title-line">
-							amazing<span class="hero-space">&nbsp;</span>
+							reliable<span class="hero-space">&nbsp;</span>
 							<span class="typewriter">{{ currentWord }}</span>
 						</span>
 					</h1>
@@ -42,9 +42,9 @@
 					<div ref="ruleEl" class="hero-rule-heavy" aria-hidden="true"></div>
 
 					<p ref="description" class="hero-description text-stone-500">
-						TypeScript connoisseur. AI nerd. Animation aficionado. Fullstack
-						web, mostly React, Svelte, Next or Nuxt. Backend with Laravel,
-						Node.js, and PHP. Have written a Python bot or two.
+						Go by choice. TypeScript by trade. AWS by necessity. Senior full
+						stack at Mad Genius, where I own web and mobile builds and the AWS
+						infrastructure behind Mississippi state agencies.
 					</p>
 
 					<div ref="buttons" class="hero-buttons">
@@ -99,24 +99,6 @@
 
 				</div>
 			</div>
-
-			<!-- ── Index strip: the handoff into the page ───── -->
-			<nav ref="indexEl" class="hero-index" aria-label="Page sections">
-				<ul class="index-list">
-					<li v-for="(entry, i) in indexEntries" :key="entry.id">
-						<a
-							:href="`#${entry.id}`"
-							class="index-item"
-							@click="onIndexClick($event, entry)"
-						>
-							<span class="index-num">{{
-								String(i + 1).padStart(2, '0')
-							}}</span>
-							<span class="index-name">{{ entry.label }}</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
 		</div>
 	</section>
 </template>
@@ -126,20 +108,8 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
 const { $gsap, $scroll } = useNuxtApp();
 
-const words = ['tools', 'apps', 'sites', 'bots'];
+const words = ['tools', 'APIs', 'platforms', 'infrastructure'];
 const currentWord = ref('');
-
-const indexEntries = [
-	{ id: 'about', label: 'About' },
-	{ id: 'process', label: 'Process' },
-	{ id: 'experience', label: 'Experience' },
-	{ id: 'certifications', label: 'Certifications' },
-	{ id: 'skills', label: 'Skills' },
-	{ id: 'education', label: 'Education' },
-	{ id: 'projects', label: 'Work' },
-	{ id: 'articles', label: 'Articles' },
-	{ id: 'contact', label: 'Contact' },
-];
 
 // Template refs
 const mastheadEl = ref(null);
@@ -149,7 +119,6 @@ const ruleEl = ref(null);
 const description = ref(null);
 const buttons = ref(null);
 const photoEl = ref(null);
-const indexEl = ref(null);
 
 let reduceMotion = false;
 
@@ -206,12 +175,6 @@ const scrollTo = (id) => {
 	$scroll.to(el);
 };
 
-const onIndexClick = (event, entry) => {
-	if (!document.getElementById(entry.id)) return; // let the anchor do its thing
-	event.preventDefault();
-	scrollTo(entry.id);
-};
-
 /* ── Entrance ────────────────────────────────────────── */
 const initAnimations = () => {
 	const cells = mastheadEl.value?.querySelectorAll('.masthead-cell') ?? [];
@@ -229,7 +192,6 @@ const initAnimations = () => {
 	$gsap.set(title.value, { opacity: 1 });
 	$gsap.set(ruleEl.value, { scaleX: 0, transformOrigin: 'left center' });
 	$gsap.set(photoEl.value, { opacity: 0, scale: 0.94, y: 24 });
-	$gsap.set(indexEl.value, { opacity: 0, y: 16 });
 
 	const tl = $gsap.timeline({ delay: 0.15 });
 
@@ -276,11 +238,6 @@ const initAnimations = () => {
 			photoEl.value,
 			{ opacity: 1, scale: 1, y: 0, duration: 1.2, ease: 'expo.out' },
 			'-=1.1'
-		)
-		.to(
-			indexEl.value,
-			{ opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
-			'-=0.5'
 		);
 };
 
@@ -490,7 +447,7 @@ onUnmounted(() => {
 }
 
 .hero-space {
-	/* keeps the space between "amazing" and the typed word from collapsing */
+	/* keeps the space between "reliable" and the typed word from collapsing */
 	display: inline;
 }
 
@@ -755,102 +712,6 @@ onUnmounted(() => {
 	object-position: top center;
 	mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
 	-webkit-mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
-}
-
-/* ══ Index strip — the handoff ═══════════════════════ */
-.hero-index {
-	margin-top: 2.75rem;
-	padding-top: 0.85rem;
-	border-top: 1px solid var(--border);
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	overflow-x: auto;
-	scrollbar-width: none;
-}
-
-.hero-index::-webkit-scrollbar {
-	display: none;
-}
-
-@media (min-width: 768px) {
-	.hero-index {
-		margin-top: auto;
-		gap: 2rem;
-	}
-}
-
-.index-list {
-	display: flex;
-	align-items: center;
-	gap: 1.15rem;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	flex-shrink: 0;
-}
-
-@media (min-width: 976px) {
-	.index-list {
-		width: 100%;
-		justify-content: space-between;
-		gap: 0.5rem;
-	}
-}
-
-.index-item {
-	display: inline-flex;
-	align-items: baseline;
-	gap: 0.4rem;
-	padding-bottom: 2px;
-	border-bottom: 1px solid transparent;
-	transition:
-		border-color 0.2s ease,
-		color 0.2s ease;
-	white-space: nowrap;
-}
-
-.index-num {
-	font-family: 'Geist Mono', monospace;
-	font-size: 9px;
-	font-variant-numeric: tabular-nums;
-	color: #d6d3d1;
-	transition: color 0.2s ease;
-}
-
-.index-name {
-	font-family: 'Instrument Serif', Georgia, serif;
-	font-size: 1rem;
-	color: var(--text-muted);
-	transition: color 0.2s ease;
-}
-
-@media (min-width: 976px) {
-	.index-name {
-		font-size: 1.0625rem;
-	}
-}
-
-@media (min-width: 1200px) {
-	.index-name {
-		font-size: 1.1875rem;
-	}
-}
-
-.index-item:hover,
-.index-item:focus-visible {
-	border-bottom-color: var(--text);
-}
-
-.index-item:hover .index-name,
-.index-item:focus-visible .index-name {
-	color: var(--text);
-	font-style: italic;
-}
-
-.index-item:hover .index-num,
-.index-item:focus-visible .index-num {
-	color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {

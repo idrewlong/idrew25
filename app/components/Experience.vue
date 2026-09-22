@@ -57,16 +57,16 @@
 								{{ exp.period }}
 							</span>
 						</div>
-						<p class="text-sm text-stone-500 mb-4 leading-relaxed max-w-2xl">
+						<p class="text-sm text-stone-700 mb-4 leading-relaxed max-w-2xl">
 							{{ exp.description }}
 						</p>
 						<ul class="space-y-2">
 							<li
-								v-for="(ach, j) in exp.achievements.slice(0, 2)"
+								v-for="(ach, j) in exp.achievements"
 								:key="j"
-								class="flex gap-3 items-start text-sm text-stone-400"
+								class="flex gap-3 items-start text-sm text-stone-600"
 							>
-								<span class="text-orange-400 shrink-0 leading-5">—</span>
+								<span class="w-1 h-1 rounded-full bg-orange-400 shrink-0 mt-2" aria-hidden="true"></span>
 								<span class="leading-relaxed">{{ ach }}</span>
 							</li>
 						</ul>
@@ -95,8 +95,9 @@ const experiences = [
 		description:
 			'Lead full-stack architecture and development across a diverse client portfolio, owning end-to-end technical decisions on web and mobile projects.',
 		achievements: [
-			'Architect and deliver full-stack solutions using Nuxt, React, React Native, and Laravel for enterprise clients across construction, real estate, and public health sectors.',
-			'Drive technical strategy and mentor junior developers while maintaining high-velocity delivery on complex, multi-platform projects.',
+			'Build and remediate AWS infrastructure (EC2, S3, scheduled jobs) for multiple Mississippi state agencies, closing security and compliance gaps.',
+			'Own architecture for web and mobile products end to end: user stories, database schema, backend, and production.',
+			'Mentor junior developers and lead quarterly internal training on web standards, SEO, and security.',
 		],
 	},
 	{
@@ -104,10 +105,12 @@ const experiences = [
 		title: 'SEO Developer',
 		company: 'Mad Genius',
 		description:
-			'Full-stack web development using Nuxt, React, React Native, Laravel, WordPress, and more. Leading SEO initiatives and comprehensive digital marketing strategies for enterprise clients across construction, real estate, and public health sectors.',
+			'Built and maintained full-stack applications while leading technical SEO for enterprise clients across construction, real estate, and public health.',
 		achievements: [
-			'Build and maintain WordPress sites, headless WordPress implementations with Nuxt, React Native mobile applications, and full-stack Laravel web applications.',
-			'Develop and execute SEO and digital marketing strategies with in-depth audits covering web presence, AI integration, and social media optimization.',
+			'Key contributor to a React Native app that grossed $1M+ in its first month with 10,000+ active users.',
+			'Drove a 74% year-over-year increase in organic traffic for a key client through technical SEO, content strategy, and LLM search integration.',
+			'Built full-stack applications with Laravel, React, Nuxt, and headless WordPress, deploying across AWS, Digital Ocean, and WP Engine.',
+			'Built automation tools, including web crawlers and reporting scripts, that cut SEO audit turnaround time by 10% across the team.',
 		],
 	},
 	{
@@ -115,10 +118,12 @@ const experiences = [
 		title: 'Marketing Project Manager',
 		company: 'Thompson Machinery',
 		description:
-			'Designed and developed campaign landing pages and full-stack marketing solutions while managing comprehensive marketing initiatives across multiple divisions.',
+			'Built campaign landing pages and internal tools while managing marketing initiatives across the sales and SITECH divisions.',
 		achievements: [
-			'Designed and developed campaign landing pages using Next.js, Tailwind CSS, and Makeshift, while maintaining WordPress sites with PHP and JavaScript.',
-			'Strategized, managed and executed comprehensive marketing initiatives across sales and SITECH divisions, including SEO, SEM and email campaigns to drive engagement and results.',
+			'Designed and developed campaign landing pages with Next.js, Tailwind CSS, and Makeswift, and maintained WordPress sites in PHP and JavaScript.',
+			'Built internal marketing forms and planners in Microsoft Power Apps to improve workflow and project coordination.',
+			'Analyzed sales data in Power BI to find market share gaps and target Caterpillar equipment campaigns.',
+			'Managed SEO, SEM, and email campaigns across the sales and SITECH divisions.',
 		],
 	},
 	{
@@ -126,10 +131,11 @@ const experiences = [
 		title: 'Web Developer',
 		company: "Finder's Guide",
 		description:
-			'Founded a marketing consultancy delivering custom web development and digital growth strategies for local and enterprise clients.',
+			'Founded a consultancy delivering custom web development and digital growth strategy for local and enterprise clients.',
 		achievements: [
-			'Built scalable web applications using Next.js and Svelte.js integrating headless WordPress CMS and deploying on Digital Ocean droplets.',
-			'Increased organic search traffic by an average of 40% across 15+ client engagements through strategic SEO implementation.',
+			'Increased organic search traffic by an average of 40% across 15+ client engagements.',
+			'Built web applications with Next.js and Svelte on headless WordPress, deployed on Digital Ocean droplets.',
+			'Led remote cross-functional design teams and managed the full project lifecycle, from client acquisition through ongoing support.',
 		],
 	},
 	{
@@ -137,10 +143,10 @@ const experiences = [
 		title: 'Associate Customer Support Specialist',
 		company: 'Core Logic',
 		description:
-			'Provided expert customer support for industry-specific software while collaborating cross-functionally to improve product quality and user experience.',
+			'Supported customers on industry-specific insurance and property software, including Xactimate and XactAnalysis.',
 		achievements: [
-			'Maintained a 95% CSAT score while handling 50-70 daily customer interactions across phone and messaging channels, consistently above team average.',
-			'Collaborated in a SCRUM environment using Salesforce and Jira, escalating complex issues to development teams and contributing to product improvement.',
+			'Maintained a 95% CSAT score across 50–70 daily customer interactions, consistently above team average.',
+			'Worked in a Scrum team using Salesforce and Jira, escalating complex issues to development and contributing to product improvements.',
 		],
 	},
 	{
@@ -148,10 +154,10 @@ const experiences = [
 		title: 'Owner',
 		company: 'LMC',
 		description:
-			'Seamlessly managed all project phases from pre-production and planning through cinematography, video production, and editing for diverse clients.',
+			'Ran a video production company, managing every phase from pre-production and planning through cinematography and editing.',
 		achievements: [
-			'Directed and edited over 100 music videos in a two-year period for a music production company.',
-			'Managed content across social media platforms with a focus on increasing consumer engagement while maintaining strict project schedules.',
+			'Directed and edited 100+ music videos in two years for a music production company.',
+			'Worked with a team of videographers and editors on music videos, executive training, live sports, and weddings.',
 		],
 	},
 ];

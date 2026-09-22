@@ -100,7 +100,7 @@ const submitForm = async () => {
 
     if (data.success) {
       status.value = 'success';
-      result.value = "Message sent — I'll be in touch soon.";
+      result.value = "Message sent. I'll be in touch soon.";
       form.value = { name: '', email: '', message: '' };
     } else {
       // Surface what Web3Forms actually said rather than a generic string --
@@ -161,7 +161,7 @@ onMounted(() => {
       </h1>
       <p class="mt-5 text-sm text-stone-500 leading-relaxed max-w-md">
         Have a project in mind, want to collaborate, or just want to connect?
-        Drop me a line — I'd love to hear from you.
+        Drop me a line. I'd love to hear from you.
       </p>
     </div>
 
@@ -318,6 +318,26 @@ onMounted(() => {
             <span class="text-[9px] tracking-[0.25em] uppercase text-stone-400 font-mono">Based In</span>
           </div>
           <p class="text-xs text-stone-700 font-mono">Long Beach, MS</p>
+        </div>
+
+        <div class="h-px bg-stone-200 my-7"></div>
+
+        <!-- Process -->
+        <div class="sidebar-block">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-orange-500 text-[10px]">✦</span>
+            <span class="text-[9px] tracking-[0.25em] uppercase text-stone-400 font-mono">Process</span>
+          </div>
+          <NuxtLink
+            to="/process"
+            class="group inline-flex items-center gap-1 text-xs text-stone-700 font-mono hover:text-orange-500 transition-colors duration-200"
+          >
+            How I work
+            <Icon
+              name="heroicons:arrow-right-20-solid"
+              class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+            />
+          </NuxtLink>
         </div>
 
         <div class="h-px bg-stone-200 my-7"></div>

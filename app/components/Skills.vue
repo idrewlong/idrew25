@@ -69,17 +69,18 @@ const rowEls = ref([]);
 const skillCategories = [
 	{
 		title: 'Languages',
-		skills: ['JavaScript', 'TypeScript', 'Golang', 'Python', 'PHP', 'SQL'],
+		skills: ['TypeScript', 'JavaScript', 'Golang', 'Python', 'PHP', 'SQL'],
 	},
 	{
-		title: 'Frontend',
+		title: 'Cloud & Infra',
 		skills: [
-			'React / Next.js',
-			'Vue / Nuxt.js',
-			'Svelte / SvelteKit',
-			'Tailwind CSS',
-			'GSAP',
-			'WordPress',
+			'AWS (EC2, S3)',
+			'Docker',
+			'CI/CD',
+			'Cron job orchestration',
+			'Digital Ocean',
+			'Cloudflare',
+			'Git',
 		],
 	},
 	{
@@ -87,29 +88,19 @@ const skillCategories = [
 		skills: ['Laravel', 'Node.js', 'GraphQL', 'PostgreSQL', 'Redis'],
 	},
 	{
-		title: 'Infra',
-		skills: ['Docker', 'AWS', 'Digital Ocean', 'Cloudflare', 'Git', 'CI/CD'],
-	},
-	{
-		title: 'Tools',
+		title: 'Frontend',
 		skills: [
-			'VSCode',
-			'Cursor',
-			'Claude Code',
-			'Postman',
-			'JIRA',
-			'Salesforce',
-			'Twilio',
+			'React / Next.js',
+			'Vue / Nuxt.js',
+			'Svelte / SvelteKit',
+			'React Native',
+			'Tailwind CSS',
+			'WordPress',
 		],
 	},
 	{
 		title: 'Design & SEO',
-		skills: [
-			'Figma',
-			'Adobe Creative Suite',
-			'SEMRush',
-			'Google Analytics / Search Console / Tag Manager',
-		],
+		skills: ['Figma', 'Technical SEO', 'Google Analytics / Search Console'],
 	},
 ];
 

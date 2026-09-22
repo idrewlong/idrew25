@@ -5,7 +5,6 @@
 			class="w-full py-8 sm:py-12 flex flex-col justify-center gap-y-14 sm:gap-y-20"
 		>
 			<About />
-			<Process />
 			<Marquee />
 			<Experience />
 
@@ -16,7 +15,6 @@
 				<Projects2 />
 			</div>
 			<Marquee :reverse="true" />
-			<Articles />
 			<Cta />
 		</main>
 	</div>

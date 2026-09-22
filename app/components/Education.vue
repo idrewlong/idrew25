@@ -92,7 +92,7 @@
 							:key="j"
 							class="flex gap-2.5 items-start text-sm text-stone-500"
 						>
-							<span class="text-orange-400 shrink-0 leading-5">—</span>
+							<span class="w-1 h-1 rounded-full bg-orange-400 shrink-0 mt-2" aria-hidden="true"></span>
 							<span class="leading-relaxed">{{ ach }}</span>
 						</div>
 					</div>
@@ -127,7 +127,7 @@
 							:key="j"
 							class="flex gap-2.5 items-start text-sm text-stone-500"
 						>
-							<span class="text-orange-400 shrink-0 leading-5">—</span>
+							<span class="w-1 h-1 rounded-full bg-orange-400 shrink-0 mt-2" aria-hidden="true"></span>
 							<span class="leading-relaxed">{{ ach }}</span>
 						</div>
 					</div>
