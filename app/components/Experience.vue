@@ -43,7 +43,7 @@
 					<!-- Content -->
 					<div class="flex-1 min-w-0 pb-2">
 						<div
-							class="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6 mb-2"
+							class="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6 mb-3"
 						>
 							<h3
 								class="text-lg font-bold font-serif text-stone-900 leading-snug"
@@ -57,9 +57,6 @@
 								{{ exp.period }}
 							</span>
 						</div>
-						<p class="text-sm text-stone-700 mb-4 leading-relaxed max-w-2xl">
-							{{ exp.description }}
-						</p>
 						<ul class="space-y-2">
 							<li
 								v-for="(ach, j) in exp.achievements"
@@ -92,21 +89,20 @@ const experiences = [
 		period: 'May 2026 – Present',
 		title: 'Senior Full Stack Developer',
 		company: 'Mad Genius',
-		description:
-			'Lead full-stack architecture and development across a diverse client portfolio, owning end-to-end technical decisions on web and mobile projects.',
 		achievements: [
+			'Lead architecture and development for a diverse client portfolio, owning web and mobile products from user stories and database schema through backend and production.',
 			'Build and remediate AWS infrastructure (EC2, S3, scheduled jobs) for multiple Mississippi state agencies, closing security and compliance gaps.',
-			'Own architecture for web and mobile products end to end: user stories, database schema, backend, and production.',
 			'Mentor junior developers and lead quarterly internal training on web standards, SEO, and security.',
+			'Stand up CI/CD pipelines and containerized deployments so client projects ship on a repeatable, reviewable release process.',
+			'Partner with designers, strategists, and account teams to scope work and translate client goals into technical requirements.',
 		],
 	},
 	{
 		period: 'June 2024 – May 2026',
 		title: 'SEO Developer',
 		company: 'Mad Genius',
-		description:
-			'Built and maintained full-stack applications while leading technical SEO for enterprise clients across construction, real estate, and public health.',
 		achievements: [
+			'Built and maintained full-stack applications while leading technical SEO for enterprise clients across construction, real estate, and public health.',
 			'Key contributor to a React Native app that grossed $1M+ in its first month with 10,000+ active users.',
 			'Drove a 74% year-over-year increase in organic traffic for a key client through technical SEO, content strategy, and LLM search integration.',
 			'Built full-stack applications with Laravel, React, Nuxt, and headless WordPress, deploying across AWS, Digital Ocean, and WP Engine.',
@@ -117,9 +113,8 @@ const experiences = [
 		period: 'December 2023 – June 2024',
 		title: 'Marketing Project Manager',
 		company: 'Thompson Machinery',
-		description:
-			'Built campaign landing pages and internal tools while managing marketing initiatives across the sales and SITECH divisions.',
 		achievements: [
+			'Built campaign landing pages and internal tools while managing marketing initiatives across the sales and SITECH divisions.',
 			'Designed and developed campaign landing pages with Next.js, Tailwind CSS, and Makeswift, and maintained WordPress sites in PHP and JavaScript.',
 			'Built internal marketing forms and planners in Microsoft Power Apps to improve workflow and project coordination.',
 			'Analyzed sales data in Power BI to find market share gaps and target Caterpillar equipment campaigns.',
@@ -130,9 +125,8 @@ const experiences = [
 		period: 'September 2022 – May 2024',
 		title: 'Web Developer',
 		company: "Finder's Guide",
-		description:
-			'Founded a consultancy delivering custom web development and digital growth strategy for local and enterprise clients.',
 		achievements: [
+			'Founded a consultancy delivering custom web development and digital growth strategy for local and enterprise clients.',
 			'Increased organic search traffic by an average of 40% across 15+ client engagements.',
 			'Built web applications with Next.js and Svelte on headless WordPress, deployed on Digital Ocean droplets.',
 			'Led remote cross-functional design teams and managed the full project lifecycle, from client acquisition through ongoing support.',
@@ -142,9 +136,8 @@ const experiences = [
 		period: 'March 2022 – January 2023',
 		title: 'Associate Customer Support Specialist',
 		company: 'Core Logic',
-		description:
-			'Supported customers on industry-specific insurance and property software, including Xactimate and XactAnalysis.',
 		achievements: [
+			'Supported customers on industry-specific insurance and property software, including Xactimate and XactAnalysis.',
 			'Maintained a 95% CSAT score across 50–70 daily customer interactions, consistently above team average.',
 			'Worked in a Scrum team using Salesforce and Jira, escalating complex issues to development and contributing to product improvements.',
 		],
@@ -153,9 +146,8 @@ const experiences = [
 		period: 'January 2018 – December 2020',
 		title: 'Owner',
 		company: 'LMC',
-		description:
-			'Ran a video production company, managing every phase from pre-production and planning through cinematography and editing.',
 		achievements: [
+			'Ran a video production company, managing every phase from pre-production and planning through cinematography and editing.',
 			'Directed and edited 100+ music videos in two years for a music production company.',
 			'Worked with a team of videographers and editors on music videos, executive training, live sports, and weddings.',
 		],

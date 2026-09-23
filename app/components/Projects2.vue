@@ -150,7 +150,7 @@
 										</span>
 									</div>
 
-									<div class="flex items-center gap-4">
+									<div class="flex flex-wrap items-center gap-x-4 gap-y-3">
 										<div class="flex items-center gap-1.5">
 											<Icon
 												v-for="tech in project.technologies.slice(0, 5)"
@@ -160,6 +160,21 @@
 											/>
 										</div>
 										<a
+											v-if="project.repo"
+											:href="project.repo"
+											target="_blank"
+											rel="noopener noreferrer"
+											:aria-label="`${project.title} source code on GitHub`"
+											class="inline-flex items-center gap-1.5 text-[11px] font-mono text-stone-600 hover:text-orange-500 border border-stone-300 hover:border-orange-300 rounded-full px-3 py-1.5 transition-colors duration-200"
+										>
+											<Icon
+												icon="ph:github-logo-fill"
+												class="w-3.5 h-3.5"
+											/>
+											Source
+										</a>
+										<a
+											v-if="project.link"
 											:href="project.link"
 											target="_blank"
 											rel="noopener noreferrer"
@@ -177,11 +192,41 @@
 								<!-- Right: project image -->
 								<div class="md:col-span-3 drawer-img overflow-hidden rounded-xl">
 									<img
+										v-if="project.image"
 										:src="project.image"
 										:alt="project.title"
 										class="w-full aspect-video object-cover rounded-xl"
 										draggable="false"
 									/>
+									<!-- Repo-only tools have no screenshot: show the command instead.
+									     Adding an `image` to the project supersedes this. -->
+									<div
+										v-else
+										class="relative w-full aspect-video rounded-xl bg-stone-900 overflow-hidden flex flex-col justify-center gap-2.5 px-6 sm:px-10"
+									>
+										<div
+											class="absolute top-4 left-5 flex items-center gap-1.5"
+											aria-hidden="true"
+										>
+											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
+											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
+											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
+										</div>
+										<p
+											v-if="project.install"
+											class="font-mono text-[11px] sm:text-sm text-stone-400 leading-relaxed break-all"
+										>
+											<span class="text-orange-400">$</span>
+											{{ project.install }}
+										</p>
+										<p
+											v-if="project.command"
+											class="font-mono text-[11px] sm:text-sm text-stone-400 leading-relaxed"
+										>
+											<span class="text-orange-400">$</span>
+											{{ project.command }}
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -287,10 +332,36 @@ const allProjects = [
 			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds. It hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
 		image: '/images/shrinkr.webp',
 		link: 'https://cli.shrinkr.app/',
+		repo: 'https://github.com/idrewlong/shrinkr_cli',
 		workTypes: ['Developer Tool', 'Open Source'],
 		isRealWork: false,
 		category: 'tool',
 		technologies: ['logos:go'],
+	},
+	{
+		title: 'Morphr',
+		description:
+			'Command-line RAW converter written in Go. Handles CR2, NEF, ARW, DNG and 25+ camera formats, converting a single file or a whole folder to JPEG, PNG, TIFF, WebP or AVIF. Run it with no arguments and it walks you through an interactive wizard.',
+		repo: 'https://github.com/idrewlong/morphr',
+		install: 'brew install idrewlong/tap/morphr',
+		command: 'morphr',
+		workTypes: ['Developer Tool', 'Open Source'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:go'],
+	},
+	{
+		title: 'Snapr',
+		description:
+			'Chrome extension that captures clean screenshots of any webpage in one click. Viewport, full page with scroll-and-stitch, or a dragged selection, exported as PNG, JPG, WebP or PDF. No account, no cloud.',
+		image: '/images/snapr.webp',
+		link: 'https://chromewebstore.google.com/detail/snapr/obbmbckbeeegfhfjmhhlhadgoiabiigg',
+		// TODO: repo is still private, so this link 404s for visitors.
+		repo: 'https://github.com/idrewlong/snapr',
+		workTypes: ['Browser Extension', 'Developer Tool'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:chrome'],
 	},
 	{
 		title: 'Mad Genius - 5.0',

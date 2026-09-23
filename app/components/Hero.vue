@@ -12,7 +12,7 @@
 
 		<div class="hero-container max-w-6xl mx-auto px-4 sm:px-6">
 			<!-- ── Masthead rail ────────────────────────────── -->
-			<div ref="mastheadEl" class="hero-masthead">
+			<div class="hero-masthead">
 				<span class="masthead-cell masthead-cell--name">Andrew Long</span>
 				<span class="masthead-cell">Portfolio</span>
 				<span class="masthead-cell">Long Beach, MS</span>
@@ -23,7 +23,7 @@
 			<div class="hero-grid">
 				<!-- Left: type -->
 				<div class="hero-content">
-					<div ref="greeting" class="hero-greeting">
+					<div class="hero-greeting">
 						<span class="hero-star" aria-hidden="true">✦</span>
 						<span
 							class="text-[9px] font-mono tracking-[0.25em] uppercase text-stone-400"
@@ -31,7 +31,7 @@
 						>
 					</div>
 
-					<h1 ref="title" class="hero-title font-serif">
+					<h1 class="hero-title font-serif">
 						<span class="hero-title-line">I like to build</span>
 						<span class="hero-title-line">
 							reliable<span class="hero-space">&nbsp;</span>
@@ -39,15 +39,15 @@
 						</span>
 					</h1>
 
-					<div ref="ruleEl" class="hero-rule-heavy" aria-hidden="true"></div>
+					<div class="hero-rule-heavy" aria-hidden="true"></div>
 
-					<p ref="description" class="hero-description text-stone-500">
+					<p class="hero-description text-stone-500">
 						Go by choice. TypeScript by trade. AWS by necessity. Senior full
 						stack at Mad Genius, where I own web and mobile builds and the AWS
 						infrastructure behind Mississippi state agencies.
 					</p>
 
-					<div ref="buttons" class="hero-buttons">
+					<div class="hero-buttons">
 						<NuxtLink to="/contact" class="hero-btn-primary group">
 							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
 								>Get In Touch</span
@@ -76,7 +76,7 @@
 				</div>
 
 				<!-- Right: plate + photo + floating tech icons -->
-				<div ref="photoEl" class="hero-image-area">
+				<div class="hero-image-area">
 					<div class="hero-glow" aria-hidden="true"></div>
 
 					<!-- Plate: the surface the photo stands on. Sits above the
@@ -104,21 +104,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
-const { $gsap, $scroll } = useNuxtApp();
+const { $scroll } = useNuxtApp();
 
-const words = ['tools', 'APIs', 'platforms', 'infrastructure'];
+const words = ['tools', 'apps', 'APIs', 'platforms', 'infrastructure'];
 const currentWord = ref('');
-
-// Template refs
-const mastheadEl = ref(null);
-const greeting = ref(null);
-const title = ref(null);
-const ruleEl = ref(null);
-const description = ref(null);
-const buttons = ref(null);
-const photoEl = ref(null);
 
 let reduceMotion = false;
 
@@ -175,80 +166,10 @@ const scrollTo = (id) => {
 	$scroll.to(el);
 };
 
-/* ── Entrance ────────────────────────────────────────── */
-const initAnimations = () => {
-	const cells = mastheadEl.value?.querySelectorAll('.masthead-cell') ?? [];
-
-	$gsap.set(mastheadEl.value, { opacity: 0 });
-	$gsap.set(cells, { opacity: 0, y: 10 });
-	$gsap.set([greeting.value, description.value, buttons.value], {
-		opacity: 0,
-		y: 24,
-	});
-	$gsap.set(title.value?.querySelectorAll('.hero-title-line') ?? [], {
-		opacity: 0,
-		y: 44,
-	});
-	$gsap.set(title.value, { opacity: 1 });
-	$gsap.set(ruleEl.value, { scaleX: 0, transformOrigin: 'left center' });
-	$gsap.set(photoEl.value, { opacity: 0, scale: 0.94, y: 24 });
-
-	const tl = $gsap.timeline({ delay: 0.15 });
-
-	tl.to(mastheadEl.value, { opacity: 1, duration: 0.3 })
-		.to(cells, {
-			opacity: 1,
-			y: 0,
-			duration: 0.5,
-			stagger: 0.06,
-			ease: 'power2.out',
-		})
-		.to(
-			greeting.value,
-			{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-			'-=0.25'
-		)
-		.to(
-			title.value.querySelectorAll('.hero-title-line'),
-			{
-				opacity: 1,
-				y: 0,
-				duration: 1,
-				stagger: 0.1,
-				ease: 'expo.out',
-			},
-			'-=0.35'
-		)
-		.to(
-			ruleEl.value,
-			{ scaleX: 1, duration: 0.9, ease: 'expo.out' },
-			'-=0.65'
-		)
-		.to(
-			description.value,
-			{ opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
-			'-=0.7'
-		)
-		.to(
-			buttons.value,
-			{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-			'-=0.5'
-		)
-		.to(
-			photoEl.value,
-			{ opacity: 1, scale: 1, y: 0, duration: 1.2, ease: 'expo.out' },
-			'-=1.1'
-		);
-};
-
 onMounted(() => {
 	reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	startTypewriter();
-
-	nextTick(() => {
-		initAnimations();
-	});
 });
 
 onUnmounted(() => {

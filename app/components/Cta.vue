@@ -36,7 +36,9 @@
 				<!-- Role chip -->
 				<div>
 					<div class="flex items-center gap-2">
-						<span class="text-emerald-500 text-[10px] pulse-dot" aria-hidden="true"
+						<span
+							class="text-emerald-500 text-[10px] pulse-dot"
+							aria-hidden="true"
 							>✦</span
 						>
 						<p class="text-[10px] tracking-[0.18em] uppercase font-mono">
@@ -47,8 +49,8 @@
 					<p
 						class="text-[10px] tracking-[0.12em] uppercase text-stone-400 font-mono mt-1.5 leading-relaxed max-w-[18rem]"
 					>
-						Software, Platform, DevSecOps and cleared roles. Huntsville or
-						remote.
+						Software, Platform, DevSecOps and cleared roles. <br /> <br />
+						Open to anywhere, especially Austin TX, Nashville TN and Huntsville AL.
 					</p>
 				</div>
 

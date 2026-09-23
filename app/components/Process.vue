@@ -11,10 +11,10 @@
 		<!-- Pull quote -->
 		<blockquote
 			ref="quoteEl"
-			class="text-lg sm:text-xl md:text-2xl font-mono italic text-stone-400 leading-relaxed mb-12 sm:mb-16 max-w-3xl"
+			class="text-2xl sm:text-3xl font-serif italic text-stone-900 leading-tight mb-12 sm:mb-16 max-w-3xl"
 		>
 			"I don't follow a rigid process. I follow the problem and
-			<span class="text-orange-500">let context shape the approach.</span>"
+			<span class="text-orange-500 not-italic">let context shape the approach.</span>"
 		</blockquote>
 
 		<!-- Desktop: horizontal accordion -->
@@ -161,11 +161,11 @@ const cards = [
 		title: 'Understand the problem first',
 		keyword: 'Why',
 		description:
-			'Before writing a single line of code, I make sure I actually understand what needs to happen and why. Talk to the stakeholders, dig into the data, map out the edges.',
+			'Before writing a single line of code, I make sure I actually understand what needs to happen and why. Talk to whoever owns the problem, dig into the data, map out the edges.',
 		points: [
 			'Ask the questions nobody else is asking',
 			'Identify constraints early. They shape the solution',
-			'Separate what the client wants from what they need',
+			'Separate the stated request from the actual requirement',
 		],
 	},
 	{
@@ -209,7 +209,7 @@ const cards = [
 		points: [
 			'Get feedback early and often',
 			'Measure what matters, not everything',
-			'Treat every project as a foundation for the next',
+			'Treat every system as a foundation for the next',
 		],
 	},
 ];
