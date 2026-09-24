@@ -27,7 +27,7 @@
 						<span class="hero-star" aria-hidden="true">✦</span>
 						<span
 							class="text-[9px] font-mono tracking-[0.25em] uppercase text-stone-400"
-							>Senior Full Stack Dev &middot; Mad Genius</span
+							>Senior Full Stack Dev</span
 						>
 					</div>
 

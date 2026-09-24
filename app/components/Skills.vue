@@ -19,7 +19,7 @@
 						if (el) rowEls[i] = el;
 					}
 				"
-				class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-16 py-4 md:py-5 border-b border-stone-100 group"
+				class="flex flex-col md:flex-row md:items-baseline gap-2.5 md:gap-16 py-5 border-b border-stone-100 group"
 			>
 				<!-- Index + category label -->
 				<div class="flex items-center gap-3 md:w-44 shrink-0">
@@ -41,17 +41,26 @@
 					</div>
 				</div>
 
-				<!-- Skills — dot-separated, same mono text as rest of site -->
-				<p class="text-sm text-stone-600 leading-relaxed">
-					<template v-for="(skill, j) in category.skills" :key="skill"
-						>{{ skill
+				<!-- Skills — dot-separated, same mono text as rest of site.
+				     Each skill is its own nowrap item so rows wrap between skills,
+				     never mid-name. -->
+				<ul
+					class="flex flex-wrap gap-y-1 text-[13px] sm:text-sm text-stone-600 leading-relaxed"
+				>
+					<li
+						v-for="(skill, j) in category.skills"
+						:key="skill"
+						class="whitespace-nowrap"
+					>
+						{{ skill
 						}}<span
 							v-if="j < category.skills.length - 1"
-							class="text-stone-300 mx-1.5"
+							class="text-stone-300 mx-2"
+							aria-hidden="true"
 							>·</span
-						></template
-					>
-				</p>
+						>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</section>

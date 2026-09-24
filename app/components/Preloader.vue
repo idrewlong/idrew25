@@ -28,19 +28,6 @@
 				></div>
 			</div>
 
-			<!-- Grid labels at intersections -->
-			<div class="grid-labels" aria-hidden="true">
-				<span
-					v-for="(label, idx) in gridLabels"
-					:key="idx"
-					ref="labelEls"
-					class="grid-label"
-					:style="{ top: label.y + '%', left: label.x + '%' }"
-				>
-					{{ label.text }}
-				</span>
-			</div>
-
 			<!-- Stacked words (foreground) -->
 			<div ref="wordsWrap" class="words-wrap">
 				<div
@@ -85,21 +72,10 @@ const bottomLabel = ref(null);
 // Grid refs
 const vLines = ref([]);
 const hLines = ref([]);
-const labelEls = ref([]);
 
 const words = ['Plan', 'Build', 'Ship'];
 const verticalCount = 5;
 const horizontalCount = 4;
-
-const gridLabels = [
-	{ text: 'PHP', x: 16.67, y: 20 },
-	{ text: 'Go', x: 50, y: 20 },
-	{ text: '2026', x: 83.33, y: 20 },
-	{ text: 'React', x: 33.33, y: 40 },
-	{ text: 'Svelte', x: 66.67, y: 40 },
-	{ text: 'Typescript', x: 16.67, y: 60 },
-	{ text: 'Vue', x: 83.33, y: 60 },
-];
 
 function sortFromCenter(els) {
 	const mid = (els.length - 1) / 2;
@@ -123,9 +99,6 @@ onMounted(() => {
 		});
 		hLines.value.forEach((el) => {
 			$gsap.set(el, { scaleX: 0, transformOrigin: 'left center' });
-		});
-		labelEls.value.forEach((el) => {
-			$gsap.set(el, { opacity: 0, scale: 0.8 });
 		});
 
 		// --- Word initial states ---
@@ -160,19 +133,6 @@ onMounted(() => {
 				ease: 'power2.out',
 			},
 			'-=0.3'
-		);
-
-		// Grid labels pop in
-		tl.to(
-			labelEls.value,
-			{
-				opacity: 1,
-				scale: 1,
-				duration: 0.25,
-				stagger: 0.03,
-				ease: 'back.out(2)',
-			},
-			'-=0.15'
 		);
 
 		// ── Phase 2: Words slide in over the grid ──
@@ -221,16 +181,6 @@ onMounted(() => {
 				ease: 'power1.inOut',
 			},
 			'-=0.1'
-		);
-
-		tl.to(
-			labelEls.value,
-			{
-				opacity: 0,
-				duration: 0.4,
-				ease: 'power1.in',
-			},
-			'<'
 		);
 
 		// Words go orange
@@ -368,27 +318,6 @@ function exitAnimation() {
 	right: 0;
 	transform: scaleX(0);
 	transform-origin: left center;
-}
-
-.grid-labels {
-	position: absolute;
-	inset: 0;
-	z-index: 2;
-	pointer-events: none;
-}
-
-.grid-label {
-	position: absolute;
-	opacity: 0;
-	transform: translate(-50%, -50%);
-	font-family: 'Geist Mono', monospace;
-	font-size: 9px;
-	letter-spacing: 0.2em;
-	text-transform: uppercase;
-	color: var(--text-muted);
-	white-space: nowrap;
-	padding: 4px 10px;
-	background: var(--bg);
 }
 
 /* ── Foreground words ── */

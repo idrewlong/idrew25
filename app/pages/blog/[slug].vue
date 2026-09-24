@@ -10,15 +10,14 @@
 
 		<header class="mb-10 sm:mb-14 max-w-3xl">
 			<div class="flex flex-wrap items-center gap-2 mb-4">
-				<time :datetime="post.publishedAt" class="text-xs text-stone-400">
+				<time :datetime="post.publishedAt" class="text-xs text-stone-400 mr-1">
 					{{ formatPostDate(post.publishedAt, 'long') }}
 				</time>
-				<span v-if="post.tags.length" class="text-stone-300">·</span>
 				<NuxtLink
 					v-for="tag in post.tags"
 					:key="tag.slug"
 					:to="`/blog/?tag=${tag.slug}`"
-					class="text-[10px] font-mono uppercase tracking-[0.15em] text-stone-400 hover:text-orange-500 transition-colors"
+					class="inline-flex items-center px-3 py-1.5 rounded-full border border-stone-200 text-[10px] leading-none font-mono uppercase tracking-[0.15em] text-stone-500 hover:text-orange-500 hover:border-orange-300 transition-colors"
 				>
 					{{ tag.title }}
 				</NuxtLink>
@@ -42,7 +41,42 @@
 			class="w-full rounded-2xl mb-12 sm:mb-16"
 		/>
 
-		<BlogPostBody :html="post.bodyHtml" />
+		<!-- With enough headings, the body gets a table of contents: pinned to
+		     the left on desktop, collapsible above the body on smaller screens. -->
+		<div
+			v-if="showToc"
+			class="lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-16"
+		>
+			<aside class="hidden lg:block">
+				<div
+					class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-4"
+				>
+					<BlogTableOfContents :headings="post.headings" />
+				</div>
+			</aside>
+
+			<details ref="mobileTocEl" class="mobile-toc lg:hidden">
+				<summary class="mobile-toc-summary">
+					On this page
+					<Icon
+						name="heroicons:chevron-down-20-solid"
+						class="mobile-toc-chevron"
+						aria-hidden="true"
+					/>
+				</summary>
+				<div class="pt-4">
+					<BlogTableOfContents
+						:headings="post.headings"
+						class="mobile-toc-list"
+						@navigate="closeMobileToc"
+					/>
+				</div>
+			</details>
+
+			<BlogPostBody :html="post.bodyHtml" />
+		</div>
+
+		<BlogPostBody v-else :html="post.bodyHtml" />
 	</article>
 </template>
 
@@ -59,6 +93,13 @@ if (!post.value) {
 		fatal: true,
 	});
 }
+
+const showToc = computed(() => (post.value?.headings?.length ?? 0) >= 2);
+
+const mobileTocEl = ref<HTMLDetailsElement | null>(null);
+const closeMobileToc = () => {
+	if (mobileTocEl.value) mobileTocEl.value.open = false;
+};
 
 // Sanity's CDN crops to the 1200x630 that social platforms expect. Falling
 // back to the site-wide OG image means a post without a cover still shares.
@@ -80,3 +121,51 @@ useSeoMeta({
 	articlePublishedTime: () => post.value?.publishedAt ?? '',
 });
 </script>
+
+<style scoped>
+/* Collapsible table of contents shown above the body below lg */
+.mobile-toc {
+	margin-bottom: 2.5rem;
+	padding: 0.875rem 1rem;
+	border: 1px solid var(--border, #e7e5e0);
+	border-radius: 0.75rem;
+}
+
+.mobile-toc-summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	list-style: none;
+	font-family: 'Geist Mono', monospace;
+	font-size: 10px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--text-muted, #78716c);
+}
+
+.mobile-toc-summary::-webkit-details-marker {
+	display: none;
+}
+
+.mobile-toc-chevron {
+	width: 1rem;
+	height: 1rem;
+	transition: transform 0.2s ease;
+}
+
+.mobile-toc[open] .mobile-toc-chevron {
+	transform: rotate(180deg);
+}
+
+/* The summary already says "On this page" */
+.mobile-toc-list :deep(.toc-label) {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mobile-toc-chevron {
+		transition: none;
+	}
+}
+</style>

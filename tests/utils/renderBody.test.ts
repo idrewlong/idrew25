@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { renderBody, slugifyHeading } from '../../server/utils/renderBody';
+import {
+	renderBody,
+	slugifyHeading,
+	extractHeadings,
+} from '../../server/utils/renderBody';
 
 const block = (text: string, style = 'normal') => ({
 	_type: 'block',
@@ -525,5 +529,49 @@ describe('renderBody', () => {
 		expect(html).toContain('alt="A diagram"');
 		expect(html).toContain('width="1200"');
 		expect(html).toContain('loading="lazy"');
+	});
+});
+
+describe('heading ids', () => {
+	it('gives repeated headings unique ids', async () => {
+		const html = await renderBody([
+			block('Setup', 'h2'),
+			block('Setup', 'h3'),
+			block('Setup', 'h2'),
+		]);
+		expect(html).toContain('<h2 id="setup">');
+		expect(html).toContain('<h3 id="setup-2">');
+		expect(html).toContain('<h2 id="setup-3">');
+	});
+
+	it('falls back to a usable id when the heading has no slug-safe text', async () => {
+		const html = await renderBody([block('???', 'h2')]);
+		expect(html).toContain('<h2 id="section">');
+	});
+});
+
+describe('extractHeadings', () => {
+	it('returns an empty list for missing content', () => {
+		expect(extractHeadings(undefined)).toEqual([]);
+		expect(extractHeadings([])).toEqual([]);
+	});
+
+	it('lists h2 and h3 in order with the ids renderBody gives them', async () => {
+		const blocks = [
+			block('Intro'),
+			block('Why Go', 'h2'),
+			block('The Format', 'h3'),
+			block('Fine Print', 'h4'),
+			block('Why Go', 'h2'),
+		];
+		const headings = extractHeadings(blocks);
+		expect(headings).toEqual([
+			{ id: 'why-go', text: 'Why Go', level: 2 },
+			{ id: 'the-format', text: 'The Format', level: 3 },
+			{ id: 'why-go-2', text: 'Why Go', level: 2 },
+		]);
+
+		const html = await renderBody(blocks);
+		for (const h of headings) expect(html).toContain(`id="${h.id}"`);
 	});
 });

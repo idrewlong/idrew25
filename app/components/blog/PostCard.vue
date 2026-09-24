@@ -12,15 +12,14 @@
 			/>
 		</div>
 		<div class="p-6">
-			<div class="flex items-center gap-2 mb-2">
-				<time :datetime="post.publishedAt" class="text-xs text-stone-400">
+			<div class="flex flex-wrap items-center gap-2 mb-3">
+				<time :datetime="post.publishedAt" class="text-xs text-stone-400 mr-1">
 					{{ formatPostDate(post.publishedAt) }}
 				</time>
-				<span v-if="post.tags.length" class="text-stone-300">·</span>
 				<span
 					v-for="tag in post.tags.slice(0, 2)"
 					:key="tag.slug"
-					class="text-[10px] font-mono uppercase tracking-[0.15em] text-stone-400"
+					class="inline-flex items-center px-2.5 py-1 rounded-full border border-stone-200 text-[9px] leading-none font-mono uppercase tracking-[0.15em] text-stone-500"
 				>
 					{{ tag.title }}
 				</span>

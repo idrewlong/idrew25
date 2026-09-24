@@ -1,5 +1,6 @@
 import { toHTML, type PortableTextComponents } from '@portabletext/to-html';
 import { createHighlighter, type Highlighter } from 'shiki';
+import type { Heading } from './types';
 
 const THEME = 'github-light';
 
@@ -88,6 +89,37 @@ export function slugifyHeading(text: string): string {
 
 function headingText(value: { children?: Array<{ text?: string }> }): string {
 	return (value?.children ?? []).map((child) => child?.text ?? '').join('');
+}
+
+const HEADING_LEVELS: Record<string, number> = { h2: 2, h3: 3, h4: 4 };
+
+type Block = Record<string, unknown>;
+
+// Walks the body once, giving every heading an id that is unique within the
+// post (a repeated "Setup" becomes setup, setup-2, ...). Both the rendered
+// <hN id> and the table of contents read from this, so they can't disagree.
+function assignHeadingIds(blocks: Block[]): Map<Block, Heading> {
+	const used = new Set<string>();
+	const ids = new Map<Block, Heading>();
+	for (const b of blocks) {
+		const level = b?._type === 'block' ? HEADING_LEVELS[String(b.style)] : 0;
+		if (!level) continue;
+		const text = headingText(b as { children?: Array<{ text?: string }> });
+		const base = slugifyHeading(text) || 'section';
+		let id = base;
+		for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+		used.add(id);
+		ids.set(b, { id, text, level });
+	}
+	return ids;
+}
+
+// The h2/h3 outline of a post, for its table of contents.
+export function extractHeadings(blocks: unknown): Heading[] {
+	if (!Array.isArray(blocks)) return [];
+	return [...assignHeadingIds(blocks as Block[]).values()].filter(
+		(h) => h.level <= 3
+	);
 }
 
 function plainCodeBlock(code: string): string {
@@ -196,11 +228,11 @@ const components: PortableTextComponents = {
 	block: {
 		normal: ({ children }) => `<p>${children}</p>`,
 		h2: ({ children, value }) =>
-			`<h2 id="${slugifyHeading(headingText(value))}">${children}</h2>`,
+			`<h2 id="${value._headingId}">${children}</h2>`,
 		h3: ({ children, value }) =>
-			`<h3 id="${slugifyHeading(headingText(value))}">${children}</h3>`,
+			`<h3 id="${value._headingId}">${children}</h3>`,
 		h4: ({ children, value }) =>
-			`<h4 id="${slugifyHeading(headingText(value))}">${children}</h4>`,
+			`<h4 id="${value._headingId}">${children}</h4>`,
 		blockquote: ({ children }) => `<blockquote>${children}</blockquote>`,
 	},
 	list: {
@@ -307,8 +339,11 @@ async function withHighlightedCode(
 
 export async function renderBody(blocks: unknown): Promise<string> {
 	if (!Array.isArray(blocks) || blocks.length === 0) return '';
-	const prepared = await withHighlightedCode(
-		blocks as Array<Record<string, unknown>>
-	);
+	const headingIds = assignHeadingIds(blocks as Block[]);
+	const withIds = (blocks as Block[]).map((b) => {
+		const heading = headingIds.get(b);
+		return heading ? { ...b, _headingId: heading.id } : b;
+	});
+	const prepared = await withHighlightedCode(withIds);
 	return toHTML(prepared as never, { components });
 }

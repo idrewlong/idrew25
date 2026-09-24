@@ -327,6 +327,18 @@ const filters = [
 // Tools lead: they're the strongest engineering signal on the page.
 const allProjects = [
 	{
+		title: 'djilog',
+		description:
+			'Go library and CLI for parsing DJI drone flight logs across all 14 format versions, including encrypted v13+ logs. Exports flight tracks to CSV, GeoJSON, KML or JSON, recovers embedded photos with their EXIF, and salvages what it can from corrupt files. Standard library only.',
+		repo: 'https://github.com/idrewlong/djilog',
+		install: 'go install github.com/idrewlong/djilog/cmd/djilog@latest',
+		command: 'djilog export flight.txt --geojson -o track.geojson',
+		workTypes: ['Developer Tool', 'Open Source'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:go'],
+	},
+	{
 		title: 'Shrinkr',
 		description:
 			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds. It hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',

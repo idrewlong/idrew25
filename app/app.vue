@@ -11,7 +11,8 @@
 </template>
 
 <script setup>
-const showPreloader = ref(true);
+// Only play the preloader when the visit starts on the home page
+const showPreloader = ref(useRoute().path === '/');
 </script>
 
 <style>

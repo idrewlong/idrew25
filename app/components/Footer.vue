@@ -2,6 +2,42 @@
 <template>
 	<footer class="w-full border-t border-stone-200 bg-(--bg)">
 		<div class="max-w-6xl mx-auto px-4 sm:px-6">
+			<div
+				class="flex flex-col gap-5 py-6 border-b border-stone-200 sm:flex-row sm:items-center sm:justify-between"
+			>
+				<nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-2">
+					<NuxtLink to="/" class="footer-link">Home</NuxtLink>
+					<NuxtLink
+						v-for="link in navigationLinks"
+						:key="link.to"
+						:to="link.to"
+						class="footer-link"
+					>
+						{{ link.label }}
+					</NuxtLink>
+					<NuxtLink to="/contact" class="footer-link">Contact</NuxtLink>
+				</nav>
+
+				<div class="flex items-center gap-4">
+					<a :href="`mailto:${contactEmail}`" class="footer-link normal-case tracking-[0.08em]">
+						{{ contactEmail }}
+					</a>
+					<div class="flex items-center gap-1">
+						<a
+							v-for="social in socialLinks"
+							:key="social.url"
+							:href="social.url"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="footer-icon"
+							:aria-label="social.label"
+						>
+							<Icon :name="social.icon" class="w-4 h-4" :aria-hidden="true" />
+						</a>
+					</div>
+				</div>
+			</div>
+
 			<div class="flex items-center justify-between py-4">
 				<span class="footer-text">Long Beach // MS</span>
 
@@ -49,5 +85,13 @@ const year = new Date().getFullYear();
 
 .footer-text {
 	@apply text-[9px] tracking-[0.2em] uppercase text-stone-400 font-mono;
+}
+
+.footer-link {
+	@apply text-[11px] tracking-[0.2em] uppercase text-stone-500 font-mono no-underline transition-colors hover:text-orange-500;
+}
+
+.footer-icon {
+	@apply inline-flex items-center justify-center w-8 h-8 text-stone-500 transition-colors hover:text-orange-500;
 }
 </style>

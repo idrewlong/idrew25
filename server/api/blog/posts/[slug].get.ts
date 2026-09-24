@@ -22,5 +22,9 @@ export default defineEventHandler(async (event): Promise<Post> => {
 	}
 
 	const { body, ...rest } = post;
-	return { ...rest, bodyHtml: await renderBody(body) };
+	return {
+		...rest,
+		bodyHtml: await renderBody(body),
+		headings: extractHeadings(body),
+	};
 });

@@ -34,8 +34,11 @@ const headingEl = ref(null);
 const formEl = ref(null);
 const sidebarEl = ref(null);
 
+// Reset on each call so an earlier timer can't wipe a newer message
+let clearStatusTimer: ReturnType<typeof setTimeout> | undefined;
 const clearStatusSoon = () => {
-	setTimeout(() => {
+	clearTimeout(clearStatusTimer);
+	clearStatusTimer = setTimeout(() => {
 		result.value = '';
 		status.value = '';
 	}, 5000);
@@ -68,6 +71,7 @@ const submitForm = async () => {
 	}
 
 	isSubmitting.value = true;
+	clearTimeout(clearStatusTimer);
 	result.value = 'Sending message...';
 	status.value = 'info';
 
@@ -215,11 +219,14 @@ onMounted(() => {
 				<form @submit.prevent="submitForm" class="space-y-8">
 					<!-- Name -->
 					<div class="form-field">
-						<label class="form-label">
-							<span class="text-orange-500 mr-1.5">✦</span>Name
+						<label for="contact-name" class="form-label">
+							<span class="text-orange-500 mr-1.5" aria-hidden="true">✦</span>Name
 						</label>
 						<input
+							id="contact-name"
+							name="name"
 							type="text"
+							autocomplete="name"
 							required
 							v-model="form.name"
 							class="form-input"
@@ -229,11 +236,14 @@ onMounted(() => {
 
 					<!-- Email -->
 					<div class="form-field">
-						<label class="form-label">
-							<span class="text-orange-500 mr-1.5">✦</span>Email
+						<label for="contact-email" class="form-label">
+							<span class="text-orange-500 mr-1.5" aria-hidden="true">✦</span>Email
 						</label>
 						<input
+							id="contact-email"
+							name="email"
 							type="email"
+							autocomplete="email"
 							required
 							v-model="form.email"
 							class="form-input"
@@ -243,10 +253,12 @@ onMounted(() => {
 
 					<!-- Message -->
 					<div class="form-field">
-						<label class="form-label">
-							<span class="text-orange-500 mr-1.5">✦</span>Message
+						<label for="contact-message" class="form-label">
+							<span class="text-orange-500 mr-1.5" aria-hidden="true">✦</span>Message
 						</label>
 						<textarea
+							id="contact-message"
+							name="message"
 							required
 							v-model="form.message"
 							rows="5"
@@ -267,40 +279,43 @@ onMounted(() => {
 						aria-hidden="true"
 					/>
 
-					<!-- Status -->
-					<Transition
-						enter-active-class="transition-all duration-300 ease-out"
-						enter-from-class="opacity-0 -translate-y-1"
-						enter-to-class="opacity-100 translate-y-0"
-						leave-active-class="transition-all duration-200 ease-in"
-						leave-from-class="opacity-100 translate-y-0"
-						leave-to-class="opacity-0 -translate-y-1"
-					>
-						<div
-							v-if="result"
-							:class="[
-								'status-message',
-								status === 'success'
-									? 'status-success'
-									: status === 'error'
-										? 'status-error'
-										: 'status-info',
-							]"
+					<!-- Status — the live region stays mounted so changes to it are announced -->
+					<div role="status" aria-live="polite" aria-atomic="true" class="empty:mb-0">
+						<Transition
+							enter-active-class="transition-all duration-300 ease-out"
+							enter-from-class="opacity-0 -translate-y-1"
+							enter-to-class="opacity-100 translate-y-0"
+							leave-active-class="transition-all duration-200 ease-in"
+							leave-from-class="opacity-100 translate-y-0"
+							leave-to-class="opacity-0 -translate-y-1"
 						>
-							<Icon
-								:name="
+							<div
+								v-if="result"
+								:class="[
+									'status-message',
 									status === 'success'
-										? 'heroicons:check-circle'
+										? 'status-success'
 										: status === 'error'
-											? 'heroicons:exclamation-circle'
-											: 'heroicons:arrow-path'
-								"
-								class="w-4 h-4 shrink-0"
-								:class="{ 'animate-spin': status === 'info' }"
-							/>
-							<span>{{ result }}</span>
-						</div>
-					</Transition>
+											? 'status-error'
+											: 'status-info',
+								]"
+							>
+								<Icon
+									:name="
+										status === 'success'
+											? 'heroicons:check-circle'
+											: status === 'error'
+												? 'heroicons:exclamation-circle'
+												: 'heroicons:arrow-path'
+									"
+									class="w-4 h-4 shrink-0"
+									:class="{ 'animate-spin': status === 'info' }"
+									aria-hidden="true"
+								/>
+								<span>{{ result }}</span>
+							</div>
+						</Transition>
+					</div>
 
 					<!-- Submit -->
 					<button
