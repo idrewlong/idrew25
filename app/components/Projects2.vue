@@ -327,6 +327,18 @@ const filters = [
 // Tools lead: they're the strongest engineering signal on the page.
 const allProjects = [
 	{
+		title: 'Skinamp',
+		description:
+			'Customizable Spotify player for Omarchy, written in Rust on librespot. A background daemon puts a mini player in the status bar, and a full player window swaps between skins like Winamp, iTunes, click-wheel iPod, Zune and WMP, with synced lyrics, terminal and GPU visualizers, and MPRIS media keys.',
+		image: '/images/skinamp-tour.gif',
+		link: 'https://plugins.omarchy.org/plugin.html?id=io.github.idrewlong.skinamp',
+		repo: 'https://github.com/idrewlong/skinamp',
+		workTypes: ['Desktop App', 'Open Source'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:rust', 'logos:spotify-icon'],
+	},
+	{
 		title: 'djilog',
 		description:
 			'Go library and CLI for parsing DJI drone flight logs across all 14 format versions, including encrypted v13+ logs. Exports flight tracks to CSV, GeoJSON, KML or JSON, recovers embedded photos with their EXIF, and salvages what it can from corrupt files. Standard library only.',
