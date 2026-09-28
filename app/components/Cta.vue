@@ -46,12 +46,12 @@
 							<span class="text-stone-700">Open To Opportunities</span>
 						</p>
 					</div>
-					<p
+					<!-- <p
 						class="text-[10px] tracking-[0.12em] uppercase text-stone-400 font-mono mt-1.5 leading-relaxed max-w-[18rem]"
 					>
 						Software, Platform, DevSecOps and cleared roles. <br /> <br />
 						Open to anywhere, especially Austin TX, Nashville TN and Huntsville AL.
-					</p>
+					</p> -->
 				</div>
 
 				<!-- Social icons -->

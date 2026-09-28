@@ -435,9 +435,10 @@ onMounted(() => {
 					<p
 						class="text-[10px] tracking-[0.12em] uppercase text-stone-500 font-mono mt-2 leading-relaxed"
 					>
-						Software, Platform, DevSecOps and cleared roles. <br />
+						Software, Platform, DevSecOps and cleared roles.
+						<!-- <br />
 						<br />Open anywhere, especially Austin TX, Nashville TN and
-						Huntsville AL.
+						Huntsville AL. -->
 					</p>
 				</div>
 
