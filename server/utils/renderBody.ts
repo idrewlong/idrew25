@@ -311,7 +311,9 @@ const components: PortableTextComponents = {
 				value.width && value.height
 					? ` width="${value.width}" height="${value.height}"`
 					: '';
-			const src = `${value.url}?w=1400&fm=webp&q=80`;
+			// fit=max caps at 1400 without upscaling smaller uploads; Sanity
+			// otherwise enlarges them, which balloons animated GIFs.
+			const src = `${value.url}?w=1400&fit=max&fm=webp&q=80`;
 			return `<figure class="body-image"><img src="${escapeHtml(src)}" alt="${alt}"${dims} loading="lazy" decoding="async" />${caption}</figure>`;
 		},
 	},
