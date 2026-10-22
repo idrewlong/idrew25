@@ -327,6 +327,18 @@ const filters = [
 // Tools lead: they're the strongest engineering signal on the page.
 const allProjects = [
 	{
+		title: 'crawlmark',
+		description:
+			'MCP server in TypeScript that gives Claude, or any MCP client, the data behind monthly SEO client work. It pulls from Search Console, GA4, Tag Manager, Lighthouse and axe-core, plus DataForSEO, Ahrefs or Semrush for keywords and backlinks, and turns it into report-shaped tools for audits, quick wins and monthly reports. Responses are cached in SQLite, and paid calls stop at per-client monthly caps.',
+		repo: 'https://github.com/idrewlong/crawlmark-mcp',
+		install: 'npx crawlmark-mcp@latest init',
+		command: 'npx crawlmark-mcp setup status',
+		workTypes: ['MCP Server', 'Open Source'],
+		isRealWork: false,
+		category: 'tool',
+		technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
+	},
+	{
 		title: 'Skinamp',
 		description:
 			'Customizable Spotify player for Omarchy, written in Rust on librespot. A background daemon puts a mini player in the status bar, and a full player window swaps between skins like Winamp, iTunes, click-wheel iPod, Zune and WMP, with synced lyrics, terminal and GPU visualizers, and MPRIS media keys.',
@@ -386,6 +398,21 @@ const allProjects = [
 		isRealWork: false,
 		category: 'tool',
 		technologies: ['logos:chrome'],
+	},
+	{
+		title: 'Southern AgCredit',
+		description:
+			'Custom WordPress theme for a farm and rural land lender serving Mississippi and Northwest Louisiana, with a loan calculator and Gravity Forms lead forms, hosted on WP Engine.',
+		image: '/images/southernagcredit.webp',
+		link: 'https://southernagcredit.com/',
+		workTypes: ['Web Development'],
+		isRealWork: true,
+		category: 'website',
+		technologies: [
+			'logos:wordpress-icon',
+			'logos:tailwindcss-icon',
+			'logos:wpengine',
+		],
 	},
 	{
 		title: 'Mad Genius - 5.0',
