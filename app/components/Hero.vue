@@ -43,8 +43,8 @@
 
 					<p class="hero-description text-stone-500">
 						Go by choice. TypeScript by trade. AWS by necessity. Senior full
-						stack at Mad Genius, where I own web and mobile builds and the AWS
-						infrastructure behind Mississippi state agencies.
+						stack developer at Mad Genius, where I own AI tooling, web apps,
+						headless sites, infra and more.
 					</p>
 
 					<div class="hero-buttons">
