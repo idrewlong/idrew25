@@ -97,8 +97,8 @@ const certifications = [
 		name: 'CompTIA Security+',
 		issuer: 'CompTIA',
 		code: 'SY0-701',
-		status: 'in-progress',
-		date: null,
+		status: 'earned',
+		date: 'Oct 2026',
 		tags: ['Security', 'Networking', 'Compliance'],
 	},
 ];
