@@ -121,6 +121,11 @@ const currently = [
 		value: 'Senior Full Stack Developer · Mad Genius',
 		link: 'https://madg.com/people/andrew-long/',
 	},
+	{
+		label: 'Certified',
+		value: 'CompTIA Security+',
+		link: 'https://www.credly.com/badges/22a82737-95da-458f-856a-02be00e5a352/public_url',
+	},
 	{ label: 'Hobbies', value: 'Soon to be Dad.' },
 ];
 

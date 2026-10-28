@@ -59,14 +59,33 @@
 						>{{ cert.date }}</span>
 					</div>
 
-					<!-- Cert name -->
-					<div>
-						<h3 class="text-lg font-bold font-serif text-stone-900 leading-snug">
-							{{ cert.name }}
-						</h3>
-						<p v-if="cert.code" class="text-[10px] font-mono text-stone-400 tracking-[0.15em] mt-1">
-							{{ cert.code }}
-						</p>
+					<!-- Cert name + badge -->
+					<div class="flex items-center justify-between gap-4">
+						<div>
+							<h3 class="text-lg font-bold font-serif text-stone-900 leading-snug">
+								{{ cert.name }}
+							</h3>
+							<p v-if="cert.code" class="text-[10px] font-mono text-stone-400 tracking-[0.15em] mt-1">
+								{{ cert.code }}
+							</p>
+						</div>
+						<component
+							:is="cert.verifyUrl ? 'a' : 'div'"
+							v-if="cert.badge"
+							:href="cert.verifyUrl"
+							:target="cert.verifyUrl ? '_blank' : undefined"
+							:rel="cert.verifyUrl ? 'noopener noreferrer' : undefined"
+							class="shrink-0 transition-transform hover:scale-105"
+						>
+							<img
+								:src="cert.badge"
+								:alt="cert.verifyUrl ? `Verify ${cert.name} on Credly` : `${cert.name} certification badge`"
+								width="64"
+								height="64"
+								loading="lazy"
+								class="w-16 h-16 object-contain"
+							/>
+						</component>
 					</div>
 
 					<!-- Footer: category tags -->
@@ -76,6 +95,13 @@
 							:key="tag"
 							class="text-[9px] font-mono tracking-[0.12em] uppercase text-stone-400 bg-stone-50 px-2 py-0.5 rounded-sm"
 						>{{ tag }}</span>
+						<a
+							v-if="cert.verifyUrl"
+							:href="cert.verifyUrl"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="ml-auto text-[9px] font-mono tracking-[0.15em] uppercase text-orange-400 hover:text-orange-500 py-0.5"
+						>Verify on Credly ↗</a>
 					</div>
 				</div>
 			</div>
@@ -99,6 +125,8 @@ const certifications = [
 		code: 'SY0-701',
 		status: 'earned',
 		date: 'Oct 2026',
+		badge: '/images/comptia-security-ce-certification.png',
+		verifyUrl: 'https://www.credly.com/badges/22a82737-95da-458f-856a-02be00e5a352/public_url',
 		tags: ['Security', 'Networking', 'Compliance'],
 	},
 ];
