@@ -1,117 +1,131 @@
 <template>
-	<section class="hero-section">
-		<!-- Paper grain — carries the Preloader texture into the page -->
-		<div class="hero-grain" aria-hidden="true"></div>
+	<section ref="root" class="hero">
+		<!-- ASCII globe (decorative). Fades in once the scene has drawn. -->
+		<div
+			ref="canvasHost"
+			class="hero-canvas"
+			:class="{ 'is-ready': sceneReady }"
+			aria-hidden="true"
+		></div>
+		<div class="hero-vignette" aria-hidden="true"></div>
 
-		<!-- Column rules — the Preloader's grid, dissolved to a whisper -->
-		<div class="hero-rules" aria-hidden="true">
-			<span class="hero-rule" style="left: 25%"></span>
-			<span class="hero-rule" style="left: 50%"></span>
-			<span class="hero-rule" style="left: 75%"></span>
-		</div>
-
-		<div class="hero-container max-w-6xl mx-auto px-4 sm:px-6">
-			<!-- ── Masthead rail ────────────────────────────── -->
-			<div class="hero-masthead">
-				<span class="masthead-cell masthead-cell--name">Andrew Long</span>
-				<span class="masthead-cell">Portfolio</span>
-				<span class="masthead-cell">Long Beach, MS</span>
-				<span class="masthead-cell masthead-cell--issue">2026</span>
+		<div class="hero-inner">
+			<!-- Info rail -->
+			<div class="hero-rail">
+				<div class="hero-cell">
+					<span class="readout !text-[var(--text)]">Andrew Long</span>
+					<span class="readout">Senior full stack dev</span>
+				</div>
+				<div class="hero-cell hidden sm:flex">
+					<span class="readout !text-[var(--text)]">Long Beach, MS</span>
+					<span class="readout">30.35°N · 89.15°W</span>
+				</div>
+				<div class="hero-cell hidden lg:flex">
+					<span class="readout !text-[var(--text)]">Web · Mobile · Cloud</span>
+					<span class="readout">TypeScript · Go · AWS</span>
+				</div>
+				<div class="hero-cell items-end text-right">
+					<span class="readout">Local time</span>
+					<span class="readout !text-[var(--text)] tabular-nums">{{ localTime }}</span>
+				</div>
 			</div>
 
-			<!-- ── Cover spread ─────────────────────────────── -->
-			<div class="hero-grid">
-				<!-- Left: type -->
-				<div class="hero-content">
-					<div class="hero-greeting">
-						<span class="hero-star" aria-hidden="true">✦</span>
-						<span
-							class="text-[9px] font-mono tracking-[0.25em] uppercase text-stone-400"
-							>Senior Full Stack Dev</span
+			<div class="hero-main">
+				<!-- Headline -->
+				<div class="hero-copy">
+					<p class="readout hero-status">
+						<span class="hero-mark" aria-hidden="true"></span>
+						<span class="hidden sm:inline">[ 00 ] · </span>Software · Platform · DevOps · AI
+					</p>
+					<h1 class="display hero-title">
+						<span class="block">I build</span>
+						<span class="block outline">reliable</span>
+						<span class="block hero-typed"
+							><span class="typewriter">{{ currentWord }}</span></span
 						>
-					</div>
-
-					<h1 class="hero-title font-serif">
-						<span class="hero-title-line">I like to build</span>
-						<span class="hero-title-line">
-							reliable<span class="hero-space">&nbsp;</span>
-							<span class="typewriter">{{ currentWord }}</span>
-						</span>
 					</h1>
+				</div>
 
-					<div class="hero-rule-heavy" aria-hidden="true"></div>
-
-					<p class="hero-description text-stone-500">
+				<!-- Brief panel -->
+				<div class="hero-panel">
+					<span class="hero-tick hero-tick--tl" aria-hidden="true">+</span>
+					<span class="hero-tick hero-tick--br" aria-hidden="true">+</span>
+					<p class="hero-description">
 						Go by choice. TypeScript by trade. AWS by necessity. Senior full
 						stack developer at Mad Genius, where I own AI tooling, web apps,
 						headless sites, infra and more.
 					</p>
-
 					<div class="hero-buttons">
-						<NuxtLink to="/contact" class="hero-btn-primary group">
-							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
-								>Get In Touch</span
-							>
+						<NuxtLink to="/contact" class="btn btn-solid">
+							<span>Get in touch</span>
 							<Icon
 								name="heroicons:arrow-up-right-20-solid"
-								class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+								class="w-4 h-4"
 								:aria-hidden="true"
 							/>
 						</NuxtLink>
 						<a
 							href="#projects"
-							class="hero-btn-secondary group"
+							class="btn btn-ghost"
 							@click.prevent="scrollTo('projects')"
 						>
-							<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
-								>View Projects</span
-							>
+							<span>See the work</span>
 							<Icon
 								name="heroicons:arrow-down-20-solid"
-								class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5"
+								class="w-4 h-4"
 								:aria-hidden="true"
 							/>
 						</a>
 					</div>
 				</div>
+			</div>
 
-				<!-- Right: plate + photo + floating tech icons -->
-				<div class="hero-image-area">
-					<div class="hero-glow" aria-hidden="true"></div>
+			<!-- Bottom rail -->
+			<div class="hero-foot readout" aria-hidden="true">
+				<span class="hidden sm:inline">Full stack developer — {{ year }}</span>
+				<span v-if="iss" class="hero-telemetry">
+					<span class="hero-live"></span>
+					<span class="!text-[var(--text)]">ISS</span>
+					<span class="tabular-nums">{{ iss }}</span>
+				</span>
+				<span class="hidden md:inline">
+					<span class="hero-drag-hint">Drag to explore</span>
+					<template v-if="iss"> · Live orbits · CelesTrak</template>
+				</span>
 
-					<!-- Plate: the surface the photo stands on. Sits above the
-					     glow but below the icons and photo, so the icons read as
-					     floating in the space between viewer and backdrop. -->
-					<div class="hero-plate" aria-hidden="true"></div>
-
-					<TechIcons />
-
-					<div class="hero-photo-wrapper">
-						<img
-							src="/images/me_1.webp"
-							alt="Andrew Long"
-							class="hero-photo"
-							width="1200"
-							height="1800"
-							fetchpriority="high"
-						/>
-					</div>
-
-				</div>
 			</div>
 		</div>
 	</section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import { onPageLeft } from '~/composables/usePageLeave';
 
 const { $scroll } = useNuxtApp();
 
-const words = ['tools', 'apps', 'APIs', 'platforms', 'infrastructure'];
+const root = ref(null);
+const canvasHost = ref(null);
+const sceneReady = ref(false);
+const year = new Date().getFullYear();
+
+const words = ['infrastructure', 'pipelines', 'AI agents', 'apps', 'platforms', 'APIs'];
 const currentWord = ref('');
 
 let reduceMotion = false;
+
+/* ── Local time (Long Beach, MS) ─────────────────────── */
+const timeFmt = new Intl.DateTimeFormat('en-US', {
+	timeZone: 'America/Chicago',
+	hour: '2-digit',
+	minute: '2-digit',
+	hour12: false,
+});
+const localTime = ref('--:--');
+let clockTimer = null;
+const tickClock = () => {
+	localTime.value = `${timeFmt.format(new Date())} CT`;
+};
 
 /* ── Typewriter ───────────────────────────────────────── */
 let typewriterTimeout = null;
@@ -166,242 +180,256 @@ const scrollTo = (id) => {
 	$scroll.to(el);
 };
 
+/* ── Live satellites ─────────────────────────────────── */
+// Positions come from /api/satellites (CelesTrak TLEs, cached server-side).
+// If it fails the globe keeps its decorative orbits.
+const iss = ref('');
+
+const formatLatLon = (lat, lon) =>
+	`${Math.abs(lat).toFixed(1)}°${lat >= 0 ? 'N' : 'S'} ${Math.abs(lon).toFixed(1)}°${lon >= 0 ? 'E' : 'W'}`;
+
+async function loadSatellites() {
+	try {
+		const data = await $fetch('/api/satellites');
+		if (!scene || disposed) return;
+		scene.onTelemetry = (sats) => {
+			const s = sats.find((x) => x.label === 'ISS');
+			iss.value = s ? `${formatLatLon(s.lat, s.lon)} · ${Math.round(s.altKm)} km` : '';
+		};
+		scene.setSatellites(data.featured, data.swarm);
+	} catch {
+		// Leave the decorative orbits in place
+	}
+}
+
+/* ── Globe scene ─────────────────────────────────────── */
+let scene = null;
+let io = null;
+let disposed = false;
+
+const onVisibility = () => {
+	if (!scene) return;
+	document.hidden ? scene.stop() : scene.start();
+};
+
+function webglAvailable() {
+	try {
+		const c = document.createElement('canvas');
+		return !!(c.getContext('webgl2') || c.getContext('webgl'));
+	} catch {
+		return false;
+	}
+}
+
+async function mountScene() {
+	if (!webglAvailable()) return;
+	// Loaded after mount so three never sits in the initial bundle
+	const { GlobeScene } = await import('~/scenes/GlobeScene');
+	if (disposed || !canvasHost.value) return;
+	scene = new GlobeScene(canvasHost.value);
+	scene.reduceMotion = reduceMotion;
+	sceneReady.value = true;
+	loadSatellites();
+
+	// Only animate while the hero is on screen
+	io = new IntersectionObserver(([entry]) => {
+		entry.isIntersecting ? scene.start() : scene.stop();
+	});
+	io.observe(root.value);
+	document.addEventListener('visibilitychange', onVisibility);
+}
+
 onMounted(() => {
 	reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+	tickClock();
+	clockTimer = setInterval(tickClock, 15000);
 	startTypewriter();
+	mountScene();
 });
 
-onUnmounted(() => {
+onPageLeft(() => {
+	disposed = true;
 	if (typewriterTimeout) clearTimeout(typewriterTimeout);
+	clearInterval(clockTimer);
+	io?.disconnect();
+	document.removeEventListener('visibilitychange', onVisibility);
+	scene?.dispose();
+	scene = null;
 });
 </script>
 
 <style scoped>
-/* ══ Shell ═══════════════════════════════════════════ */
-.hero-section {
+.hero {
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	padding-top: 1.5rem;
-	padding-bottom: 1.5rem;
-	isolation: isolate;
+	overflow: hidden;
+	border-bottom: 1px solid var(--border);
+	background: var(--bg);
 }
 
-@media (min-width: 768px) {
-	.hero-section {
-		min-height: min(calc(100svh - 64px), 940px);
-		padding-top: 2.25rem;
-		padding-bottom: 1.75rem;
-	}
-}
-
-.hero-container {
-	position: relative;
-	width: 100%;
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	z-index: 2;
-}
-
-/* Paper grain — same texture as the Preloader */
-.hero-grain {
+.hero-canvas {
 	position: absolute;
 	inset: 0;
-	z-index: 0;
-	opacity: 0.028;
-	pointer-events: none;
-	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-	background-size: 128px 128px;
+	opacity: 0;
+	transition: opacity 1.2s ease;
 }
 
-/* Column rules — fade out top and bottom so they dissolve into the page */
-.hero-rules {
+.hero-canvas.is-ready {
+	opacity: 0.6;
+}
+
+/* Full strength once the globe has its own side of the screen */
+@media (min-width: 768px) {
+	.hero-canvas.is-ready {
+		opacity: 1;
+	}
+}
+
+/* Darken the left/bottom so the headline always reads over the globe */
+.hero-vignette {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
+	inset: 0;
+	pointer-events: none;
+	background:
+		linear-gradient(to top, var(--bg) 0%, transparent 35%),
+		linear-gradient(to right, rgba(10, 11, 12, 0.85) 0%, transparent 55%);
+}
+
+/* Full-bleed with the same gutters and 1600px cap as `.wrap`.
+   Lets drags fall through to the globe canvas underneath; anything you
+   click or read closely opts back in. */
+.hero-inner {
+	position: relative;
+	z-index: 2;
+	pointer-events: none;
 	width: 100%;
-	max-width: 72rem;
-	z-index: 1;
-	pointer-events: none;
-	display: none;
+	max-width: 100rem;
+	margin-inline: auto;
+	padding-inline: 1rem;
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100svh - 56px);
+	padding-top: 1.25rem;
+	padding-bottom: 1.5rem;
 }
 
-@media (min-width: 768px) {
-	.hero-rules {
-		display: block;
+@media (min-width: 480px) {
+	.hero-inner {
+		min-height: calc(100svh - 64px);
+		padding-inline: 1.5rem;
 	}
 }
 
-.hero-rule {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	width: 1px;
-	background: linear-gradient(
-		to bottom,
-		transparent,
-		var(--border) 12%,
-		var(--border) 62%,
-		transparent 96%
-	);
-	opacity: 0.55;
+@media (min-width: 976px) {
+	.hero-inner {
+		padding-inline: 2.5rem;
+	}
 }
 
-/* ══ Masthead rail ═══════════════════════════════════ */
-.hero-masthead {
+/* ── Info rail ── */
+.hero-rail {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	border-top: 1px solid var(--border);
+	grid-template-columns: 1fr auto;
+	gap: 1rem;
+	padding-bottom: 0.9rem;
 	border-bottom: 1px solid var(--border);
-	margin-bottom: 2.5rem;
 }
 
 @media (min-width: 640px) {
-	.hero-masthead {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+	.hero-rail {
+		grid-template-columns: 1fr 1fr auto;
 	}
 }
 
-@media (min-width: 768px) {
-	.hero-masthead {
-		margin-bottom: 2rem;
+@media (min-width: 976px) {
+	.hero-rail {
+		grid-template-columns: 1fr 1fr 1fr auto;
 	}
 }
 
-.masthead-cell {
-	padding: 0.6rem 0.75rem;
-	font-family: 'Geist Mono', monospace;
-	font-size: 9px;
-	letter-spacing: 0.24em;
-	text-transform: uppercase;
-	color: var(--text-muted);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	border-left: 1px solid var(--border);
-}
-
-.masthead-cell:first-child {
-	border-left: 0;
-	padding-left: 0;
-}
-
-.masthead-cell:nth-child(3) {
-	border-left: 0;
-	padding-left: 0;
-}
-
-@media (min-width: 640px) {
-	.masthead-cell:nth-child(3) {
-		border-left: 1px solid var(--border);
-		padding-left: 0.75rem;
-	}
-}
-
-.masthead-cell--name {
-	color: var(--text);
-	font-weight: 500;
-}
-
-.masthead-cell--issue {
-	color: var(--accent);
-	text-align: right;
-	padding-right: 0;
-}
-
-/* ══ Cover spread ════════════════════════════════════ */
-.hero-grid {
-	position: relative;
+.hero-cell {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5rem;
+	gap: 0.3rem;
+}
+
+/* ── Main ── */
+.hero-main {
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 2rem;
+	padding-top: 40vh;
+	padding-bottom: 2rem;
 }
 
 @media (min-width: 768px) {
-	.hero-grid {
+	.hero-main {
 		flex-direction: row;
-		align-items: center;
-		gap: 4rem;
+		align-items: flex-end;
+		justify-content: space-between;
+		padding-top: 6rem;
 	}
 }
 
-.hero-content {
-	flex: 1;
-	min-width: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	position: relative;
-	z-index: 10;
-}
-
-.hero-greeting {
-	display: flex;
+.hero-status {
+	display: inline-flex;
 	align-items: center;
 	gap: 0.6rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.25rem;
 }
 
-.hero-star {
-	color: var(--accent);
-	font-size: 10px;
-	line-height: 1;
+/* Same pulsing square as the availability lines in About and Contact */
+.hero-mark {
+	width: 6px;
+	height: 6px;
+	background: var(--accent);
+	animation: hero-mark 2.4s ease-in-out infinite;
 }
 
-/* ── Headline ── */
-.hero-title {
-	font-size: clamp(2.5rem, 7.4vw, 5.75rem);
-	font-weight: 400;
-	line-height: 1;
-	letter-spacing: -0.03em;
-	color: var(--text);
-}
-
-.hero-title-line {
-	display: block;
-	will-change: transform, opacity;
-}
-
-.hero-space {
-	/* keeps the space between "reliable" and the typed word from collapsing */
-	display: inline;
-}
-
-/* Heavy rule under the headline — same device as the Cta name block */
-.hero-rule-heavy {
-	height: 2px;
-	width: 100%;
-	max-width: 30rem; /* aligns with the description block below it */
-	background: var(--text);
-	margin-top: 1.75rem;
-}
-
-.hero-description {
-	font-size: 0.875rem;
-	line-height: 1.8;
-	max-width: 30rem;
-	margin-top: 1.75rem;
-}
-
-@media (min-width: 768px) {
-	.hero-description {
-		font-size: 0.9375rem;
+@keyframes hero-mark {
+	50% {
+		opacity: 0.35;
 	}
 }
 
-/* ── Typewriter ── */
-.typewriter {
-	display: inline-block;
-	min-width: 60px;
-	font-style: italic;
+.hero-live {
+	width: 6px;
+	height: 6px;
+	background: #3ddc84;
+	animation: live 2s ease-in-out infinite;
+}
+
+@keyframes live {
+	50% {
+		opacity: 0.25;
+	}
+}
+
+.hero-title {
+	font-size: clamp(4.5rem, 24vw, 9rem);
+	font-weight: 900;
+}
+
+@media (min-width: 768px) {
+	.hero-title {
+		font-size: clamp(5rem, 10vw, 9.5rem);
+	}
+}
+
+.hero-typed {
+	/* "infrastructure" is ~6.3em wide at full size; 0.6em keeps it in the column down to 375px */
+	font-size: 0.6em;
+	line-height: 1.1;
+	margin-top: 0.15em;
 	color: var(--accent);
-	border-right: 2.5px solid var(--accent);
-	padding-right: 3px;
+	min-height: 1.1em;
+	white-space: nowrap;
+}
+
+.typewriter {
+	border-right: 0.08em solid var(--accent);
+	padding-right: 0.04em;
 	animation: blink 0.75s step-end infinite;
 }
 
@@ -415,233 +443,81 @@ onUnmounted(() => {
 	}
 }
 
-/* ── Buttons ── */
+/* ── Panel ── */
+.hero-panel {
+	position: relative;
+	max-width: 30rem;
+	padding: 1.5rem;
+	border: 1px solid var(--border);
+	background: rgba(10, 11, 12, 0.72);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+.hero-tick {
+	position: absolute;
+	font-family: 'Geist Mono', monospace;
+	font-size: 12px;
+	line-height: 1;
+	color: var(--accent);
+}
+.hero-tick--tl { top: -7px; left: -4px; }
+.hero-tick--br { bottom: -7px; right: -4px; }
+
+.hero-description {
+	font-size: 0.9375rem;
+	line-height: 1.65;
+	color: var(--text-muted);
+}
+
 .hero-buttons {
 	display: flex;
 	flex-direction: column;
-	gap: 0.75rem;
-	width: 100%;
-	max-width: 20rem;
-	margin-top: 2rem;
+	gap: 0.6rem;
+	margin-top: 1.5rem;
+}
+
+.hero-buttons .btn {
+	white-space: nowrap;
 }
 
 @media (min-width: 480px) {
 	.hero-buttons {
 		flex-direction: row;
-		width: auto;
-		max-width: none;
 	}
 }
 
-.hero-btn-primary,
-.hero-btn-secondary {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
+.hero-foot {
+	display: flex;
 	justify-content: space-between;
-	gap: 1.5rem;
-	padding: 0.9rem 1.25rem;
-	overflow: hidden;
+	gap: 1rem;
+	padding-top: 0.9rem;
+	border-top: 1px solid var(--border);
 }
 
-.hero-btn-primary {
-	background: var(--text);
-	color: #fafaf9;
+.hero-inner :is(a, button, .hero-panel, .hero-rail) {
+	pointer-events: auto;
 }
 
-/* Swipe fill on hover instead of a flat colour change */
-.hero-btn-primary::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: var(--accent);
-	transform: scaleX(0);
-	transform-origin: left center;
-	transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
-	z-index: 0;
-}
-
-.hero-btn-primary:hover::before,
-.hero-btn-primary:focus-visible::before {
-	transform: scaleX(1);
-}
-
-.hero-btn-primary > * {
-	position: relative;
-	z-index: 1;
-}
-
-.hero-btn-secondary {
-	border: 1px solid #d6d3d1;
-	color: #57534e;
-	transition:
-		border-color 0.2s ease,
-		color 0.2s ease;
-}
-
-.hero-btn-secondary:hover,
-.hero-btn-secondary:focus-visible {
-	border-color: var(--text);
+.hero-drag-hint {
 	color: var(--text);
 }
 
-/* ══ Photo plate ═════════════════════════════════════ */
-.hero-image-area {
-	position: relative;
-	flex-shrink: 0;
-	width: 100%;
-	max-width: 300px;
-	aspect-ratio: 4 / 5;
-	margin: 0 auto;
-}
-
-@media (min-width: 480px) {
-	.hero-image-area {
-		max-width: 420px;
-	}
-}
-
-@media (min-width: 768px) {
-	.hero-image-area {
-		width: 380px;
-		max-width: none;
-		margin: 0;
-	}
-}
-
-@media (min-width: 976px) {
-	.hero-image-area {
-		width: 420px;
-	}
-}
-
-/* Warm bloom so the icons read against something */
-.hero-glow {
-	position: absolute;
-	left: 50%;
-	bottom: 4%;
-	width: 130%;
-	aspect-ratio: 1;
-	transform: translateX(-50%);
-	background: radial-gradient(
-		circle at center,
-		rgba(249, 115, 22, 0.07) 0%,
-		rgba(249, 115, 22, 0.03) 38%,
-		transparent 68%
-	);
-	pointer-events: none;
-	z-index: 0;
-}
-
-/* Plate — the lifted surface the photo stands on. The soft drop
-   shadow plus the inset highlight is what reads as depth: the
-   photo breaks out over its top edge and the icons float in
-   front of it, giving three distinct planes. */
-.hero-plate {
-	position: absolute;
-	left: 50%;
-	bottom: 0;
-	transform: translateX(-50%);
-	width: 240px;
-	height: 62%;
-	z-index: 1;
-	pointer-events: none;
-	/* No border or drop shadow — the edges are feathered away so it
-	   reads as a soft pool of light rather than a box, and the photo's
-	   own white backdrop dissolves into it instead of seaming. Depth
-	   comes from the icons' shadows sitting in front of it. */
-	background: linear-gradient(
-		180deg,
-		rgba(255, 255, 255, 0.92) 0%,
-		rgba(255, 255, 255, 0.72) 55%,
-		rgba(255, 255, 255, 0.5) 100%
-	);
-	mask-image:
-		linear-gradient(
-			to bottom,
-			transparent 0%,
-			black 20%,
-			black 84%,
-			transparent 100%
-		),
-		linear-gradient(
-			to right,
-			transparent 0%,
-			black 16%,
-			black 84%,
-			transparent 100%
-		);
-	mask-composite: intersect;
-	-webkit-mask-image:
-		linear-gradient(
-			to bottom,
-			transparent 0%,
-			black 20%,
-			black 84%,
-			transparent 100%
-		),
-		linear-gradient(
-			to right,
-			transparent 0%,
-			black 16%,
-			black 84%,
-			transparent 100%
-		);
-	-webkit-mask-composite: source-in;
-}
-
-@media (min-width: 480px) {
-	.hero-plate {
-		width: 300px;
-	}
-}
-
-@media (min-width: 768px) {
-	.hero-plate {
-		width: 322px;
-	}
-}
-
-.hero-photo-wrapper {
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 220px;
-	height: 320px;
-	z-index: 10;
-}
-
-@media (min-width: 480px) {
-	.hero-photo-wrapper {
-		width: 280px;
-		height: 400px;
-	}
-}
-
-@media (min-width: 768px) {
-	.hero-photo-wrapper {
-		width: 300px;
-		height: 425px;
-	}
-}
-
-.hero-photo {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: top center;
-	mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
-	-webkit-mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
+.hero-telemetry {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.hero-btn-primary::before {
-		transition: none;
+	.typewriter,
+	.hero-live,
+	.hero-mark {
+		animation: none;
 	}
 
-	.typewriter {
-		animation: none;
+	.hero-canvas {
+		transition: none;
 	}
 }
 </style>

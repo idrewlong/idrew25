@@ -162,12 +162,12 @@ onUnmounted(() => {
 }
 
 .toc-link--active {
-	color: var(--accent, #f97316);
-	border-left-color: var(--accent, #f97316);
+	color: var(--accent);
+	border-left-color: var(--accent);
 }
 
 .toc-link:focus-visible {
-	outline: 2px solid var(--accent, #f97316);
+	outline: 2px solid var(--accent);
 	outline-offset: 2px;
 }
 

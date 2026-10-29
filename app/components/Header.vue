@@ -13,12 +13,14 @@
 			<!-- Desktop Navigation -->
 			<nav class="desktop-nav" aria-label="Main navigation">
 				<NuxtLink
-					v-for="link in navigationLinks"
+					v-for="(link, idx) in navigationLinks"
 					:key="link.to"
 					:to="link.to"
 					class="nav-item"
-					active-class="nav-item--active"
+					:active-class="link.to.includes('#') ? '' : 'nav-item--active'"
+					@click="onSectionLink($event, link.to)"
 				>
+					<span class="nav-index" aria-hidden="true">{{ String(idx + 1).padStart(2, '0') }}</span>
 					{{ link.label }}
 				</NuxtLink>
 
@@ -35,6 +37,11 @@
 				</a>
 
 				<div class="nav-divider" aria-hidden="true" />
+
+				<button v-if="assistant.enabled.value" type="button" class="header-ai" @click="assistant.open.value = true">
+					<span class="header-ai-dot" aria-hidden="true"></span>
+					Ask AI
+				</button>
 
 				<NuxtLink to="/contact" class="header-cta">
 					<span class="header-cta-label">Contact</span>
@@ -103,13 +110,24 @@
 					:key="link.to"
 					:to="link.to"
 					class="mobile-menu-link"
-					active-class="mobile-menu-link--active"
+					:active-class="link.to.includes('#') ? '' : 'mobile-menu-link--active'"
+					@click="menuOpen = false; onSectionLink($event, link.to)"
 				>
 					<span class="mobile-menu-index">{{
 						String(idx + 1).padStart(2, '0')
 					}}</span>
 					{{ link.label }}
 				</NuxtLink>
+
+				<button
+					v-if="assistant.enabled.value"
+					type="button"
+					class="mobile-menu-link mobile-menu-ai"
+					@click="menuOpen = false; assistant.open.value = true"
+				>
+					<span class="mobile-menu-index">AI</span>
+					Ask my AI
+				</button>
 
 				<div class="mobile-menu-meta">
 					<a :href="`mailto:${contactEmail}`" class="mobile-menu-email">
@@ -137,10 +155,12 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 
+const assistant = useAssistant();
 const isScrolled = ref(false);
 const menuOpen = ref(false);
 const toggleEl = ref(null);
 const route = useRoute();
+const onSectionLink = useSectionLink();
 
 // Close the menu once a link has navigated
 watch(
@@ -186,7 +206,7 @@ onUnmounted(() => {
 	position: sticky;
 	top: 0;
 	z-index: 50;
-	background: rgba(247, 246, 243, 0.82);
+	background: rgba(10, 11, 12, 0.78);
 	backdrop-filter: blur(16px) saturate(1.4);
 	-webkit-backdrop-filter: blur(16px) saturate(1.4);
 	border-bottom: 1px solid transparent;
@@ -197,11 +217,11 @@ onUnmounted(() => {
 
 .site-header.is-scrolled {
 	border-bottom-color: var(--border);
-	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.03);
+	box-shadow: none;
 }
 
 .header-inner {
-	max-width: 72rem;
+	max-width: 100rem;
 	margin: 0 auto;
 	padding: 0 1rem;
 	height: 56px;
@@ -214,6 +234,12 @@ onUnmounted(() => {
 	.header-inner {
 		padding: 0 1.5rem;
 		height: 64px;
+	}
+}
+
+@media (min-width: 976px) {
+	.header-inner {
+		padding: 0 2.5rem;
 	}
 }
 
@@ -265,13 +291,14 @@ onUnmounted(() => {
 .nav-item {
 	display: inline-flex;
 	align-items: center;
-	padding: 6px 12px;
-	border-radius: 6px;
-	font-size: 0.9375rem;
-	font-family: inherit;
+	min-height: 44px;
+	padding: 0 12px;
+	font-family: 'Geist Mono', monospace;
+	font-size: 10px;
+	text-transform: uppercase;
 	color: var(--text-muted);
 	text-decoration: none;
-	letter-spacing: 0.01em;
+	letter-spacing: 0.22em;
 	transition:
 		background 0.12s ease,
 		color 0.12s ease;
@@ -279,8 +306,21 @@ onUnmounted(() => {
 
 .nav-item:hover,
 .nav-item--active {
-	background: rgba(0, 0, 0, 0.05);
 	color: var(--text);
+}
+
+.nav-item--active {
+	box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.nav-index {
+	margin-right: 0.5rem;
+	color: var(--text-muted);
+}
+
+.nav-item--active .nav-index,
+.nav-item:hover .nav-index {
+	color: var(--accent);
 }
 
 /* Contact CTA — same swipe-fill button language as the hero and footer CTA */
@@ -291,8 +331,8 @@ onUnmounted(() => {
 	gap: 0.65rem;
 	padding: 8px 14px;
 	overflow: hidden;
-	background: var(--bg);
-	border: 1px solid #d6d3d1;
+	background: transparent;
+	border: 1px solid var(--border);
 	color: var(--text);
 	text-decoration: none;
 	flex-shrink: 0;
@@ -303,7 +343,7 @@ onUnmounted(() => {
 
 .header-cta:hover,
 .header-cta:focus-visible {
-	color: #fafaf9;
+	color: #0a0b0c;
 	border-color: var(--accent);
 }
 
@@ -370,6 +410,48 @@ onUnmounted(() => {
 	}
 }
 
+.header-ai {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-height: 36px;
+	margin-right: 8px;
+	padding: 0 12px;
+	border: 1px solid var(--accent);
+	font-family: 'Geist Mono', monospace;
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--text);
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.header-ai:hover {
+	background: rgba(255, 91, 31, 0.15);
+}
+
+/* Touch screens get full 44px tap targets */
+@media (pointer: coarse) {
+	.header-cta,
+	.header-ai {
+		min-height: 44px;
+	}
+}
+
+.header-ai-dot {
+	width: 6px;
+	height: 6px;
+	background: var(--accent);
+}
+
+.mobile-menu-ai {
+	width: 100%;
+	text-align: left;
+	color: var(--accent);
+	cursor: pointer;
+}
+
 .nav-divider {
 	width: 1px;
 	height: 18px;
@@ -382,18 +464,14 @@ onUnmounted(() => {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 34px;
-	height: 34px;
-	border-radius: 6px;
+	width: 44px;
+	height: 44px;
 	color: var(--text-muted);
-	transition:
-		background 0.12s ease,
-		color 0.12s ease;
+	transition: color 0.12s ease;
 }
 
 .icon-item:hover {
-	background: rgba(0, 0, 0, 0.05);
-	color: var(--text);
+	color: var(--accent);
 }
 
 /* ── Mobile menu toggle: hamburger ↔ X ──
@@ -403,10 +481,10 @@ onUnmounted(() => {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 36px;
-	height: 36px;
-	border: 1px solid #d6d3d1;
-	background: var(--bg);
+	width: 44px;
+	height: 44px;
+	border: 1px solid var(--border);
+	background: transparent;
 	color: var(--text);
 	cursor: pointer;
 	flex-shrink: 0;
@@ -460,7 +538,7 @@ onUnmounted(() => {
 	left: 0;
 	right: 0;
 	height: 100vh;
-	background: rgba(28, 25, 23, 0.2);
+	background: rgba(0, 0, 0, 0.6);
 }
 
 .mobile-menu {
@@ -473,7 +551,7 @@ onUnmounted(() => {
 	padding: 0.5rem 1rem 1.25rem;
 	background: var(--bg);
 	border-bottom: 1px solid var(--border);
-	box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.12);
+	box-shadow: none;
 }
 
 @media (min-width: 480px) {
@@ -495,10 +573,11 @@ onUnmounted(() => {
 	gap: 0.875rem;
 	padding: 0.625rem 0;
 	border-bottom: 1px solid var(--border);
-	font-family: 'Instrument Serif', Georgia, serif;
-	font-style: italic;
-	font-size: 2rem;
-	line-height: 1.1;
+	font-family: var(--font-display);
+	font-weight: 800;
+	text-transform: uppercase;
+	font-size: 2.25rem;
+	line-height: 1;
 	letter-spacing: -0.02em;
 	color: var(--text);
 	text-decoration: none;

@@ -208,16 +208,17 @@ onUnmounted(() => {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.92);
-	border: 1px solid var(--border);
+	border-radius: 6px;
+	/* Light tiles keep every logo legible, including the dark ones */
+	background: rgba(236, 237, 238, 0.94);
+	border: 1px solid rgba(255, 255, 255, 0.6);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	/* Lift the cards off the photo plate so they stay legible
 	   where they overlap it */
 	box-shadow:
-		0 6px 16px -8px rgba(28, 25, 23, 0.28),
-		0 2px 4px -2px rgba(28, 25, 23, 0.08);
+		0 10px 24px -10px rgba(0, 0, 0, 0.7),
+		0 2px 6px -2px rgba(0, 0, 0, 0.4);
 	transition:
 		border-color 0.2s ease,
 		box-shadow 0.2s ease,
@@ -237,7 +238,7 @@ onUnmounted(() => {
 	.icon-inner {
 		width: 40px;
 		height: 40px;
-		border-radius: 10px;
+		border-radius: 5px;
 	}
 	.icon-inner :deep(.tech-logo) {
 		font-size: calc(20px * var(--icon-scale, 1));

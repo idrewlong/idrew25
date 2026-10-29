@@ -2,35 +2,33 @@
 	<section
 		ref="sectionEl"
 		id="projects"
-		class="bg-stone-100/70 border-y border-stone-200 py-16"
+		class="bg-[var(--bg-card)] border-y border-[var(--border)] py-16 md:py-24"
 		@mousemove="onMouseMove"
 		@mouseleave="onSectionLeave"
 	>
-		<div class="max-w-6xl mx-auto px-4 sm:px-6">
+		<div class="wrap">
 			<!-- Header -->
-			<div class="mb-10">
-				<div class="flex items-center gap-4 mb-4 text-[11px] font-mono text-stone-400 uppercase tracking-widest">
-					<span>Selected Work</span>
-					<span class="flex-1 h-px bg-stone-200" aria-hidden="true"></span>
-					<span>{{ filteredProjects.length }} Projects</span>
-				</div>
+			<div class="sec-rule">
+				<span class="readout text-[var(--accent)]">06</span>
+				<span class="readout">Selected work</span>
+				<span class="readout ml-auto">{{ filteredProjects.length }} entries</span>
+			</div>
+			<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-5 mb-8 md:mb-12">
+				<h2 class="display sec-word !m-0">Work<span class="sr-only">: selected projects, tools and websites</span></h2>
 
 				<!-- Filter tabs -->
-				<div class="flex items-center gap-1">
+				<div class="flex items-center border border-[var(--border)] self-start md:self-auto" role="group" aria-label="Filter projects">
 					<button
 						v-for="f in filters"
 						:key="f.value"
 						@click="setFilter(f.value)"
-						class="relative px-3 py-1 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200"
+						class="readout min-h-11 px-4 transition-colors duration-200 border-r border-[var(--border)] last:border-r-0"
 						:class="activeFilter === f.value
-							? 'text-orange-500'
-							: 'text-stone-400 hover:text-stone-600'"
+							? 'bg-[var(--text)] !text-[var(--bg)]'
+							: 'hover:!text-[var(--text)]'"
+						:aria-pressed="activeFilter === f.value"
 					>
 						{{ f.label }}
-						<span
-							class="absolute bottom-0 left-3 right-3 h-px transition-all duration-300"
-							:class="activeFilter === f.value ? 'bg-orange-400 opacity-100' : 'bg-transparent opacity-0'"
-						></span>
 					</button>
 				</div>
 			</div>
@@ -40,13 +38,15 @@
 				<div
 					v-for="(project, i) in visibleProjects"
 					:key="project.title"
-					class="accordion-row border-t border-stone-200"
-					:class="{ 'border-b border-stone-200': i === visibleProjects.length - 1 && !hasMore }"
+					class="accordion-row border-t border-[var(--border)]"
+					:class="{ 'border-b border-[var(--border)]': i === visibleProjects.length - 1 && !hasMore }"
 				>
 					<!-- Row header -->
 					<button
-						class="relative w-full flex items-center gap-3 sm:gap-5 py-5 sm:py-6 group text-left overflow-hidden md:cursor-none"
+						class="relative w-full flex items-center gap-3 sm:gap-5 py-5 sm:py-6 group text-left overflow-hidden"
+						:class="{ 'md:cursor-none': cursorShown }"
 						:aria-expanded="openIndex === i"
+						:id="`drawer-btn-${i}`"
 						:aria-controls="`drawer-${i}`"
 						@click="toggleRow(i)"
 						@mouseenter="onRowEnter($event)"
@@ -54,7 +54,7 @@
 					>
 						<!-- Hover background sweep -->
 						<span
-							class="absolute inset-0 z-0 bg-white/60 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out pointer-events-none"
+							class="absolute inset-0 z-0 bg-white/[0.03] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out pointer-events-none"
 							aria-hidden="true"
 						></span>
 
@@ -65,14 +65,16 @@
 							aria-hidden="true"
 						>
 							<img
+								v-if="project.image"
 								:src="project.image"
 								:alt="project.title"
 								class="h-full w-full object-cover object-left"
 								draggable="false"
 							/>
+							<ProjectArt v-else-if="project.art" :name="project.art" crop />
 							<!-- Fade left edge into row background -->
 							<div
-								class="absolute inset-0 bg-linear-to-r from-stone-100 via-stone-100/60 to-transparent"
+								class="absolute inset-0 bg-linear-to-r from-[var(--bg-card)] via-[var(--bg-card)]/60 to-transparent"
 							></div>
 						</div>
 
@@ -80,7 +82,7 @@
 						<span
 							class="relative z-10 font-mono text-[11px] shrink-0 w-6 tabular-nums transition-colors duration-300"
 							:class="
-								openIndex === i ? 'text-orange-400' : 'text-stone-300'
+								openIndex === i ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'
 							"
 							aria-hidden="true"
 						>
@@ -89,11 +91,11 @@
 
 						<!-- Title -->
 						<h3
-							class="relative z-10 flex-1 font-serif leading-none transition-colors duration-300"
+							class="relative z-10 flex-1 display leading-none transition-colors duration-300"
 							:class="[
 								openIndex === i
-									? 'text-orange-500'
-									: 'text-stone-900 group-hover:text-orange-500',
+									? '!text-[var(--accent)]'
+									: 'group-hover:!text-[var(--accent)]',
 								'text-2xl sm:text-3xl lg:text-4xl',
 							]"
 						>
@@ -102,9 +104,9 @@
 
 						<!-- Work type dot -->
 						<span
-							class="relative z-10 w-1.5 h-1.5 rounded-full shrink-0 hidden sm:block"
+							class="relative z-10 w-1.5 h-1.5 shrink-0 hidden sm:block"
 							:class="
-								project.isRealWork ? 'bg-emerald-400' : 'bg-amber-300'
+								project.isRealWork ? 'bg-[#3ddc84]' : 'bg-[var(--text-muted)]'
 							"
 							:title="project.isRealWork ? 'Client work' : 'Side project'"
 						></span>
@@ -115,7 +117,7 @@
 						>
 							<Icon
 								icon="heroicons:plus-small"
-								class="w-5 h-5 text-stone-400 transition-all duration-300 group-hover:text-orange-500"
+								class="w-5 h-5 text-[var(--text-muted)] transition-all duration-300 group-hover:text-[var(--accent)]"
 								:style="{
 									transform:
 										openIndex === i ? 'rotate(45deg)' : 'rotate(0deg)',
@@ -127,6 +129,9 @@
 					<!-- Drawer body -->
 					<div
 						:id="`drawer-${i}`"
+						role="region"
+						:aria-labelledby="`drawer-btn-${i}`"
+						:inert="openIndex !== i"
 						style="height: 0; overflow: hidden"
 					>
 						<div class="pb-6 sm:pb-10 pt-1">
@@ -134,7 +139,7 @@
 								<!-- Left: text details -->
 								<div class="md:col-span-2 flex flex-col gap-5 drawer-text">
 									<p
-										class="text-sm text-stone-500 leading-relaxed"
+										class="text-[0.9375rem] text-[var(--text-muted)] leading-relaxed"
 										style="max-width: 40ch"
 									>
 										{{ project.description }}
@@ -144,7 +149,7 @@
 										<span
 											v-for="tag in project.workTypes"
 											:key="tag"
-											class="px-2.5 py-1 rounded-full text-[10px] font-medium text-stone-500 bg-white border border-stone-200"
+											class="readout px-2.5 py-1.5 border border-[var(--border)] !text-[var(--text)]"
 										>
 											{{ tag }}
 										</span>
@@ -156,16 +161,17 @@
 												v-for="tech in project.technologies.slice(0, 5)"
 												:key="tech"
 												:icon="tech"
-												class="w-5 h-5 opacity-50"
+												class="w-5 h-5 opacity-80"
 											/>
 										</div>
 										<a
 											v-if="project.repo"
 											:href="project.repo"
+											:data-project="project.title"
 											target="_blank"
 											rel="noopener noreferrer"
 											:aria-label="`${project.title} source code on GitHub`"
-											class="inline-flex items-center gap-1.5 text-[11px] font-mono text-stone-600 hover:text-orange-500 border border-stone-300 hover:border-orange-300 rounded-full px-3 py-1.5 transition-colors duration-200"
+											class="inline-flex items-center gap-1.5 text-[11px] font-mono text-[var(--text)] hover:text-[var(--accent)] border border-[var(--border)] hover:border-[var(--accent)] px-3 min-h-11 transition-colors duration-200"
 										>
 											<Icon
 												icon="ph:github-logo-fill"
@@ -176,9 +182,10 @@
 										<a
 											v-if="project.link"
 											:href="project.link"
+											:data-project="project.title"
 											target="_blank"
 											rel="noopener noreferrer"
-											class="inline-flex items-center gap-1.5 text-[11px] font-mono text-stone-600 hover:text-orange-500 border border-stone-300 hover:border-orange-300 rounded-full px-3 py-1.5 transition-colors duration-200"
+											class="inline-flex items-center gap-1.5 text-[11px] font-mono text-[var(--text)] hover:text-[var(--accent)] border border-[var(--border)] hover:border-[var(--accent)] px-3 min-h-11 transition-colors duration-200"
 										>
 											Visit site
 											<Icon
@@ -190,40 +197,70 @@
 								</div>
 
 								<!-- Right: project image -->
-								<div class="md:col-span-3 drawer-img overflow-hidden rounded-xl">
+								<div class="md:col-span-3 drawer-img overflow-hidden border border-[var(--border)]">
+									<!-- Played by openRow while the drawer is open, unless reduced motion -->
+									<video
+										v-if="project.video"
+										:src="project.video"
+										:poster="project.image"
+										:aria-label="`${project.title} demo`"
+										class="w-full aspect-video object-cover"
+										muted
+										loop
+										playsinline
+										preload="none"
+									></video>
 									<img
-										v-if="project.image"
+										v-else-if="project.image"
 										:src="project.image"
 										:alt="project.title"
-										class="w-full aspect-video object-cover rounded-xl"
+										class="w-full aspect-video object-cover"
 										draggable="false"
+										loading="lazy"
 									/>
-									<!-- Repo-only tools have no screenshot: show the command instead.
-									     Adding an `image` to the project supersedes this. -->
+									<!-- Tools without a screenshot get a generated cover, with their
+									     commands underneath. A real `image` supersedes both. -->
+									<template v-else-if="project.art">
+										<div class="w-full aspect-video">
+											<ProjectArt :name="project.art" />
+										</div>
+										<div
+											v-if="project.install || project.command"
+											class="border-t border-[var(--border)] bg-[var(--bg)] px-5 py-3 space-y-1"
+										>
+											<p
+												v-for="cmd in [project.install, project.command].filter(Boolean)"
+												:key="cmd"
+												class="font-mono text-[11px] sm:text-xs text-[var(--text-muted)] leading-relaxed break-all"
+											>
+												<span class="text-[var(--accent)]">$</span> {{ cmd }}
+											</p>
+										</div>
+									</template>
 									<div
 										v-else
-										class="relative w-full aspect-video rounded-xl bg-stone-900 overflow-hidden flex flex-col justify-center gap-2.5 px-6 sm:px-10"
+										class="relative w-full aspect-video bg-[var(--bg)] overflow-hidden flex flex-col justify-center gap-2.5 px-6 sm:px-10"
 									>
 										<div
 											class="absolute top-4 left-5 flex items-center gap-1.5"
 											aria-hidden="true"
 										>
-											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
-											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
-											<span class="w-2 h-2 rounded-full bg-stone-700"></span>
+											<span class="w-2 h-2 rounded-full bg-[var(--border)]"></span>
+											<span class="w-2 h-2 rounded-full bg-[var(--border)]"></span>
+											<span class="w-2 h-2 rounded-full bg-[var(--border)]"></span>
 										</div>
 										<p
 											v-if="project.install"
-											class="font-mono text-[11px] sm:text-sm text-stone-400 leading-relaxed break-all"
+											class="font-mono text-[11px] sm:text-sm text-[var(--text-muted)] leading-relaxed break-all"
 										>
-											<span class="text-orange-400">$</span>
+											<span class="text-[var(--accent)]">$</span>
 											{{ project.install }}
 										</p>
 										<p
 											v-if="project.command"
-											class="font-mono text-[11px] sm:text-sm text-stone-400 leading-relaxed"
+											class="font-mono text-[11px] sm:text-sm text-[var(--text-muted)] leading-relaxed"
 										>
-											<span class="text-orange-400">$</span>
+											<span class="text-[var(--accent)]">$</span>
 											{{ project.command }}
 										</p>
 									</div>
@@ -234,10 +271,10 @@
 				</div>
 			</div>
 			<!-- Show more -->
-			<div v-if="hasMore" class="border-t border-stone-200">
+			<div v-if="hasMore" class="border-t border-[var(--border)]">
 				<button
 					@click="showMore"
-					class="w-full py-4 flex items-center justify-center gap-2 text-[11px] font-mono uppercase tracking-widest text-stone-400 hover:text-orange-500 transition-colors duration-200 group"
+					class="w-full py-4 flex items-center justify-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200 group"
 				>
 					Show more
 					<Icon
@@ -271,11 +308,11 @@
 							/>
 						</defs>
 						<!-- Orange circle with inner dashed ring -->
-						<circle cx="56" cy="56" r="52" fill="#f97316" />
-						<circle cx="56" cy="56" r="49" fill="none" stroke="white" stroke-width="0.75" stroke-dasharray="4 3" opacity="0.35" />
-						<!-- Circular text in white -->
+						<circle cx="56" cy="56" r="52" fill="#ff5b1f" />
+						<circle cx="56" cy="56" r="49" fill="none" stroke="#0a0b0c" stroke-width="0.75" stroke-dasharray="4 3" opacity="0.35" />
+						<!-- Circular text, dark on orange for contrast (white was 3.1:1) -->
 						<text
-							fill="white"
+							fill="#0a0b0c"
 							font-size="8"
 							font-family="'Courier New', monospace"
 							letter-spacing="3.5"
@@ -298,7 +335,7 @@
 						>
 							<path
 								d="M7 17L17 7M17 7H7M17 7V17"
-								stroke="white"
+								stroke="#0a0b0c"
 								stroke-width="2"
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -312,7 +349,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, nextTick } from 'vue';
+import { onPageLeft } from '~/composables/usePageLeave';
 import { Icon } from '@iconify/vue';
 
 const { $gsap } = useNuxtApp();
@@ -330,6 +368,7 @@ const allProjects = [
 		title: 'crawlmark',
 		description:
 			'MCP server in TypeScript that gives Claude, or any MCP client, the data behind monthly SEO client work. It pulls from Search Console, GA4, Tag Manager, Lighthouse and axe-core, plus DataForSEO, Ahrefs or Semrush for keywords and backlinks, and turns it into report-shaped tools for audits, quick wins and monthly reports. Responses are cached in SQLite, and paid calls stop at per-client monthly caps.',
+		art: 'crawlmark',
 		repo: 'https://github.com/idrewlong/crawlmark-mcp',
 		install: 'npx crawlmark-mcp@latest init',
 		command: 'npx crawlmark-mcp setup status',
@@ -342,7 +381,10 @@ const allProjects = [
 		title: 'Skinamp',
 		description:
 			'Customizable Spotify player for Omarchy, written in Rust on librespot. A background daemon puts a mini player in the status bar, and a full player window swaps between skins like Winamp, iTunes, click-wheel iPod, Zune and WMP, with synced lyrics, terminal and GPU visualizers, and MPRIS media keys.',
-		image: '/images/skinamp-tour.gif',
+		// Screen recording as video (an 850KB MP4 instead of a 3.2MB GIF);
+		// the still is the hover peek and the poster
+		image: '/images/skinamp-tour.jpg',
+		video: '/images/skinamp-tour.mp4',
 		link: 'https://plugins.omarchy.org/plugin.html?id=io.github.idrewlong.skinamp',
 		repo: 'https://github.com/idrewlong/skinamp',
 		workTypes: ['Desktop App', 'Open Source'],
@@ -354,6 +396,7 @@ const allProjects = [
 		title: 'djilog',
 		description:
 			'Go library and CLI for parsing DJI drone flight logs across all 14 format versions, including encrypted v13+ logs. Exports flight tracks to CSV, GeoJSON, KML or JSON, recovers embedded photos with their EXIF, and salvages what it can from corrupt files. Standard library only.',
+		art: 'djilog',
 		repo: 'https://github.com/idrewlong/djilog',
 		install: 'go install github.com/idrewlong/djilog/cmd/djilog@latest',
 		command: 'djilog export flight.txt --geojson -o track.geojson',
@@ -378,6 +421,7 @@ const allProjects = [
 		title: 'Morphr',
 		description:
 			'Command-line RAW converter written in Go. Handles CR2, NEF, ARW, DNG and 25+ camera formats, converting a single file or a whole folder to JPEG, PNG, TIFF, WebP or AVIF. Run it with no arguments and it walks you through an interactive wizard.',
+		art: 'morphr',
 		repo: 'https://github.com/idrewlong/morphr',
 		install: 'brew install idrewlong/tap/morphr',
 		command: 'morphr',
@@ -644,27 +688,39 @@ const sectionEl = ref(null);
 const accordionEl = ref(null);
 const openIndex = ref(-1);
 
-const getBody = (i) => accordionEl.value?.querySelectorAll('[id^="drawer-"]')[i] ?? null;
+const getBody = (i) => accordionEl.value?.querySelector(`#drawer-${i}`) ?? null;
 const cursorEl = ref(null);
 const cursorRing = ref(null);
 let isCursorVisible = false;
+// Rows hide the native pointer only while the custom cursor is up, so a
+// scroll that hides it never leaves the row with no pointer at all
+const cursorShown = ref(false);
 let hasValidPosition = false;
 let hideTimer = null;
 
 const hideCursor = () => {
 	if (!isCursorVisible || !cursorEl.value) return;
 	isCursorVisible = false;
+	cursorShown.value = false;
 	$gsap.to(cursorEl.value, {
 		opacity: 0,
 		scale: 0.8,
 		duration: 0.22,
 		ease: 'power2.in',
+		// Kill a fade-in still running, or it finishes after this and leaves
+		// the cursor visible while the flag says hidden
+		overwrite: 'auto',
 	});
 };
 
 const onMouseMove = (e) => {
 	if (!cursorEl.value) return;
 	hasValidPosition = true;
+	// A real move over a row after scrolling brings the cursor back
+	if (!isCursorVisible && e.target instanceof Element && e.target.closest('.accordion-row button')) {
+		scrolledAt = 0;
+		onRowEnter(e);
+	}
 	$gsap.to(cursorEl.value, {
 		x: e.clientX,
 		y: e.clientY,
@@ -675,6 +731,7 @@ const onMouseMove = (e) => {
 };
 
 const onRowEnter = (e) => {
+	if (performance.now() - scrolledAt < 250) return;
 	clearTimeout(hideTimer);
 	// Snap cursor to actual mouse position before revealing —
 	// prevents the stuck-at-top-left bug when scroll brings a row under the cursor
@@ -684,11 +741,13 @@ const onRowEnter = (e) => {
 	}
 	if (!isCursorVisible && cursorEl.value && hasValidPosition) {
 		isCursorVisible = true;
+		cursorShown.value = true;
 		$gsap.to(cursorEl.value, {
 			opacity: 1,
 			scale: 1,
 			duration: 0.3,
 			ease: 'back.out(1.4)',
+			overwrite: 'auto',
 		});
 	}
 };
@@ -731,6 +790,11 @@ const openRow = (i) => {
 		);
 	}
 
+	const video = body.querySelector('video');
+	if (video && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		video.play().catch(() => {});
+	}
+
 	const img = body.querySelector('.drawer-img');
 	if (img) {
 		$gsap.fromTo(
@@ -744,6 +808,7 @@ const openRow = (i) => {
 const closeRow = (i) => {
 	const body = getBody(i);
 	if (!body) return;
+	body.querySelector('video')?.pause();
 	$gsap.set(body, { overflow: 'hidden' });
 	$gsap.to(body, {
 		height: 0,
@@ -763,38 +828,84 @@ const toggleRow = (i) => {
 	}
 };
 
+// Scrolling slides rows under a still mouse, and the browser fires hover
+// events for them; the cursor would follow the page into other sections.
+// Hide it on scroll and ignore row hovers until the pointer actually moves.
+let scrolledAt = 0;
+const onScroll = () => {
+	scrolledAt = performance.now();
+	if (isCursorVisible) hideCursor();
+};
+
+// Belt and braces: any pointer move that isn't over a Work row hides it,
+// however the page got there (anchor jumps, back-to-top, keyboard scroll)
+const onWindowPointer = (e) => {
+	if (!isCursorVisible) return;
+	const t = e.target instanceof Element ? e.target : null;
+	if (!t?.closest('#projects .accordion-row button')) {
+		clearTimeout(hideTimer);
+		hideCursor();
+	}
+};
+
+let mm;
+
+onBeforeUnmount(() => {
+	window.removeEventListener('scroll', onScroll);
+	window.removeEventListener('pointermove', onWindowPointer);
+});
+
+onPageLeft(() => mm?.revert());
+
 onMounted(() => {
+	window.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('pointermove', onWindowPointer, { passive: true });
 	nextTick(() => {
 		if (!sectionEl.value || !accordionEl.value) return;
 
-		const rows = accordionEl.value.querySelectorAll('.accordion-row');
-
-		$gsap.set(rows, { opacity: 0, y: 20 });
-		$gsap.to(rows, {
-			opacity: 1,
-			y: 0,
-			duration: 0.6,
-			stagger: 0.07,
-			ease: 'power2.out',
-			onComplete: () => toggleRow(0),
-			scrollTrigger: {
-				trigger: sectionEl.value,
-				start: 'top 75%',
-				toggleActions: 'play none none none',
+		mm = $gsap.matchMedia(sectionEl.value);
+		mm.add(
+			{
+				motion: '(prefers-reduced-motion: no-preference)',
+				reduce: '(prefers-reduced-motion: reduce)',
 			},
-		});
+			(ctx) => {
+				// Reduced motion: rows are already visible, open the first one, no spinning ring
+				if (ctx.conditions.reduce) {
+					if (openIndex.value === -1) toggleRow(0);
+					return;
+				}
 
-		// Start continuous ring rotation
-		if (cursorRing.value) {
-			$gsap.set(cursorEl.value, { scale: 0.8 });
-			$gsap.to(cursorRing.value, {
-				rotation: 360,
-				duration: 9,
-				ease: 'none',
-				repeat: -1,
-				transformOrigin: '50% 50%',
-			});
-		}
+				const rows = accordionEl.value.querySelectorAll('.accordion-row');
+
+				$gsap.set(rows, { opacity: 0, y: 20 });
+				$gsap.to(rows, {
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					stagger: 0.07,
+					ease: 'power2.out',
+					onComplete: () => toggleRow(0),
+					scrollTrigger: {
+						trigger: sectionEl.value,
+						start: 'top 75%',
+						toggleActions: 'play none none none',
+					},
+				});
+
+				// Start continuous ring rotation
+				if (cursorRing.value) {
+					$gsap.set(cursorEl.value, { scale: 0.8 });
+					$gsap.to(cursorRing.value, {
+						rotation: 360,
+						duration: 9,
+						ease: 'none',
+						repeat: -1,
+						transformOrigin: '50% 50%',
+					});
+				}
+			}
+		);
 	});
 });
 </script>

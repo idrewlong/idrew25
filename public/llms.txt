@@ -1,0 +1,17 @@
+# Andrew Long
+
+> Senior full stack developer at Mad Genius. Builds web apps, APIs, AI tooling and headless sites with TypeScript, Go and AWS. This site is his portfolio.
+
+## Pages
+
+- [Home](https://www.idrewlong.com/): focus areas, experience, skills, selected work and what he's shipping now
+- [Resume](https://www.idrewlong.com/resume/): experience, education, skills and certifications
+- [Process](https://www.idrewlong.com/process/): how he plans, builds and ships projects
+- [Blog](https://www.idrewlong.com/blog/): posts about the tools and sites he builds
+- [Teardown](https://www.idrewlong.com/teardown/): how this site is built
+- [Contact](https://www.idrewlong.com/contact/): contact form and email
+
+## Elsewhere
+
+- [GitHub](https://github.com/idrewlong)
+- [LinkedIn](https://www.linkedin.com/in/idrewlong/)

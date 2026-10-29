@@ -1,150 +1,149 @@
 <template>
-	<section id="skills" ref="skillsSection" class="max-w-6xl mx-auto px-4 sm:px-6">
-		<!-- Section label — identical pattern to every other section -->
-		<div ref="labelEl" class="flex items-center gap-3 mb-10">
-			<span
-				class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>Skills</span
-			>
-			<div class="flex-1 h-px bg-stone-200"></div>
+	<section id="skills" ref="root" class="wrap">
+		<div class="sec-rule js-reveal">
+			<span class="readout text-[var(--accent)]">05</span>
+			<span class="readout">Loadout</span>
+			<span class="readout ml-auto">Stack · {{ total }}</span>
 		</div>
+		<h2 class="display sec-word js-reveal">Skills<span class="sr-only"> and tech stack</span></h2>
 
-		<!-- Rows directly on page background, no card container -->
-		<div class="">
-			<div
-				v-for="(category, i) in skillCategories"
-				:key="category.title"
-				:ref="
-					(el) => {
-						if (el) rowEls[i] = el;
-					}
-				"
-				class="flex flex-col md:flex-row md:items-baseline gap-2.5 md:gap-16 py-5 border-b border-stone-100 group"
-			>
-				<!-- Index + category label -->
-				<div class="flex items-center gap-3 md:w-44 shrink-0">
-					<span
-						class="text-[9px] font-mono text-stone-300 tabular-nums select-none"
-						aria-hidden="true"
-						>{{ String(i + 1).padStart(2, '0') }}</span
-					>
-					<div class="flex items-center gap-1.5">
-						<span
-							class="w-1 h-1 rounded-full bg-orange-400 shrink-0"
-							aria-hidden="true"
-						></span>
-						<span
-							class="text-xs font-mono tracking-[0.15em] uppercase text-orange-400"
-						>
-							{{ category.title }}
-						</span>
-					</div>
+		<div class="sk-grid">
+			<div v-for="(category, i) in skillCategories" :key="category.title" class="sk-cell js-reveal">
+				<span class="sk-tick sk-tick--tl" aria-hidden="true">+</span>
+				<div class="sk-head">
+					<h3 class="readout !text-[var(--text)]">{{ category.title }}</h3>
+					<span class="readout" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
 				</div>
-
-				<!-- Skills — dot-separated, same mono text as rest of site.
-				     Each skill is its own nowrap item so rows wrap between skills,
-				     never mid-name. -->
-				<ul
-					class="flex flex-wrap gap-y-1 text-[13px] sm:text-sm text-stone-600 leading-relaxed"
-				>
-					<li
-						v-for="(skill, j) in category.skills"
-						:key="skill"
-						class="whitespace-nowrap"
-					>
-						{{ skill
-						}}<span
-							v-if="j < category.skills.length - 1"
-							class="text-stone-300 mx-2"
-							aria-hidden="true"
-							>·</span
-						>
-					</li>
+				<ul class="sk-chips">
+					<li v-for="skill in category.skills" :key="skill">{{ skill }}</li>
 				</ul>
 			</div>
+		</div>
+
+		<div class="sk-areas js-reveal">
+			<p class="readout">Areas of expertise</p>
+			<ul class="sk-area-list">
+				<li v-for="area in expertiseAreas" :key="area" class="display">{{ area }}</li>
+			</ul>
 		</div>
 	</section>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
+import { skillCategories, expertiseAreas } from '~/utils/resume';
 
-const { $gsap } = useNuxtApp();
+const root = ref(null);
+useReveal(root);
 
-const skillsSection = ref(null);
-const labelEl = ref(null);
-const rowEls = ref([]);
-
-const skillCategories = [
-	{
-		title: 'Languages',
-		skills: ['TypeScript', 'JavaScript', 'Golang', 'Python', 'PHP', 'SQL'],
-	},
-	{
-		title: 'Cloud & Infra',
-		skills: [
-			'AWS (EC2, S3)',
-			'Docker',
-			'CI/CD',
-			'Cron job orchestration',
-			'Digital Ocean',
-			'Cloudflare',
-			'Git',
-		],
-	},
-	{
-		title: 'Backend',
-		skills: ['Laravel', 'Node.js', 'GraphQL', 'PostgreSQL', 'Redis'],
-	},
-	{
-		title: 'Frontend',
-		skills: [
-			'React / Next.js',
-			'Vue / Nuxt.js',
-			'Svelte / SvelteKit',
-			'React Native',
-			'Tailwind CSS',
-			'WordPress',
-		],
-	},
-	{
-		title: 'Design & SEO',
-		skills: ['Figma', 'Technical SEO', 'Google Analytics / Search Console'],
-	},
-];
-
-onMounted(() => {
-	nextTick(() => {
-		if (!skillsSection.value) return;
-
-		$gsap.set(labelEl.value, { opacity: 0, y: 20 });
-		$gsap.set(rowEls.value.filter(Boolean), { opacity: 0, x: -12 });
-
-		const tl = $gsap.timeline({
-			scrollTrigger: {
-				trigger: skillsSection.value,
-				start: 'top 80%',
-				toggleActions: 'play none none none',
-			},
-		});
-
-		tl.to(labelEl.value, {
-			opacity: 1,
-			y: 0,
-			duration: 0.5,
-			ease: 'power2.out',
-		}).to(
-			rowEls.value.filter(Boolean),
-			{
-				opacity: 1,
-				x: 0,
-				duration: 0.45,
-				ease: 'power2.out',
-				stagger: 0.07,
-				clearProps: 'all',
-			},
-			'-=0.2'
-		);
-	});
-});
+const total = skillCategories.reduce((n, c) => n + c.skills.length, 0);
 </script>
+
+<style scoped>
+.sk-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	border-top: 1px solid var(--border);
+	border-left: 1px solid var(--border);
+}
+
+@media (min-width: 640px) {
+	.sk-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 1100px) {
+	.sk-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.sk-cell {
+	position: relative;
+	padding: 1.5rem;
+	border-right: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+}
+
+/* Registration mark on each cell corner, like the panels on a spec sheet */
+.sk-tick {
+	position: absolute;
+	font-family: 'Geist Mono', ui-monospace, monospace;
+	font-size: 11px;
+	line-height: 1;
+	color: var(--text-muted);
+}
+
+.sk-tick--tl {
+	top: -6px;
+	left: -4px;
+}
+
+.sk-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+}
+
+.sk-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 1.25rem;
+}
+
+.sk-chips li {
+	padding: 0.4rem 0.65rem;
+	border: 1px solid var(--border);
+	font-family: 'Geist Mono', ui-monospace, monospace;
+	font-size: 10.5px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--text);
+	transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.sk-chips li:hover {
+	border-color: var(--accent);
+}
+
+/* The first category (AI) gets the signal colour on its edge */
+.sk-cell:first-child {
+	box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.sk-areas {
+	margin-top: 3.5rem;
+}
+
+.sk-area-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0;
+	margin-top: 1.25rem;
+}
+
+.sk-area-list li {
+	font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+	line-height: 1.2;
+	color: var(--text-muted);
+	transition: color 0.2s ease;
+}
+
+.sk-area-list li:hover {
+	color: var(--text);
+}
+
+.sk-area-list li:last-child::after {
+	content: none;
+}
+
+.sk-area-list li::after {
+	content: '/';
+	margin: 0 0.6em;
+	color: var(--text-muted);
+	opacity: 0.6;
+}
+</style>

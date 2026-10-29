@@ -1,63 +1,48 @@
 <template>
-	<div ref="pageRoot" class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-10 sm:py-16">
-		<div class="flex items-center gap-3 mb-6 sm:mb-10">
-			<span
-				class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-			>
-				Blog
-			</span>
-			<div class="flex-1 h-px bg-stone-200" />
-		</div>
-
-		<div class="mb-10 sm:mb-14">
-			<h1
-				class="font-serif italic text-stone-900 leading-[0.92] tracking-tight text-4xl sm:text-6xl"
-			>
-				Writing
-			</h1>
-			<p class="mt-5 text-sm text-stone-500 leading-relaxed max-w-md">
-				Notes on building things for the web: development, strategy, and
-				whatever I'm currently arguing with.
-			</p>
-		</div>
-
-		<BlogTagFilter :tags="tags ?? []" :active="activeTag" class="mb-10" />
-
-		<div
-			v-if="posts?.length"
-			class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+	<div ref="pageRoot" class="blog-page">
+		<PageHeader
+			index="[ 00 / 01 ]"
+			kicker="Blog"
+			:title="['Writing']"
+			lede="Notes on building things for the web: development, strategy, and whatever I'm currently arguing with."
 		>
-			<BlogPostCard v-for="post in posts" :key="post.slug" :post="post" />
-		</div>
-		<p v-else class="text-sm text-stone-500 py-10">
-			{{
-				activeTag
-					? 'No posts with that tag yet.'
-					: 'No posts published yet.'
-			}}
-		</p>
+			<StatTiles
+				:items="[
+					{ value: String(posts?.length ?? 0).padStart(2, '0'), label: activeTag ? 'Posts in this tag' : 'Posts' },
+					{ value: String(features.length).padStart(2, '0'), label: 'Published elsewhere' },
+				]"
+			/>
+		</PageHeader>
 
-		<section v-if="features?.length" class="mt-20 sm:mt-28">
-			<div class="flex items-center gap-3 mb-10">
-				<span
-					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>
-					Published Elsewhere
-				</span>
-				<div class="flex-1 h-px bg-stone-200" />
+		<section class="wrap">
+			<div class="sec-rule">
+				<span class="readout text-[var(--accent)]">[ 01 ]</span>
+				<span class="readout">Posts</span>
 			</div>
-			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				<BlogFeatureCard
-					v-for="feature in features"
-					:key="feature.externalUrl"
-					:feature="feature"
-				/>
+			<BlogTagFilter :tags="tags ?? []" :active="activeTag" class="mt-6 mb-4" />
+
+			<div v-if="posts?.length" class="border-t border-[var(--border)] mt-6">
+				<BlogPostCard v-for="post in posts" :key="post.slug" :post="post" />
+			</div>
+			<p v-else class="readout py-10">
+				{{ activeTag ? 'No posts with that tag yet.' : 'No posts published yet.' }}
+			</p>
+		</section>
+
+		<section v-if="features?.length" class="wrap mt-24 sm:mt-32">
+			<div class="sec-rule">
+				<span class="readout text-[var(--accent)]">[ 02 ]</span>
+				<span class="readout">Published elsewhere</span>
+			</div>
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+				<BlogFeatureCard v-for="feature in features" :key="feature.externalUrl" :feature="feature" />
 			</div>
 		</section>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { onPageLeft } from '~/composables/usePageLeave';
 const route = useRoute();
 
 const activeTag = computed(() =>
@@ -80,11 +65,13 @@ useSeoMeta({
 	ogTitle: 'Blog | Andrew Long',
 	ogDescription:
 		'Notes on web development, strategy, and building things, by Andrew Long.',
-	ogImage: '/images/OG.webp',
 });
 
 const { $gsap } = useNuxtApp();
 const pageRoot = ref<HTMLElement | null>(null);
+let ctx: gsap.Context | undefined;
+
+onPageLeft(() => ctx?.revert());
 
 onMounted(() => {
 	nextTick(() => {
@@ -95,25 +82,31 @@ onMounted(() => {
 			return;
 		}
 
-		const cards = pageRoot.value.querySelectorAll(
-			'.post-card, .feature-card'
-		);
+		const cards = pageRoot.value.querySelectorAll('.post-card, .feature-card');
 		if (!cards.length) return;
 
-		$gsap.set(cards, { opacity: 0, y: 40 });
-		$gsap.to(cards, {
-			opacity: 1,
-			y: 0,
-			duration: 0.7,
-			ease: 'expo.out',
-			stagger: 0.08,
-			clearProps: 'transform',
-			scrollTrigger: {
-				trigger: pageRoot.value,
-				start: 'top 90%',
-				toggleActions: 'play none none none',
-			},
+		ctx = $gsap.context(() => {
+			$gsap.set(cards, { opacity: 0, y: 40 });
+			$gsap.to(cards, {
+				opacity: 1,
+				y: 0,
+				duration: 0.7,
+				ease: 'expo.out',
+				stagger: 0.08,
+				clearProps: 'transform',
+				scrollTrigger: {
+					trigger: pageRoot.value,
+					start: 'top 90%',
+					toggleActions: 'play none none none',
+				},
+			});
 		});
 	});
 });
 </script>
+
+<style scoped>
+.blog-page {
+	padding-bottom: 6rem;
+}
+</style>

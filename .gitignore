@@ -23,3 +23,6 @@ studio/.sanity
 # Env files (keep the example)
 .env.*
 !.env.example
+
+# Playwright MCP screenshots and logs
+.playwright-mcp/

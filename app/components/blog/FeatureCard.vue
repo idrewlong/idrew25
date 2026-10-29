@@ -19,36 +19,24 @@
 		</div>
 		<div class="p-6 flex flex-col flex-grow">
 			<div class="flex items-start justify-between gap-4 mb-3">
-				<h3
-					class="text-base font-serif font-bold text-stone-900 group-hover:text-orange-500 transition-colors line-clamp-2"
-				>
+				<h3 class="display feature-title line-clamp-2">
 					{{ feature.title }}
 				</h3>
 				<time
 					:datetime="feature.publishedAt"
-					class="text-xs text-stone-400 whitespace-nowrap"
+					class="readout whitespace-nowrap"
 				>
 					{{ formatPostDate(feature.publishedAt) }}
 				</time>
 			</div>
-			<p class="text-stone-500 text-sm mb-4 line-clamp-2 flex-grow">
+			<p class="feature-desc line-clamp-2 flex-grow">
 				{{ feature.description }}
 			</p>
 			<div class="flex items-center justify-between">
-				<span
-					class="text-[10px] font-mono uppercase tracking-[0.15em] text-stone-400"
-				>
+				<span class="readout">
 					{{ feature.publisher }}
 				</span>
-				<span
-					class="flex items-center text-orange-500 group-hover:text-orange-600 transition-colors text-sm"
-				>
-					Read article
-					<Icon
-						name="material-symbols:arrow-circle-right-outline"
-						class="w-4 h-4 ml-1"
-					/>
-				</span>
+				<span class="readout feature-read">Read article <span aria-hidden="true">↗</span></span>
 			</div>
 		</div>
 	</a>
@@ -66,9 +54,8 @@ defineProps<{ feature: FeaturedArticle }>();
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	background: #fff;
-	border: 1px solid var(--border, #e7e5e4);
-	border-radius: 1rem;
+	background: var(--bg-card);
+	border: 1px solid var(--border);
 	overflow: hidden;
 	transition:
 		border-color 0.3s ease,
@@ -76,8 +63,29 @@ defineProps<{ feature: FeaturedArticle }>();
 }
 
 .feature-card:hover {
-	border-color: #d6d3d1;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+	border-color: var(--accent);
+}
+
+.feature-title {
+	font-size: 1.6rem;
+	line-height: 0.95;
+	transition: color 0.2s ease;
+}
+
+.feature-card:hover .feature-title,
+.feature-card:hover .feature-read {
+	color: var(--accent);
+}
+
+.feature-desc {
+	margin-bottom: 1.25rem;
+	font-size: 0.9375rem;
+	line-height: 1.55;
+	color: var(--text-muted);
+}
+
+.feature-read {
+	color: var(--text);
 }
 
 .feature-card-media {

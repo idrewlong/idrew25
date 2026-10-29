@@ -1,35 +1,18 @@
 <template>
-	<article v-if="post" class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-10 sm:py-16">
-		<NuxtLink
-			to="/blog/"
-			class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.2em] text-stone-400 hover:text-orange-500 transition-colors mb-10"
-		>
-			<Icon name="heroicons:arrow-left-20-solid" class="w-3.5 h-3.5" />
-			All posts
-		</NuxtLink>
+	<article v-if="post" class="wrap post-page">
+		<NuxtLink to="/blog/" class="readout post-back">← All posts</NuxtLink>
 
-		<header class="mb-10 sm:mb-14 max-w-3xl">
-			<div class="flex flex-wrap items-center gap-2 mb-4">
-				<time :datetime="post.publishedAt" class="text-xs text-stone-400 mr-1">
+		<header class="post-head">
+			<div class="post-meta">
+				<time :datetime="post.publishedAt" class="readout !text-[var(--text)]">
 					{{ formatPostDate(post.publishedAt, 'long') }}
 				</time>
-				<NuxtLink
-					v-for="tag in post.tags"
-					:key="tag.slug"
-					:to="`/blog/?tag=${tag.slug}`"
-					class="inline-flex items-center px-3 py-1.5 rounded-full border border-stone-200 text-[10px] leading-none font-mono uppercase tracking-[0.15em] text-stone-500 hover:text-orange-500 hover:border-orange-300 transition-colors"
-				>
+				<NuxtLink v-for="tag in post.tags" :key="tag.slug" :to="`/blog/?tag=${tag.slug}`" class="readout post-tag">
 					{{ tag.title }}
 				</NuxtLink>
 			</div>
-			<h1
-				class="font-serif italic text-stone-900 leading-[0.98] tracking-tight text-3xl sm:text-5xl"
-			>
-				{{ post.title }}
-			</h1>
-			<p class="mt-5 text-base text-stone-500 leading-relaxed max-w-2xl">
-				{{ post.description }}
-			</p>
+			<h1 class="display post-title">{{ post.title }}</h1>
+			<p class="post-desc">{{ post.description }}</p>
 		</header>
 
 		<img
@@ -38,7 +21,7 @@
 			:alt="post.coverImage.alt"
 			:width="post.coverImage.width ?? undefined"
 			:height="post.coverImage.height ?? undefined"
-			class="w-full rounded-2xl mb-12 sm:mb-16"
+			class="post-cover"
 		/>
 
 		<!-- With enough headings, the body gets a table of contents: pinned to
@@ -106,29 +89,101 @@ const closeMobileToc = () => {
 const ogImage = computed(() =>
 	post.value?.coverImage
 		? `${post.value.coverImage.url}?w=1200&h=630&fit=crop&fm=jpg`
-		: 'https://www.idrewlong.com/images/OG.webp'
+		: 'https://www.idrewlong.com/og/andrew-long.jpg'
+);
+
+// Sanity titles can carry stray whitespace; posts without a description
+// fall back to a generic line instead of shipping an empty one
+const postTitle = computed(() => post.value?.title?.trim() || 'Post');
+const postDescription = computed(
+	() => post.value?.description?.trim() || `${postTitle.value}: a post by Andrew Long on building for the web.`
 );
 
 useSeoMeta({
-	title: () => post.value?.title ?? 'Post',
-	description: () => post.value?.description ?? '',
-	ogTitle: () => post.value?.title ?? 'Post',
-	ogDescription: () => post.value?.description ?? '',
+	title: () => postTitle.value,
+	description: () => postDescription.value,
+	ogTitle: () => postTitle.value,
+	ogDescription: () => postDescription.value,
 	ogImage: () => ogImage.value,
-	ogImageWidth: 1200,
-	ogImageHeight: 630,
+	ogImageAlt: () => postTitle.value,
 	ogType: 'article',
 	articlePublishedTime: () => post.value?.publishedAt ?? '',
 });
+
+useSchemaOrg([
+	defineArticle({
+		headline: () => postTitle.value,
+		description: () => postDescription.value,
+		image: () => ogImage.value,
+		datePublished: () => post.value?.publishedAt,
+	}),
+]);
 </script>
 
 <style scoped>
+.post-page {
+	padding-top: 2.5rem;
+	padding-bottom: 6rem;
+}
+
+.post-back {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	text-decoration: none;
+}
+
+.post-back:hover {
+	color: var(--accent);
+}
+
+.post-head {
+	max-width: 62rem;
+	margin: 2rem 0 3rem;
+	padding-bottom: 2.5rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.post-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.post-tag {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+.post-tag:hover {
+	color: var(--text);
+}
+
+.post-title {
+	font-size: clamp(3rem, 7vw, 6.5rem);
+	line-height: 0.9;
+}
+
+.post-desc {
+	margin-top: 1.5rem;
+	max-width: 46rem;
+	font-size: 1.125rem;
+	line-height: 1.6;
+	color: var(--text-muted);
+}
+
+.post-cover {
+	width: 100%;
+	margin-bottom: 4rem;
+	border: 1px solid var(--border);
+}
+
 /* Collapsible table of contents shown above the body below lg */
 .mobile-toc {
 	margin-bottom: 2.5rem;
 	padding: 0.875rem 1rem;
-	border: 1px solid var(--border, #e7e5e0);
-	border-radius: 0.75rem;
+	border: 1px solid var(--border);
 }
 
 .mobile-toc-summary {
@@ -141,7 +196,7 @@ useSeoMeta({
 	font-size: 10px;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	color: var(--text-muted, #78716c);
+	color: var(--text-muted);
 }
 
 .mobile-toc-summary::-webkit-details-marker {

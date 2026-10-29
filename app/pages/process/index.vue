@@ -1,89 +1,53 @@
 <template>
-	<div class="w-full py-10 sm:py-16">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6">
-			<div class="flex items-center gap-3 mb-6 sm:mb-10">
-				<span
-					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>
-					Process
-				</span>
-				<div class="flex-1 h-px bg-stone-200" />
-			</div>
+	<div ref="root" class="process-page">
+		<PageHeader
+			index="[ 00 / 02 ]"
+			kicker="Process"
+			:title="['How I', 'work']"
+			lede="How I approach engineering work, from the first question to what ships and what happens to it after."
+		>
+			<StatTiles
+				:items="[
+					{ value: '05', label: 'Principles' },
+					{ value: String(practice.length).padStart(2, '0'), label: 'Practices' },
+				]"
+			/>
+		</PageHeader>
 
-			<div class="mb-10 sm:mb-14">
-				<h1
-					class="font-serif italic text-stone-900 leading-[0.92] tracking-tight text-4xl sm:text-6xl"
-				>
-					How I work
-				</h1>
-				<p class="mt-5 text-sm text-stone-500 leading-relaxed max-w-md">
-					How I approach engineering work, from the first question to what
-					ships and what happens to it after.
-				</p>
-			</div>
-		</div>
-
-		<Process :show-label="false" />
+		<Process />
 
 		<!-- What the process actually produces -->
-		<section
-			ref="practiceEl"
-			class="max-w-6xl mx-auto px-4 sm:px-6 mt-16 sm:mt-24"
-		>
-			<div class="flex items-center gap-3 mb-8 sm:mb-10">
-				<span
-					class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>
-					In practice
-				</span>
-				<div class="flex-1 h-px bg-stone-200" />
+		<section class="wrap pp-practice">
+			<div class="sec-rule js-reveal">
+				<span class="readout text-[var(--accent)]">[ 02 / 02 ]</span>
+				<span class="readout">In practice</span>
 			</div>
+			<h2 class="display sec-word js-reveal">In practice</h2>
 
-			<div
-				class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 lg:gap-x-20 border-t border-stone-200"
-			>
-				<div
-					v-for="(item, i) in practice"
-					:key="item.title"
-					class="practice-item py-6 sm:py-7 border-b border-stone-200"
-				>
-					<span
-						class="font-mono text-[11px] tabular-nums text-orange-400 block mb-2"
-					>
-						{{ String(i + 1).padStart(2, '0') }}
-					</span>
-					<h2
-						class="font-serif text-lg sm:text-xl font-bold text-stone-900 leading-tight mb-2"
-					>
-						{{ item.title }}
-					</h2>
-					<p class="text-sm text-stone-500 leading-relaxed max-w-sm">
-						{{ item.description }}
-					</p>
-				</div>
+			<div class="pp-grid">
+				<article v-for="(item, i) in practice" :key="item.title" class="pp-cell js-reveal">
+					<span class="readout text-[var(--accent)]">P—{{ String(i + 1).padStart(2, '0') }}</span>
+					<h3 class="display pp-title">{{ item.title }}</h3>
+					<p class="pp-desc">{{ item.description }}</p>
+				</article>
 			</div>
 		</section>
 
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 mt-14 sm:mt-20">
-			<NuxtLink to="/contact" class="process-cta group">
-				<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
-					>Let's talk about the work</span
-				>
-				<Icon
-					name="heroicons:arrow-up-right-20-solid"
-					class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-				/>
+		<section class="wrap pp-cta js-reveal">
+			<p class="display pp-cta-line">Have a problem worth<br /><span class="outline">working through?</span></p>
+			<NuxtLink to="/contact" class="btn btn-solid">
+				<span>Let's talk about the work</span>
+				<Icon name="heroicons:arrow-up-right-20-solid" class="w-4 h-4" :aria-hidden="true" />
 			</NuxtLink>
-		</div>
+		</section>
 	</div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
 
-const { $gsap } = useNuxtApp();
-
-const practiceEl = ref(null);
+const root = ref(null);
+useReveal(root);
 
 const practice = [
 	{
@@ -108,33 +72,6 @@ const practice = [
 	},
 ];
 
-onMounted(() => {
-	nextTick(() => {
-		if (!practiceEl.value) return;
-
-		const prefersReducedMotion = window.matchMedia(
-			'(prefers-reduced-motion: reduce)'
-		).matches;
-		if (prefersReducedMotion) return;
-
-		const items = practiceEl.value.querySelectorAll('.practice-item');
-		$gsap.set(items, { opacity: 0, y: 20 });
-		$gsap.to(items, {
-			opacity: 1,
-			y: 0,
-			duration: 0.5,
-			stagger: 0.08,
-			ease: 'power2.out',
-			clearProps: 'all',
-			scrollTrigger: {
-				trigger: practiceEl.value,
-				start: 'top 85%',
-				toggleActions: 'play none none none',
-			},
-		});
-	});
-});
-
 useSeoMeta({
 	title: 'Process',
 	description:
@@ -142,26 +79,86 @@ useSeoMeta({
 	ogTitle: 'How I Work | Andrew Long',
 	ogDescription:
 		'How Andrew Long approaches engineering work: understand the problem, research before building, build with intention, and iterate.',
-	ogImage: '/images/OG.webp',
-	twitterCard: 'summary_large_image',
 });
 </script>
 
 <style scoped>
-.process-cta {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.75rem;
-	border: 1px solid #d6d3d1;
-	color: #57534e;
-	padding: 0.875rem 1.25rem;
-	transition:
-		border-color 0.2s ease,
-		color 0.2s ease;
+.process-page {
+	padding-bottom: 6rem;
 }
 
-.process-cta:hover {
-	border-color: var(--text);
-	color: var(--text);
+.pp-practice {
+	margin-top: 8rem;
+}
+
+.pp-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	border-top: 1px solid var(--border);
+	border-left: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+	.pp-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.pp-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	min-height: 15rem;
+	padding: 1.75rem;
+	border-right: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+	transition: background 0.25s ease;
+}
+
+.pp-cell:hover {
+	background: var(--bg-card);
+}
+
+.pp-title {
+	font-size: clamp(1.75rem, 2.8vw, 2.4rem);
+	line-height: 0.95;
+	max-width: 18ch;
+}
+
+.pp-desc {
+	margin-top: auto;
+	font-size: 0.9375rem;
+	line-height: 1.6;
+	color: var(--text-muted);
+	max-width: 46ch;
+}
+
+.pp-cta {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2rem;
+	margin-top: 8rem;
+	padding-top: 3rem;
+	border-top: 1px solid var(--border);
+}
+
+@media (min-width: 976px) {
+	.pp-cta {
+		flex-direction: row;
+		align-items: flex-end;
+		justify-content: space-between;
+	}
+}
+
+.pp-cta-line {
+	font-size: clamp(3rem, 7vw, 6.5rem);
+	line-height: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pp-cell {
+		transition: none;
+	}
 }
 </style>

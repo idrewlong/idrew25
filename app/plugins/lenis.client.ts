@@ -57,6 +57,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 	motionQuery.addEventListener('change', sync);
 
 	// New page = new layout. Resync lenis' cached position and remeasure triggers.
+	// (Scroll reset happens in app.vue's page transition, while the screen is blank.)
 	nuxtApp.hook('page:finish', () => {
 		requestAnimationFrame(() => {
 			lenis?.resize();

@@ -8,13 +8,9 @@ export default defineEventHandler(async (event): Promise<Post> => {
 	}
 
 	const runtime = useRuntimeConfig();
-	const preview = hasPreviewCookie(
-		getRequestHeader(event, 'cookie'),
-		runtime.previewSecret
-	);
-	const client = createSanityClient(runtime.sanity as SanityConfig, {
-		preview,
-	});
+	// Published content only. A drafts preview must never go through these
+	// endpoints: /blog/** is ISR-cached, so a draft would be served to everyone.
+	const client = createSanityClient(runtime.sanity as SanityConfig);
 
 	const post = await client.fetch(POST_BY_SLUG_QUERY, { slug });
 	if (!post) {

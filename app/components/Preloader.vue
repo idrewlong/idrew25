@@ -84,7 +84,34 @@ function sortFromCenter(els) {
 	);
 }
 
+let intro;
+let leaving = false;
+
+// Any click or key skips straight to the exit
+function skip() {
+	if (leaving) return;
+	intro?.kill();
+	exitAnimation();
+}
+
+function finish() {
+	window.removeEventListener('keydown', skip);
+	window.removeEventListener('pointerdown', skip);
+	visible.value = false;
+	emit('done');
+}
+
 onMounted(() => {
+	// Reduced motion, or a link to a section (/#projects): no intro at all,
+	// the page shows straight away. The hash is checked here, not in app.vue,
+	// because the server never sees it and the first render has to match.
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.location.hash) {
+		finish();
+		return;
+	}
+	window.addEventListener('keydown', skip);
+	window.addEventListener('pointerdown', skip);
+
 	nextTick(() => {
 		if (!preloaderEl.value) return;
 
@@ -109,10 +136,10 @@ onMounted(() => {
 		$gsap.set(bottomLine.value, { opacity: 0, scaleX: 0 });
 		$gsap.set(bottomLabel.value, { opacity: 0 });
 
-		const tl = $gsap.timeline({
+		const tl = (intro = $gsap.timeline({
 			delay: 0.2,
 			onComplete: exitAnimation,
-		});
+		}));
 
 		// ── Phase 1: Grid draws in ──
 		const vOrder = sortFromCenter(vLines.value);
@@ -188,7 +215,7 @@ onMounted(() => {
 			tl.to(
 				el,
 				{
-					color: '#f97316',
+					color: '#ff5b1f',
 					duration: 0.5,
 					ease: 'sine.inOut',
 				},
@@ -243,12 +270,8 @@ onMounted(() => {
 });
 
 function exitAnimation() {
-	const tl = $gsap.timeline({
-		onComplete: () => {
-			visible.value = false;
-			emit('done');
-		},
-	});
+	leaving = true;
+	const tl = $gsap.timeline({ onComplete: finish });
 
 	tl.to(bottomLine.value, {
 		opacity: 0,
@@ -328,18 +351,18 @@ function exitAnimation() {
 }
 
 .word-row {
-	display: block;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 1rem;
 	position: relative;
 	will-change: transform, opacity;
 	opacity: 0;
 }
 
+/* Sits just before its word, whatever the word's width */
 .word-index {
-	position: absolute;
-	right: calc(50% + clamp(4rem, 11vw, 7.5rem));
-	top: 50%;
-	transform: translateY(-50%);
+	align-self: center;
 	font-family: 'Geist Mono', monospace;
 	font-size: 10px;
 	letter-spacing: 0.15em;
@@ -348,12 +371,13 @@ function exitAnimation() {
 }
 
 .word-text {
-	font-family: 'Instrument Serif', Georgia, serif;
-	font-size: clamp(3.5rem, 12vw, 8rem);
-	font-style: italic;
+	font-family: var(--font-display);
+	font-size: clamp(4.5rem, 16vw, 10rem);
+	font-weight: 800;
+	text-transform: uppercase;
 	color: var(--text);
-	line-height: 1.05;
-	letter-spacing: -0.03em;
+	line-height: 0.92;
+	letter-spacing: 0;
 	will-change: color;
 	display: inline-block;
 }

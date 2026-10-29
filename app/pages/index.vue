@@ -1,34 +1,43 @@
 <template>
 	<div class="min-h-screen flex flex-col w-full">
 		<Hero />
-		<main
-			class="w-full py-8 sm:py-12 flex flex-col justify-center gap-y-14 sm:gap-y-20"
+		<WordTicker />
+		<div
+			class="w-full pt-24 sm:pt-32 pb-16 sm:pb-24 flex flex-col justify-center gap-y-24 sm:gap-y-32"
 		>
 			<About />
-			<Marquee />
+			<Focus />
+			<LaunchSequence />
 			<Experience />
-
 			<Certs />
 			<Skills />
-			<Education />
 			<div class="w-full">
 				<Projects2 />
 			</div>
+			<Education />
+			<NowShipping />
 			<Marquee :reverse="true" />
 			<Cta />
-		</main>
+		</div>
 	</div>
 </template>
 
 <script setup>
+const description =
+	'Andrew Long is a senior full stack developer at Mad Genius, building web apps, APIs, AI tooling and headless sites with TypeScript, Go and AWS.';
+
 useSeoMeta({
 	title: 'Full Stack Developer',
-	description:
-		'Andrew Long is a full stack developer with a passion for building tools, websites, apps, strategies and business solutions.',
-	ogTitle: 'Full Stack Developer',
-	ogDescription:
-		'Andrew Long is a full stack developer with a passion for building tools, websites, apps, strategies and business solutions',
-	ogImage: '/images/OG.webp',
-	twitterCard: 'summary_large_image',
+	description,
+	ogTitle: 'Andrew Long | Senior Full Stack Developer',
+	ogDescription: description,
+	ogType: 'website',
+	// A 10s loop of the hero. iMessage, Discord, Slack and Telegram play it
+	// in the link preview; everywhere else shows the og:image from app.vue.
+	ogVideo: 'https://www.idrewlong.com/og/andrew-long.mp4',
+	ogVideoSecureUrl: 'https://www.idrewlong.com/og/andrew-long.mp4',
+	ogVideoType: 'video/mp4',
+	ogVideoWidth: 1200,
+	ogVideoHeight: 630,
 });
 </script>

@@ -1,66 +1,43 @@
 <template>
-	<div
+	<section
 		id="contact"
-		ref="ctaSection"
-		class="relative w-full max-w-6xl mx-auto px-4 sm:px-6"
+		ref="root"
+		class="relative wrap"
 	>
-		<!-- Notion-style section label — matches About/Experience/Skills -->
-		<div ref="labelEl" class="flex items-center gap-3 mb-10">
-			<span
-				class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>Contact</span
-			>
-			<div class="flex-1 h-px bg-stone-200"></div>
+		<div class="sec-rule js-reveal">
+			<span class="readout text-[var(--accent)]">09</span>
+			<span class="readout">Contact</span>
+			<span class="readout ml-auto inline-flex items-center gap-2 !text-[var(--text)]">
+				<span class="cta-dot" aria-hidden="true"></span>
+				Open to software, platform, DevOps, AI &amp; cleared roles · Open to relocating
+			</span>
 		</div>
 
-		<!-- Main editorial split -->
-		<div class="flex flex-col md:flex-row border-t border-b border-stone-200">
-			<!-- Left: Giant name display -->
-			<div
-				ref="nameEl"
-				class="flex-1 py-14 md:py-20 border-b md:border-b-0 md:border-r border-stone-200 md:pr-14"
-			>
-				<h2
-					class="cta-name font-serif italic text-stone-900 leading-[0.88] tracking-tight select-none"
-				>
-					ANDREW<br />LONG
-				</h2>
-				<div class="mt-5 h-[2px] bg-stone-900 w-full max-w-md"></div>
+		<div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_20rem] lg:grid-cols-[minmax(0,1fr)_22rem] border-b border-[var(--border)]">
+			<!-- Giant name -->
+			<div class="py-12 md:py-20 md:pr-12 md:border-r border-[var(--border)]">
+				<h2 class="sr-only">Contact Andrew Long</h2>
+				<!-- The name is a design element, not a heading -->
+				<p class="display cta-name js-reveal" aria-hidden="true">
+					Andrew<br />Long<span class="text-[var(--accent)]">.</span>
+				</p>
 			</div>
 
-			<!-- Right: Notion-style contact blocks -->
-			<div
-				ref="contactEl"
-				class="w-full md:w-80 lg:w-96 py-14 md:py-20 md:pl-12 flex flex-col gap-7"
-			>
-				<!-- Role chip -->
+			<!-- Channels -->
+			<div class="py-10 md:py-20 md:pl-12 flex flex-col gap-8 js-reveal">
 				<div>
-					<div class="flex items-center gap-2">
-						<span
-							class="text-emerald-500 text-[10px] pulse-dot"
-							aria-hidden="true"
-							>✦</span
-						>
-						<p class="text-[10px] tracking-[0.18em] uppercase font-mono">
-							<span class="text-stone-400">Status:</span>
-							<span class="text-stone-700">Open To Opportunities</span>
-						</p>
-					</div>
-					<!-- <p
-						class="text-[10px] tracking-[0.12em] uppercase text-stone-400 font-mono mt-1.5 leading-relaxed max-w-[18rem]"
-					>
-						Software, Platform, DevSecOps and cleared roles. <br /> <br />
-						Open to anywhere, especially Austin TX, Nashville TN and Huntsville AL.
-					</p> -->
+					<p class="readout mb-2">Inquiries</p>
+					<a href="mailto:idrewlong@gmail.com" class="cta-email">
+						idrewlong@gmail.com
+					</a>
 				</div>
 
-				<!-- Social icons -->
 				<div class="flex items-center gap-2">
 					<a
 						href="https://github.com/idrewlong"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="cta-social-icon"
+						class="cta-social"
 						aria-label="GitHub"
 					>
 						<Icon name="ph:github-logo-fill" class="w-4 h-4" />
@@ -69,153 +46,99 @@
 						href="https://www.linkedin.com/in/idrewlong/"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="cta-social-icon"
+						class="cta-social"
 						aria-label="LinkedIn"
 					>
 						<Icon name="ph:linkedin-logo-fill" class="w-4 h-4" />
 					</a>
 				</div>
 
-				<!-- Divider -->
-				<div class="h-px bg-stone-900 w-full"></div>
-
-				<!-- Email block -->
-				<div>
-					<span
-						class="text-[9px] tracking-[0.25em] uppercase text-stone-400 font-mono block mb-1.5"
-						>Inquiries</span
-					>
-					<a
-						href="mailto:idrewlong@gmail.com"
-						class="text-xs text-stone-700 font-mono hover:text-orange-500 transition-colors duration-200"
-					>
-						idrewlong@gmail.com
-					</a>
-				</div>
-
-				<!-- Buttons -->
 				<div class="flex flex-col gap-3">
-					<NuxtLink to="/contact" class="cta-button group">
-						<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
-							>Get In Touch</span
-						>
+					<NuxtLink to="/contact" class="btn btn-solid w-full">
+						<span>Get in touch</span>
 						<Icon
 							name="heroicons:arrow-up-right-20-solid"
-							class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+							class="w-4 h-4"
+							:aria-hidden="true"
 						/>
 					</NuxtLink>
-
 					<a
 						href="/Andrew%20Long%20Resume.pdf"
 						download
-						class="cta-button-secondary group"
+						class="btn btn-ghost w-full"
 					>
-						<span class="text-[10px] tracking-[0.25em] uppercase font-mono"
-							>Download Resume</span
-						>
+						<span>Download resume</span>
 						<Icon
 							name="heroicons:arrow-down-tray"
-							class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5"
+							class="w-4 h-4"
+							:aria-hidden="true"
 						/>
 					</a>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
 
-const { $gsap } = useNuxtApp();
-
-const ctaSection = ref(null);
-const labelEl = ref(null);
-const nameEl = ref(null);
-const contactEl = ref(null);
-
-onMounted(() => {
-	nextTick(() => {
-		if (!ctaSection.value) return;
-
-		$gsap.set([labelEl.value, nameEl.value, contactEl.value], {
-			opacity: 0,
-			y: 30,
-		});
-
-		const tl = $gsap.timeline({
-			scrollTrigger: {
-				trigger: ctaSection.value,
-				start: 'top 70%',
-				toggleActions: 'play none none none',
-			},
-		});
-
-		tl.to(labelEl.value, {
-			opacity: 1,
-			y: 0,
-			duration: 0.6,
-			ease: 'power2.out',
-		})
-			.to(
-				nameEl.value,
-				{ opacity: 1, y: 0, duration: 1, ease: 'expo.out' },
-				'-=0.3'
-			)
-			.to(
-				contactEl.value,
-				{
-					opacity: 1,
-					y: 0,
-					duration: 0.8,
-					ease: 'power2.out',
-					clearProps: 'all',
-				},
-				'-=0.6'
-			);
-	});
-});
+const root = ref(null);
+useReveal(root);
 </script>
 
 <style scoped>
-@reference '../assets/css/main.css';
-
 .cta-name {
-	font-size: clamp(3.5rem, 10vw, 9rem);
+	font-size: clamp(4rem, 14vw, 10.5rem);
+	font-weight: 900;
+	line-height: 0.85;
 }
 
-.cta-social-icon {
-	@apply w-9 h-9 border border-stone-300 flex items-center justify-center text-stone-600
-         hover:border-stone-900 hover:text-stone-900 transition-colors duration-200;
-}
-
-.cta-button {
-	@apply inline-flex items-center justify-between w-full bg-stone-900 text-stone-50
-         px-5 py-4 hover:bg-stone-700 transition-colors duration-200;
-}
-
-.cta-button-secondary {
-	@apply inline-flex items-center justify-between w-full border border-stone-300 text-stone-700
-         px-5 py-4 hover:border-stone-900 hover:text-stone-900 transition-colors duration-200;
-}
-
-/* Status dot, same pulse as the contact page */
-.pulse-dot {
+.cta-dot {
+	width: 6px;
+	height: 6px;
+	background: var(--accent);
 	animation: pulse-dot 2.4s ease-in-out infinite;
 }
 
 @keyframes pulse-dot {
-	0%,
-	100% {
-		opacity: 1;
-	}
 	50% {
-		opacity: 0.25;
+		opacity: 0.35;
 	}
 }
 
+.cta-email {
+	font-size: 1.125rem;
+	color: var(--text);
+	text-decoration: none;
+	overflow-wrap: anywhere;
+	transition: color 0.2s ease;
+}
+
+.cta-email:hover {
+	color: var(--accent);
+}
+
+.cta-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 1px solid var(--border);
+	color: var(--text-muted);
+	transition:
+		color 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.cta-social:hover {
+	color: var(--accent);
+	border-color: var(--accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
-	.pulse-dot {
+	.cta-dot {
 		animation: none;
 	}
 }

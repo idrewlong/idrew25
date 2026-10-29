@@ -25,7 +25,7 @@ No lint or typecheck script exists yet (`vue-tsc` isn't installed).
 app/components/   page sections (Hero, About, Experience, Skills, Projects2, Process, Cta, …) and blog/ components
 app/pages/        index, process, contact, blog
 app/plugins/      gsap.ts (plugin registration), lenis.client.ts
-server/api/       blog API (Sanity queries, preview) and __sitemap__ source
+server/api/       blog API (Sanity queries) and __sitemap__ source
 studio/           Sanity Studio (schemas: post, tag, blockContent)
 tests/            Vitest smoke tests
 public/           static images, OG image
@@ -36,7 +36,7 @@ public/           static images, OG image
 - The preloader runs only on the first load of the home page, never on client-side navigation.
 - Mobile first: check every layout change at 375px. Navigation (blog, process, contact) must be reachable on mobile.
 - Form fields have linked `<label for>`/`id` pairs.
-- Server-only secrets (`SANITY_READ_TOKEN`, `BLOG_PREVIEW_SECRET`) live in `runtimeConfig`, never `runtimeConfig.public`.
+- Server-only secrets (`SANITY_READ_TOKEN`, `NUXT_ANTHROPIC_API_KEY`) live in `runtimeConfig`, never `runtimeConfig.public`.
 
 ## Environments
 - Local: `.env` from `.env.example`.

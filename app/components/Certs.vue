@@ -1,194 +1,162 @@
 <template>
-	<section id="certifications" ref="certsSection" class="max-w-6xl mx-auto px-4 sm:px-6 w-full">
-		<!-- Section label -->
-		<div ref="labelEl" class="flex items-center gap-3 mb-10">
-			<span class="text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400"
-				>Certifications</span
-			>
-			<div class="flex-1 h-px bg-stone-200"></div>
+	<section id="certifications" ref="root" class="wrap">
+		<div class="sec-rule js-reveal">
+			<span class="readout text-[var(--accent)]">04</span>
+			<span class="readout">Credentials</span>
 		</div>
+		<h2 class="display sec-word js-reveal">Certified<span class="sr-only">: certifications</span></h2>
 
-		<!-- Card grid -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-			<div
-				v-for="(cert, i) in certifications"
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<article
+				v-for="cert in certifications"
 				:key="cert.name"
-				:ref="(el) => { if (el) cardEls[i] = el }"
-				class="cert-card group relative bg-white border border-stone-200 rounded-xl overflow-hidden"
+				class="cert js-reveal"
 			>
-				<!-- Left accent bar -->
-				<div
-					:class="[
-						'absolute left-0 top-0 bottom-0 w-0.5',
-						cert.status === 'earned' ? 'bg-stone-300' : 'bg-orange-400',
-					]"
-				></div>
-
-				<!-- Watermark for in-progress -->
-				<div
-					v-if="cert.status !== 'earned'"
-					class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-					aria-hidden="true"
+				<component
+					:is="cert.verifyUrl ? 'a' : 'div'"
+					v-if="cert.badge"
+					:href="cert.verifyUrl"
+					:target="cert.verifyUrl ? '_blank' : undefined"
+					:rel="cert.verifyUrl ? 'noopener noreferrer' : undefined"
+					class="cert-badge"
 				>
-					<span class="watermark-text font-mono tracking-[0.4em] uppercase text-stone-100 rotate-[-20deg] whitespace-nowrap font-bold leading-none">
-						TBA
-					</span>
-				</div>
+					<img
+						:src="cert.badge"
+						:alt="cert.verifyUrl ? `Verify ${cert.name} on Credly` : `${cert.name} certification badge`"
+						width="96"
+						height="96"
+						loading="lazy"
+						class="w-20 h-20 sm:w-24 sm:h-24 object-contain"
+					/>
+				</component>
 
-				<!-- Card content -->
-				<div class="relative z-10 pl-5 pr-5 pt-5 pb-5 flex flex-col gap-4">
-					<!-- Top row: issuer + status -->
-					<div class="flex items-center justify-between gap-3">
-						<div class="flex items-center gap-1.5">
-							<span class="w-1 h-1 rounded-full bg-orange-400 shrink-0"></span>
-							<span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-400">
-								{{ cert.issuer }}
-							</span>
-						</div>
-						<!-- Status -->
-						<div
-							v-if="cert.status !== 'earned'"
-							class="flex items-center gap-1.5"
-						>
-							<span class="status-pulse w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>
-							<span class="text-[9px] font-mono tracking-[0.15em] uppercase text-orange-400">In Progress</span>
-						</div>
-						<span
-							v-else
-							class="text-[9px] font-mono tracking-[0.15em] uppercase text-stone-400"
-						>{{ cert.date }}</span>
-					</div>
+				<div class="min-w-0 flex-1">
+					<p class="readout">
+						{{ cert.issuer }}
+						<template v-if="cert.code"> · {{ cert.code }}</template>
+					</p>
+					<h3 class="display cert-name">{{ cert.name }}</h3>
 
-					<!-- Cert name + badge -->
-					<div class="flex items-center justify-between gap-4">
-						<div>
-							<h3 class="text-lg font-bold font-serif text-stone-900 leading-snug">
-								{{ cert.name }}
-							</h3>
-							<p v-if="cert.code" class="text-[10px] font-mono text-stone-400 tracking-[0.15em] mt-1">
-								{{ cert.code }}
-							</p>
-						</div>
-						<component
-							:is="cert.verifyUrl ? 'a' : 'div'"
-							v-if="cert.badge"
-							:href="cert.verifyUrl"
-							:target="cert.verifyUrl ? '_blank' : undefined"
-							:rel="cert.verifyUrl ? 'noopener noreferrer' : undefined"
-							class="shrink-0 transition-transform hover:scale-105"
-						>
-							<img
-								:src="cert.badge"
-								:alt="cert.verifyUrl ? `Verify ${cert.name} on Credly` : `${cert.name} certification badge`"
-								width="64"
-								height="64"
-								loading="lazy"
-								class="w-16 h-16 object-contain"
-							/>
-						</component>
-					</div>
+					<div class="cert-foot">
+						<span v-if="cert.status === 'earned'" class="readout cert-status">
+							<span class="cert-dot" aria-hidden="true"></span>
+							Issued {{ cert.date }}
+						</span>
+						<span v-else class="readout text-[var(--accent)]">In progress</span>
 
-					<!-- Footer: category tags -->
-					<div class="flex flex-wrap gap-1.5 pt-1 border-t border-stone-100">
-						<span
-							v-for="tag in cert.tags"
-							:key="tag"
-							class="text-[9px] font-mono tracking-[0.12em] uppercase text-stone-400 bg-stone-50 px-2 py-0.5 rounded-sm"
-						>{{ tag }}</span>
 						<a
 							v-if="cert.verifyUrl"
 							:href="cert.verifyUrl"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="ml-auto text-[9px] font-mono tracking-[0.15em] uppercase text-orange-400 hover:text-orange-500 py-0.5"
-						>Verify on Credly ↗</a>
+							class="readout cert-verify"
+						>
+							Verify on Credly
+							<Icon
+								name="heroicons:arrow-up-right-20-solid"
+								class="w-3.5 h-3.5"
+								:aria-hidden="true"
+							/>
+						</a>
 					</div>
 				</div>
-			</div>
+			</article>
 		</div>
 	</section>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
+import { certifications } from '~/utils/resume';
 
-const { $gsap } = useNuxtApp();
+const root = ref(null);
+useReveal(root);
 
-const certsSection = ref(null);
-const labelEl = ref(null);
-const cardEls = ref([]);
-
-const certifications = [
-	{
-		name: 'CompTIA Security+',
-		issuer: 'CompTIA',
-		code: 'SY0-701',
-		status: 'earned',
-		date: 'Oct 2026',
-		badge: '/images/comptia-security-ce-certification.png',
-		verifyUrl: 'https://www.credly.com/badges/22a82737-95da-458f-856a-02be00e5a352/public_url',
-		tags: ['Security', 'Networking', 'Compliance'],
-	},
-];
-
-onMounted(() => {
-	nextTick(() => {
-		if (!certsSection.value) return;
-
-		$gsap.set(labelEl.value, { opacity: 0, y: 20 });
-		$gsap.set(cardEls.value.filter(Boolean), { opacity: 0, y: 24, scale: 0.98 });
-
-		const tl = $gsap.timeline({
-			scrollTrigger: {
-				trigger: certsSection.value,
-				start: 'top 80%',
-				toggleActions: 'play none none none',
-			},
-		});
-
-		tl.to(labelEl.value, {
-			opacity: 1,
-			y: 0,
-			duration: 0.5,
-			ease: 'power2.out',
-		}).to(
-			cardEls.value.filter(Boolean),
-			{
-				opacity: 1,
-				y: 0,
-				scale: 1,
-				duration: 0.55,
-				ease: 'power3.out',
-				stagger: 0.08,
-				clearProps: 'all',
-			},
-			'-=0.2'
-		);
-	});
-});
 </script>
 
 <style scoped>
-.cert-card {
-	transition: box-shadow 0.2s ease, border-color 0.2s ease;
+.cert {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 1.5rem;
+	border: 1px solid var(--border);
+	background: var(--bg-card);
+	transition: border-color 0.2s ease;
 }
 
-.cert-card:hover {
-	box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.06);
-	border-color: #d6d3d1;
+.cert:hover {
+	border-color: #3a3f44;
 }
 
-.status-pulse {
-	animation: status-pulse 2.2s ease-in-out infinite;
+/* Signal edge on the left, like a status bar on a panel */
+.cert::before {
+	content: '';
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	bottom: -1px;
+	width: 2px;
+	background: var(--accent);
 }
 
-@keyframes status-pulse {
-	0%, 100% { opacity: 1; }
-	50% { opacity: 0.2; }
+.cert-badge {
+	flex-shrink: 0;
+	transition: transform 0.2s ease;
 }
 
-.watermark-text {
-	opacity: 0.045;
-	font-size: clamp(28px, 6vw, 52px);
+a.cert-badge:hover {
+	transform: scale(1.04);
+}
+
+.cert-name {
+	margin-top: 0.5rem;
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	line-height: 1;
+}
+
+.cert-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+	margin-top: 1.25rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--border);
+}
+
+.cert-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--text);
+}
+
+.cert-dot {
+	width: 6px;
+	height: 6px;
+	background: #3ddc84;
+}
+
+.cert-verify {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	min-height: 44px;
+	color: var(--accent);
+	text-decoration: none;
+}
+
+.cert-verify:hover {
+	color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cert,
+	.cert-badge {
+		transition: none;
+	}
 }
 </style>
