@@ -444,6 +444,22 @@ const allProjects = [
 		technologies: ['logos:chrome'],
 	},
 	{
+		title: 'Mississippi State Department of Health',
+		description:
+			'Built much of the custom Laravel CMS behind the state health department\'s new site, parts of the Inertia and React front end, the AWS hosting, and internal tooling that migrated pages over from the old site.',
+		image: '/images/msdh.webp',
+		link: 'https://msdh.ms.gov/',
+		workTypes: ['Web Development', 'Cloud'],
+		isRealWork: true,
+		category: 'website',
+		technologies: [
+			'logos:laravel',
+			'logos:react',
+			'logos:tailwindcss-icon',
+			'logos:aws',
+		],
+	},
+	{
 		title: 'Southern AgCredit',
 		description:
 			'Custom WordPress theme for a farm and rural land lender serving Mississippi and Northwest Louisiana, with a loan calculator and Gravity Forms lead forms, hosted on WP Engine.',

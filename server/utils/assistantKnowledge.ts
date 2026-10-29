@@ -29,6 +29,7 @@ Tools (open source):
 - Morphr: Go CLI RAW converter for CR2, NEF, ARW, DNG and 25+ formats, with an interactive wizard.
 - Snapr: Chrome extension for one-click screenshots (viewport, full page, or selection) exported as PNG, JPG, WebP or PDF.
 Websites:
+- Mississippi State Department of Health (msdh.ms.gov): built much of the custom Laravel CMS, parts of the Inertia and React front end, the AWS hosting, and internal tooling that migrated pages over from the old site.
 - Southern AgCredit: custom WordPress theme with a loan calculator and Gravity Forms, on WP Engine.
 - Mad Genius 5.0: helped rebuild the agency site with headless WordPress, TypeScript Nuxt over GraphQL, GSAP transitions.
 - Yates Construction: modular template system on headless WordPress and Nuxt; performance and technical SEO.
