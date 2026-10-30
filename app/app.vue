@@ -43,7 +43,8 @@ useSeoMeta({
 // Only play the preloader when the visit starts on the home page. (A link to
 // a section, idrewlong.com/#projects, skips it: see Preloader.vue.)
 const route = useRoute();
-const showPreloader = ref(route.path === '/');
+// Shared so the hero can hold its typing until the preloader is gone.
+const showPreloader = useState('preloader', () => route.path === '/');
 
 const { $scroll, $ScrollTrigger } = useNuxtApp();
 

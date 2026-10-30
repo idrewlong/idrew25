@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { onPageLeft } from '~/composables/usePageLeave';
 
 const { $scroll } = useNuxtApp();
@@ -109,10 +109,11 @@ const canvasHost = ref(null);
 const sceneReady = ref(false);
 const year = new Date().getFullYear();
 
-const words = ['infrastructure', 'pipelines', 'AI agents', 'apps', 'platforms', 'APIs'];
+const words = ['apps', 'AI agents', 'APIs', 'infrastructure', 'pipelines', 'platforms'];
 const currentWord = ref('');
 
 let reduceMotion = false;
+const preloading = useState('preloader', () => false);
 
 /* ── Local time (Long Beach, MS) ─────────────────────── */
 const timeFmt = new Intl.DateTimeFormat('en-US', {
@@ -164,6 +165,7 @@ const typewriterEffect = () => {
 };
 
 const startTypewriter = () => {
+	if (disposed) return;
 	if (reduceMotion) {
 		// Hold a single word rather than typing on a loop
 		currentWord.value = words[0];
@@ -243,7 +245,9 @@ onMounted(() => {
 	reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	tickClock();
 	clockTimer = setInterval(tickClock, 15000);
-	startTypewriter();
+	// Type only once the preloader has gone, so visitors see it from the first word
+	if (preloading.value) watch(preloading, startTypewriter, { once: true });
+	else startTypewriter();
 	mountScene();
 });
 

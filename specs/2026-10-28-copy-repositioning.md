@@ -7,7 +7,7 @@ Date: 2026-10-28
 Position the site for DevOps, cloud and AI engineering roles. Voice: tech optimism, bullish on AI, love of learning, getting things done, earnest and public-minded ("American altruism"). Every claim stays true; "Senior Full Stack Developer at Mad Genius" stays wherever it's stated as fact (resume, schema identity, About fact tiles).
 
 ## Already done (2026-10-28)
-- Hero typed words: infrastructure, pipelines, AI agents, apps, platforms, APIs
+- Hero typed words: apps, AI agents, APIs, infrastructure, pipelines, platforms
 - Hero status and CTA: "Open to software, platform, DevOps, AI & cleared roles"
 - Contact roles line: "Software, platform, DevOps, AI and cleared roles."
 
