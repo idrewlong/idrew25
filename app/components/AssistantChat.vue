@@ -1,20 +1,33 @@
 <template>
 	<div v-if="enabled" class="ai">
+		<div v-if="!open && !minimized" class="ai-launch-row" :class="{ 'ai-launch--wait': waitForScroll }">
+			<button ref="launcher" type="button" class="ai-launch" aria-haspopup="dialog" @click="openPanel">
+				<span class="ai-dot" aria-hidden="true"></span>
+				<span class="ai-launch-text">
+					<span class="readout !text-[var(--text)]">Ask my AI</span>
+					<span class="ai-launch-sub">About my work, skills or projects</span>
+				</span>
+				<span class="ai-launch-arrow" aria-hidden="true">↗</span>
+			</button>
+			<button type="button" class="ai-min" aria-label="Minimize assistant" @click="setMinimized(true)">
+				<span aria-hidden="true">–</span>
+			</button>
+		</div>
+
+		<!-- Minimized: a small tab that still opens the chat -->
 		<button
-			v-if="!open"
+			v-else-if="!open"
 			ref="launcher"
 			type="button"
-			class="ai-launch"
+			class="ai-launch ai-launch--mini"
 			:class="{ 'ai-launch--wait': waitForScroll }"
 			aria-haspopup="dialog"
+			aria-label="Ask my AI"
+			title="Ask my AI"
 			@click="openPanel"
 		>
 			<span class="ai-dot" aria-hidden="true"></span>
-			<span class="ai-launch-text">
-				<span class="readout !text-[var(--text)]">Ask my AI</span>
-				<span class="ai-launch-sub">About my work, skills or projects</span>
-			</span>
-			<span class="ai-launch-arrow" aria-hidden="true">↗</span>
+			<span class="readout !text-[var(--text)]" aria-hidden="true">AI</span>
 		</button>
 
 		<div
@@ -91,6 +104,26 @@ const suggestions = ['What does Andrew build?', 'What is his AWS experience?', '
 
 function openPanel() {
 	open.value = true;
+}
+
+// Visitors can shrink the launcher to a small tab. Remembered per browser;
+// storage can be blocked, so every access is guarded.
+const MIN_KEY = 'assistant-minimized';
+const minimized = ref(false);
+onMounted(() => {
+	try {
+		minimized.value = localStorage.getItem(MIN_KEY) === '1';
+	} catch {}
+});
+function setMinimized(value) {
+	minimized.value = value;
+	try {
+		if (value) localStorage.setItem(MIN_KEY, '1');
+		else localStorage.removeItem(MIN_KEY);
+	} catch {}
+	if (value) useTrackEvent('assistant_minimize');
+	// The button that had focus is gone; move focus to the tab that replaced it
+	nextTick(() => launcher.value?.focus());
 }
 
 // On phones the launcher would sit on top of the home hero's buttons, so it
@@ -211,8 +244,37 @@ function scrollDown() {
 	background: rgba(255, 91, 31, 0.12);
 }
 
+.ai-launch-row {
+	display: flex;
+	align-items: stretch;
+}
+
+.ai-min {
+	width: 44px;
+	border: 1px solid var(--accent);
+	border-left: none;
+	background: rgba(10, 11, 12, 0.92);
+	backdrop-filter: blur(8px);
+	color: var(--text-muted);
+	font-size: 1.1rem;
+	cursor: pointer;
+}
+
+.ai-min:hover {
+	color: var(--accent);
+	background: rgba(255, 91, 31, 0.12);
+}
+
+.ai-launch--mini {
+	gap: 0.5rem;
+	min-width: 52px;
+	padding: 0.5rem 0.75rem;
+	justify-content: center;
+}
+
 @media (max-width: 767px) {
-	.ai-launch {
+	.ai-launch,
+	.ai-launch-row {
 		transition:
 			opacity 0.25s ease,
 			visibility 0.25s;
