@@ -20,10 +20,15 @@ export interface SatellitePayload {
 	swarm: TleRecord[];
 }
 
+// Vercel stops the function at about 10s and answers 504. All requests run in
+// parallel, so an 8s cap lets a slow or down CelesTrak end in our own 502
+// instead.
+const FETCH_TIMEOUT = 8_000;
+
 async function fetchTle(query: string): Promise<TleRecord[]> {
 	const text = await $fetch<string>(`${CELESTRAK}?${query}&FORMAT=TLE`, {
 		responseType: 'text',
-		timeout: 20_000,
+		timeout: FETCH_TIMEOUT,
 	});
 	return parseTle(text);
 }
