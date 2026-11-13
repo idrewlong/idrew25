@@ -26,3 +26,6 @@ studio/.sanity
 
 # Playwright MCP screenshots and logs
 .playwright-mcp/
+
+# Vercel local build output
+.vercel

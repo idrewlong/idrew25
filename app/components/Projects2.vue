@@ -436,7 +436,6 @@ const allProjects = [
 			'Chrome extension that captures clean screenshots of any webpage in one click. Viewport, full page with scroll-and-stitch, or a dragged selection, exported as PNG, JPG, WebP or PDF. No account, no cloud.',
 		image: '/images/snapr.webp',
 		link: 'https://chromewebstore.google.com/detail/snapr/obbmbckbeeegfhfjmhhlhadgoiabiigg',
-		// TODO: repo is still private, so this link 404s for visitors.
 		repo: 'https://github.com/idrewlong/snapr',
 		workTypes: ['Browser Extension', 'Developer Tool'],
 		isRealWork: false,
