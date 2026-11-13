@@ -20,7 +20,7 @@ export default defineNuxtConfig({
 		githubToken: '',
 		// AI assistant (server-only). No key = assistant hidden and offline.
 		anthropicApiKey: '',
-		assistantModel: 'claude-opus-5-5',
+		assistantModel: 'claude-haiku-5-5',
 		assistantDailyCap: 300,
 		public: {
 			// Public by design: Web3Forms' free plan only accepts submissions
