@@ -9,9 +9,14 @@ export interface ShipEntry extends PushSummary {
 }
 
 // Public events only include public repos. Commit messages need one lookup
-// per push. Unauthenticated GitHub allows 60 calls/hour per server; a 30-min
-// cache keeps this to ~7 calls per window. NUXT_GITHUB_TOKEN raises the limit.
-export default defineCachedEventHandler(
+// per push, so each refresh is ~7 GitHub calls. NUXT_GITHUB_TOKEN lifts the
+// limit from 60/hour per IP (shared on Vercel) to 5,000/hour.
+//
+// Caching lives only in the `swr` route rule in nuxt.config.ts. A second
+// layer here (defineCachedEventHandler with swr) handed the route cache its
+// own stale copy on every refresh, so the feed froze for weeks. If GitHub
+// fails, the error propagates and the route cache keeps the last good copy.
+export default defineEventHandler(
 	async (): Promise<ShipEntry[]> => {
 		const { githubToken } = useRuntimeConfig();
 		const headers: Record<string, string> = {
@@ -39,6 +44,5 @@ export default defineCachedEventHandler(
 				};
 			})
 		);
-	},
-	{ name: 'github-activity', maxAge: 60 * 30, swr: true }
+	}
 );
