@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   site:
-    name: Typecheck and test
+    name: Typecheck, test and Studio build
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -23,23 +23,16 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            studio/package-lock.json
+      # postinstall runs `nuxt prepare`, which writes .nuxt/. The Studio build
+      # needs it too: its bundler reads the root tsconfig, which references .nuxt/.
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-
-  studio:
-    name: Studio build
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    defaults:
-      run:
+      - name: Studio build
         working-directory: studio
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: studio/package-lock.json
-      - run: npm ci
-      - run: npm run build
+        run: |
+          npm ci
+          npm run build
