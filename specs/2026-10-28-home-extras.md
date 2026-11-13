@@ -36,14 +36,14 @@ The endpoint is `POST /api/assistant`. Layers, cheapest first, so most abuse nev
 | Previews | Scope `NUXT_ANTHROPIC_API_KEY` to Production in Vercel (or keep preview protection on) so preview URLs aren't extra endpoints. |
 | Account cap | Set a monthly spend limit on the Anthropic key in the Console. A hard ceiling no code bug can exceed. |
 
-Model: `NUXT_ASSISTANT_MODEL`, default `claude-opus-5-5` (effort `low`, server-side refusal fallback on). `claude-haiku-5-5` is the cheap option.
+Model: `NUXT_ASSISTANT_MODEL`, default `claude-haiku-5-5` (effort `low`; refusals get the fixed reply, since Haiku has no server-side fallback). Set it to `claude-opus-5-5` or `claude-sonnet-5-5` for a bigger model; those also send the server-side refusal fallback.
 
 ## Definition of done
 
-- [ ] Each section renders at 375px and 1440px with no horizontal scroll
-- [ ] Reduced motion: no cursor, no ridge animation, no dither animation; content still shown
+- [x] Each section renders at 375px and 1440px with no horizontal scroll (QA 2026-11-13: /, /process, /contact, /resume, /blog, /teardown, checked per page)
+- [x] Reduced motion: no cursor, no ridge animation, no dither animation; content still shown (QA 2026-11-13; Work drawer dither not opened)
 - [ ] Impact and build-log copy only restates facts already on the site or in this repo
-- [ ] Assistant: unit tests for input validation, origin check, rate limiter, daily cap
-- [ ] Assistant: off cleanly with no key; refuses off-topic questions; never exposes the key client-side
+- [x] Assistant: unit tests for input validation, origin check, rate limiter, daily cap (tests/utils/assistantGuard*.test.ts, tests/server/assistantRoute.test.ts)
+- [ ] Assistant: off cleanly with no key; refuses off-topic questions; never exposes the key client-side (off cleanly and key-not-in-responses are tested; off-topic refusal and a client-bundle scan are not)
 - [x] Security review of the assistant route (2026-10-28): SEC-1 atomic counter, SEC-2 fail closed without Upstash, SEC-3 signed history, SEC-4 IPv6 /64 all fixed
-- [ ] `npm test` and `npm run build` pass
+- [x] `npm test` and `npm run build` pass (137 tests, plus `npm run typecheck`)
