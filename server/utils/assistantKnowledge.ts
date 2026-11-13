@@ -8,9 +8,9 @@ export const ASSISTANT_KNOWLEDGE = `
 
 Senior full stack developer at Mad Genius, based in Long Beach, Mississippi. U.S. citizen. Open to opportunities. Contact: idrewlong@gmail.com, or the contact form at /contact. GitHub: github.com/idrewlong. LinkedIn: linkedin.com/in/idrewlong.
 Tagline: "Go by choice. TypeScript by trade. AWS by necessity."
-At Mad Genius he owns AI tooling, web apps, headless sites, infra and more. He builds client web and mobile apps from the database schema to production, and fixes security and compliance gaps in AWS for Mississippi state agencies. He came to development through SEO and marketing work, so he asks what a build is supposed to do for the business before starting it.
+At Mad Genius he owns AI tooling, web apps, headless sites, infra and more. He builds client web and mobile apps, from the database schema to production. He also designs and secures the AWS architecture behind Mississippi state agency sites. Day to day he builds apps in Laravel, React and Nuxt, sets up CI/CD pipelines and containerized deployments, and mentors junior developers.
 Certified: CompTIA Security+ (SY0-701), October 2026.
-Personal: soon to be a dad.
+Personal: a dad.
 
 ## Experience
 - Senior Full Stack Developer, Mad Genius (May 2026 to present): leads architecture and development for a diverse client portfolio, owning web and mobile products from user stories and database schema through backend and production. Builds and remediates AWS infrastructure (EC2, S3, scheduled jobs) for multiple Mississippi state agencies, closing security and compliance gaps. Mentors junior developers and leads quarterly internal training on web standards, SEO and security. Stands up CI/CD pipelines and containerized deployments. Partners with designers, strategists and account teams to scope work.

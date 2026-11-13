@@ -12,9 +12,13 @@ export interface GithubPulse {
 
 // The contribution calendar is the one on the GitHub profile: every
 // contribution, including private repos as counts only. Repos come from the
-// public events feed, so only public ones are named. Both are cached, so
-// GitHub sees a couple of requests every few hours.
-export default defineCachedEventHandler(
+// public events feed, so only public ones are named.
+//
+// Caching lives only in the `swr` route rule in nuxt.config.ts (see
+// github-activity.get.ts for why). Fetch errors propagate instead of
+// returning empty data, so the route cache keeps the last good copy rather
+// than caching a blank panel for hours.
+export default defineEventHandler(
 	async (): Promise<GithubPulse> => {
 		const { githubToken } = useRuntimeConfig();
 		const headers: Record<string, string> = { 'User-Agent': 'idrewlong.com' };
@@ -24,7 +28,7 @@ export default defineCachedEventHandler(
 				headers,
 				responseType: 'text',
 				timeout: 10_000,
-			}).catch(() => ''),
+			}),
 			$fetch<unknown[]>(`https://api.github.com/users/${USER}/events/public?per_page=100`, {
 				headers: {
 					...headers,
@@ -32,7 +36,7 @@ export default defineCachedEventHandler(
 					...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
 				},
 				timeout: 10_000,
-			}).catch(() => []),
+			}),
 		]);
 
 		const all = parseContributions(html);
@@ -45,6 +49,5 @@ export default defineCachedEventHandler(
 			totals: today ? summarizeContributions(all, today) : { week: 0, month: 0, year: 0 },
 			repos: recentRepos(events, 4),
 		};
-	},
-	{ name: 'github-pulse', maxAge: 60 * 60 * 3, swr: true }
+	}
 );

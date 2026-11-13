@@ -129,10 +129,13 @@ export default defineNuxtConfig({
 			},
 		},
 		'/blog/**': { isr: 60 },
-		// Orbital elements change every 2 hours; let the CDN serve this
-		'/api/satellites': { swr: 60 * 60 * 2 },
-		'/api/github-activity': { swr: 60 * 30 },
-		'/api/github-pulse': { swr: 60 * 60 * 3 },
+		// CDN-cached API routes. Use `isr` with seconds, not `swr`: on Vercel
+		// `swr` compiles to an ISR entry with no expiration, so the response
+		// never refreshes until the next deploy.
+		// Orbital elements change every 2 hours
+		'/api/satellites': { isr: 60 * 60 * 2 },
+		'/api/github-activity': { isr: 60 * 30 },
+		'/api/github-pulse': { isr: 60 * 60 * 3 },
 		'/api/assistant/**': { headers: { 'Cache-Control': 'no-store' } },
 	},
 	// Assistant rate-limit counters. With Upstash configured they're shared

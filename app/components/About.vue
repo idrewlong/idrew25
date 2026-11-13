@@ -47,14 +47,14 @@
 				<div class="about-bio mt-8 space-y-5">
 					<p class="about-body js-reveal">
 						I'm Andrew Long, a senior full stack developer at Mad Genius. I
-						build client web and mobile apps from the database schema to
-						production, and I fix security and compliance gaps in AWS for
-						Mississippi state agencies.
+						build client web and mobile apps, from the database schema to
+						production. I also design and secure the AWS architecture behind
+						Mississippi state agency sites.
 					</p>
 					<p class="about-body js-reveal">
-						I got here through SEO and marketing work, so I usually ask what a
-						build is supposed to do for the business before I start it. When I
-						don't know something, I go find out.
+						Most days that means building apps in Laravel, React and Nuxt, then
+						setting up the CI/CD pipelines and containerized deployments that
+						ship them. I also own our AI tooling and mentor junior developers.
 					</p>
 					<div class="about-actions js-reveal">
 						<NuxtLink to="/resume" class="btn btn-solid">
@@ -134,7 +134,7 @@ const currently = [
 		link: 'https://madg.com/people/andrew-long/',
 		wide: true,
 	},
-	{ label: 'Hobbies', value: 'Soon to be Dad.' },
+	{ label: 'Hobbies', value: 'Being a dad.' },
 ];
 </script>
 
