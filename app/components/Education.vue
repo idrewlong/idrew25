@@ -46,7 +46,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { educationList } from '~/utils/resume';
+import { educationList } from '#shared/siteData/resume';
 
 const root = ref(null);
 useReveal(root);

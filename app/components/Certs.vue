@@ -67,7 +67,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { certifications } from '~/utils/resume';
+import { certifications } from '#shared/siteData/resume';
 
 const root = ref(null);
 useReveal(root);

@@ -84,7 +84,7 @@
 
 <script setup>
 import { ref, nextTick } from 'vue';
-import { experiences } from '~/utils/resume';
+import { experiences } from '#shared/siteData/resume';
 
 const { $gsap } = useNuxtApp();
 
