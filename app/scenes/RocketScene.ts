@@ -113,13 +113,13 @@ function makePad() {
 	const tower = new THREE.Group();
 	tower.position.set(-1.35, -0.35, 0);
 	const H = 8.4;
-	for (const [x, z] of [[-0.3, -0.3], [0.3, -0.3], [-0.3, 0.3], [0.3, 0.3]]) {
+	for (const [x, z] of [[-0.3, -0.3], [0.3, -0.3], [-0.3, 0.3], [0.3, 0.3]] as [number, number][]) {
 		const post = new THREE.Mesh(new THREE.BoxGeometry(0.06, H, 0.06), MAT.steel);
 		post.position.set(x, H / 2, z);
 		tower.add(post);
 	}
 	for (let y = 0.6; y < H; y += 0.6) {
-		for (const [w, d, x, z] of [[0.6, 0.04, 0, -0.3], [0.6, 0.04, 0, 0.3], [0.04, 0.6, -0.3, 0], [0.04, 0.6, 0.3, 0]]) {
+		for (const [w, d, x, z] of [[0.6, 0.04, 0, -0.3], [0.6, 0.04, 0, 0.3], [0.04, 0.6, -0.3, 0], [0.04, 0.6, 0.3, 0]] as [number, number, number, number][]) {
 			const brace = new THREE.Mesh(new THREE.BoxGeometry(w, 0.04, d), MAT.steel);
 			brace.position.set(x, y, z);
 			tower.add(brace);
@@ -311,7 +311,7 @@ export class RocketScene extends AsciiStage {
 		const C = col.array as Float32Array;
 		for (let i = 0; i < plume.life.length; i++) {
 			// Same cone as the original launch: widens and lengthens with thrust
-			let life = plume.life[i] + dt * (1.4 + thrust);
+			let life = plume.life[i]! + dt * (1.4 + thrust);
 			if (life > 1) life -= 1;
 			plume.life[i] = life;
 			const r = life * (0.35 + thrust * 0.6) * scale * Math.random();
@@ -336,7 +336,7 @@ export class RocketScene extends AsciiStage {
 		const P = pos.array as Float32Array;
 		const C = col.array as Float32Array;
 		for (let i = 0; i < this.smoke.life.length; i++) {
-			let life = this.smoke.life[i] + dt * 0.35;
+			let life = this.smoke.life[i]! + dt * 0.35;
 			if (life > 1) life -= 1;
 			this.smoke.life[i] = life;
 			const dir = i % 2 ? 1 : -1;

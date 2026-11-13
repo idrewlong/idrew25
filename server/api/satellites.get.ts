@@ -42,7 +42,7 @@ const getFeatured = defineCachedFunction(
 			FEATURED.map((f) => fetchTle(`CATNR=${f.id}`).catch(() => [] as TleRecord[]))
 		);
 		return results.flatMap((records, i) =>
-			records.slice(0, 1).map((r) => ({ ...r, label: FEATURED[i].label }))
+			records.slice(0, 1).map((r) => ({ ...r, label: FEATURED[i]!.label }))
 		);
 	},
 	{ name: 'satellites-featured', maxAge: TWO_HOURS }

@@ -14,11 +14,12 @@ Andrew Long's portfolio site: home, selected work (tools listed before websites)
 |---|---|
 | Dev server | `npm run dev` (http://localhost:3000) |
 | Unit tests | `npm test` (Vitest) |
+| Typecheck | `npm run typecheck` (vue-tsc via `nuxt typecheck`) |
 | Build | `npm run build` |
 | Preview build | `npm run preview` |
 | Studio | `cd studio && npm run dev` |
 
-No lint or typecheck script exists yet (`vue-tsc` isn't installed).
+No lint script yet.
 
 ## Layout
 ```

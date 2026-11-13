@@ -13,6 +13,7 @@ export default defineEventHandler(async (event): Promise<PostSummary[]> => {
 	// endpoints: /blog/** is ISR-cached, so a draft would be served to everyone.
 	const client = createSanityClient(runtime.sanity as SanityConfig);
 
-	const posts = await client.fetch(postsQuery(tag), tag ? { tag } : {});
+	const params: Record<string, string> = tag ? { tag } : {};
+	const posts = await client.fetch(postsQuery(tag), params);
 	return posts ?? [];
 });

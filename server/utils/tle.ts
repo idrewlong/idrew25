@@ -21,7 +21,7 @@ export function parseTle(text: string): TleRecord[] {
 	for (let i = 0; i + 2 < lines.length; ) {
 		const [name, line1, line2] = [lines[i], lines[i + 1], lines[i + 2]];
 		if (line1?.startsWith('1 ') && line2?.startsWith('2 ')) {
-			records.push({ name: name.trim(), id: Number(line1.slice(2, 7)), line1, line2 });
+			records.push({ name: name!.trim(), id: Number(line1.slice(2, 7)), line1, line2 });
 			i += 3;
 		} else {
 			i += 1;

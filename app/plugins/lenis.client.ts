@@ -84,7 +84,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 			const top =
 				typeof target === 'number'
 					? target
-					: el
+					: el instanceof Element
 						? el.getBoundingClientRect().top + window.scrollY
 						: null;
 			if (top === null) return;

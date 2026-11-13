@@ -43,8 +43,8 @@ export interface ContributionDay {
 export function parseContributions(html: string): ContributionDay[] {
 	const counts = new Map<string, number>();
 	for (const m of html.matchAll(/<tool-tip[^>]*\sfor="([^"]+)"[^>]*>([^<]*)<\/tool-tip>/g)) {
-		const n = m[2].match(/^([\d,]+) contributions? on/);
-		counts.set(m[1], n ? Number(n[1].replace(/,/g, '')) : 0);
+		const n = m[2]!.match(/^([\d,]+) contributions? on/);
+		counts.set(m[1]!, n ? Number(n[1]!.replace(/,/g, '')) : 0);
 	}
 	const days: ContributionDay[] = [];
 	for (const m of html.matchAll(/<td\b[^>]*>/g)) {

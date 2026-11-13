@@ -78,7 +78,7 @@ function isLand(mask: Uint8Array, lat: number, lon: number) {
 	const row = Math.min(LAND_H - 1, Math.max(0, Math.floor(((90 - lat) / 180) * LAND_H)));
 	const col = Math.min(LAND_W - 1, Math.max(0, Math.floor(((lon + 180) / 360) * LAND_W)));
 	const i = row * LAND_W + col;
-	return (mask[i >> 3] & (1 << (i & 7))) !== 0;
+	return ((mask[i >> 3] ?? 0) & (1 << (i & 7))) !== 0;
 }
 
 function latLonToVec(lat: number, lon: number, r: number) {
@@ -250,7 +250,7 @@ export class GlobeScene extends AsciiStage {
 		];
 		for (const ring of rings) {
 			const pivot = new THREE.Group();
-			pivot.rotation.set(ring.tilt[0], ring.tilt[1], 0);
+			pivot.rotation.set(ring.tilt[0]!, ring.tilt[1]!, 0);
 			const pts = new THREE.EllipseCurve(0, 0, ring.r, ring.r).getPoints(200);
 			pivot.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), ringMat));
 			const sat = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.05), satMat);
@@ -485,7 +485,7 @@ export class GlobeScene extends AsciiStage {
 		this.placeLabels();
 	}
 
-	dispose() {
+	override dispose() {
 		window.removeEventListener('pointermove', this.onPointer);
 		const el = this.renderer.domElement;
 		el.removeEventListener('pointerdown', this.onDragStart);
