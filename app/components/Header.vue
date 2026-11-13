@@ -1,5 +1,5 @@
 <template>
-	<header class="site-header" :class="{ 'is-scrolled': isScrolled }">
+	<header ref="headerEl" class="site-header" :class="{ 'is-scrolled': isScrolled }">
 		<div class="header-inner">
 			<!-- Brand -->
 			<NuxtLink to="/" class="brand" aria-label="Go to homepage">
@@ -159,6 +159,7 @@ const assistant = useAssistant();
 const isScrolled = ref(false);
 const menuOpen = ref(false);
 const toggleEl = ref(null);
+const headerEl = ref(null);
 const route = useRoute();
 const onSectionLink = useSectionLink();
 
@@ -174,7 +175,45 @@ const handleScroll = () => {
 	isScrolled.value = window.scrollY > 8;
 };
 
+// While the overlay is open, everything outside the header is inert so focus
+// (and assistive tech) can't reach the page behind it. Restored on close,
+// route change and unmount.
+let inerted = [];
+const setBackgroundInert = (on) => {
+	if (on) {
+		const root = headerEl.value?.parentElement;
+		if (!root) return;
+		inerted = [...root.children].filter(
+			(el) => el !== headerEl.value && !el.hasAttribute('inert') && !el.classList.contains('skip-link')
+		);
+		inerted.forEach((el) => el.setAttribute('inert', ''));
+	} else {
+		inerted.forEach((el) => el.removeAttribute('inert'));
+		inerted = [];
+	}
+};
+watch(menuOpen, (open) => setBackgroundInert(open), { flush: 'post' });
+
+// Keep Tab / Shift+Tab cycling inside the header while the menu is open
+const trapTab = (e) => {
+	const items = [...headerEl.value.querySelectorAll('a[href], button')].filter(
+		(el) => el.getClientRects().length > 0
+	);
+	if (!items.length) return;
+	const first = items[0];
+	const last = items[items.length - 1];
+	const active = document.activeElement;
+	if (e.shiftKey && (active === first || !headerEl.value.contains(active))) {
+		e.preventDefault();
+		last.focus();
+	} else if (!e.shiftKey && (active === last || !headerEl.value.contains(active))) {
+		e.preventDefault();
+		first.focus();
+	}
+};
+
 const handleKeydown = (e) => {
+	if (e.key === 'Tab' && menuOpen.value) trapTab(e);
 	if (e.key === 'Escape' && menuOpen.value) {
 		menuOpen.value = false;
 		toggleEl.value?.focus();
@@ -195,6 +234,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+	setBackgroundInert(false);
 	window.removeEventListener('scroll', handleScroll);
 	window.removeEventListener('keydown', handleKeydown);
 	mdQuery?.removeEventListener('change', handleBreakpoint);
@@ -612,6 +652,9 @@ onUnmounted(() => {
 	color: var(--text-muted);
 	text-decoration: none;
 	overflow-wrap: anywhere;
+	display: inline-flex;
+	align-items: center;
+	min-height: 24px;
 }
 
 .mobile-menu-email:hover {
