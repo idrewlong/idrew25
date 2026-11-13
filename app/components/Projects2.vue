@@ -597,16 +597,6 @@ const allProjects = [
 			'logos:vercel-icon',
 		],
 	},
-	// {
-	// 	title: 'Taylor Trolley',
-	// 	description:
-	// 		'Brand and marketing site for a charter trolley service in Oxford/Taylor, MS.',
-	// 	image: '/images/taylortrolley.webp',
-	// 	link: 'https://taylortrolley.vercel.app/',
-	// 	workTypes: ['Web Development', 'Web Design', 'Branding'],
-	// 	isRealWork: false,
-	// 	technologies: ['logos:nuxt-icon', 'logos:tailwindcss-icon'],
-	// },
 ];
 
 const filteredProjects = computed(() => {
