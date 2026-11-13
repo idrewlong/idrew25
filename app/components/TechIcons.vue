@@ -29,7 +29,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
+import { onPageLeft } from '~/composables/usePageLeave';
 
 const { $gsap } = useNuxtApp();
 
@@ -40,6 +41,9 @@ const mouse = { x: -9999, y: -9999 };
 let isMouseInField = false;
 let rafId = null;
 let positions = [];
+let fieldW = 0;
+let fieldH = 0;
+let mm = null;
 
 // Add `scale` to an entry to size that logo up or down (1 = default,
 // 1.2 = 20% bigger). Wide wordmark logos read smaller than square ones,
@@ -107,11 +111,10 @@ const onMouseLeave = () => {
 };
 
 const animate = () => {
-	const field = fieldRef.value;
-	if (!field) return;
+	if (!fieldRef.value) return;
 
-	const w = field.offsetWidth;
-	const h = field.offsetHeight;
+	const w = fieldW;
+	const h = fieldH;
 	const time = Date.now() * 0.001;
 
 	iconEls.value.forEach((el, i) => {
@@ -158,34 +161,77 @@ onMounted(() => {
 	nextTick(() => {
 		const field = fieldRef.value;
 		if (!field) return;
-		const w = field.offsetWidth;
-		const h = field.offsetHeight;
 
-		// Initialize positions at home
-		positions = homePositions.map((home) => ({
-			x: (home.x / 100) * w,
-			y: (home.y / 100) * h,
-		}));
+		mm = $gsap.matchMedia(field);
+		mm.add(
+			// matchMedia only runs the callback when a condition matches, so the
+			// no-preference case needs its own entry
+			{
+				reduce: '(prefers-reduced-motion: reduce)',
+				full: '(prefers-reduced-motion: no-preference)',
+			},
+			(ctx) => {
+				const els = iconEls.value.filter(Boolean);
 
-		// Entrance animation — icons fade and scale in with stagger
-		iconEls.value.filter(Boolean).forEach((el, i) => {
-			$gsap.set(el, { opacity: 0, scale: 0.4 });
-			$gsap.to(el, {
-				opacity: 1,
-				scale: 1,
-				duration: 0.8,
-				delay: 0.6 + i * 0.07,
-				ease: 'back.out(1.6)',
-			});
-		});
+				// Reduced motion: final state, no entrance and no loop
+				if (ctx.conditions.reduce) {
+					$gsap.set(els, { opacity: 1, scale: 1 });
+					return;
+				}
 
-		// Start animation loop
-		rafId = requestAnimationFrame(animate);
+				// Cache the field size; the loop runs every frame
+				const measure = () => {
+					fieldW = field.offsetWidth;
+					fieldH = field.offsetHeight;
+				};
+				measure();
+				positions = homePositions.map((home) => ({
+					x: (home.x / 100) * fieldW,
+					y: (home.y / 100) * fieldH,
+				}));
+
+				// Entrance: icons fade and scale in with stagger
+				els.forEach((el, i) => {
+					$gsap.set(el, { opacity: 0, scale: 0.4 });
+					$gsap.to(el, {
+						opacity: 1,
+						scale: 1,
+						duration: 0.8,
+						delay: 0.6 + i * 0.07,
+						ease: 'back.out(1.6)',
+					});
+				});
+
+				// The loop only runs while the field is on screen
+				let visible = false;
+				const ro = new ResizeObserver(measure);
+				ro.observe(field);
+				const io = new IntersectionObserver(([entry]) => {
+					visible = entry.isIntersecting;
+					if (visible && !rafId) rafId = requestAnimationFrame(animate);
+					else if (!visible && rafId) {
+						cancelAnimationFrame(rafId);
+						rafId = null;
+					}
+				});
+				io.observe(field);
+
+				return () => {
+					io.disconnect();
+					ro.disconnect();
+					if (rafId) cancelAnimationFrame(rafId);
+					rafId = null;
+				};
+			}
+		);
 	});
 });
 
-onUnmounted(() => {
+onPageLeft(() => {
 	if (rafId) cancelAnimationFrame(rafId);
+	rafId = null;
+	mm?.revert();
+	mm = null;
 });
 </script>
 
