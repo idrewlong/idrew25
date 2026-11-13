@@ -190,14 +190,14 @@ function videoEmbedSrc(rawUrl: string): string | null {
 				segments[0] === 'embed' ||
 				segments[0] === 'live')
 		) {
-			return buildYouTubeSrc(segments[1]);
+			return buildYouTubeSrc(segments[1]!);
 		}
 		return null;
 	}
 
 	if (host === YOUTUBE_NOCOOKIE_HOST) {
 		if (segments.length >= 2 && segments[0] === 'embed') {
-			return buildYouTubeSrc(segments[1]);
+			return buildYouTubeSrc(segments[1]!);
 		}
 		return null;
 	}
@@ -228,11 +228,11 @@ const components: PortableTextComponents = {
 	block: {
 		normal: ({ children }) => `<p>${children}</p>`,
 		h2: ({ children, value }) =>
-			`<h2 id="${value._headingId}">${children}</h2>`,
+			`<h2 id="${(value as { _headingId?: string })._headingId}">${children}</h2>`,
 		h3: ({ children, value }) =>
-			`<h3 id="${value._headingId}">${children}</h3>`,
+			`<h3 id="${(value as { _headingId?: string })._headingId}">${children}</h3>`,
 		h4: ({ children, value }) =>
-			`<h4 id="${value._headingId}">${children}</h4>`,
+			`<h4 id="${(value as { _headingId?: string })._headingId}">${children}</h4>`,
 		blockquote: ({ children }) => `<blockquote>${children}</blockquote>`,
 	},
 	list: {

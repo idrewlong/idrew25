@@ -241,6 +241,18 @@ async function mountScene() {
 	document.addEventListener('visibilitychange', onVisibility);
 }
 
+let sceneIdle = null;
+let sceneTimer = null;
+
+function scheduleScene() {
+	if (disposed) return;
+	if ('requestIdleCallback' in window) {
+		sceneIdle = requestIdleCallback(() => mountScene(), { timeout: 2000 });
+	} else {
+		sceneTimer = setTimeout(mountScene, 200);
+	}
+}
+
 onMounted(() => {
 	reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	tickClock();
@@ -248,11 +260,16 @@ onMounted(() => {
 	// Type only once the preloader has gone, so visitors see it from the first word
 	if (preloading.value) watch(preloading, startTypewriter, { once: true });
 	else startTypewriter();
-	mountScene();
+	// The globe waits for the preloader (three.js is ~500KB to fetch and init),
+	// then for an idle moment so it never competes with the hero text.
+	if (preloading.value) watch(preloading, scheduleScene, { once: true });
+	else scheduleScene();
 });
 
 onPageLeft(() => {
 	disposed = true;
+	if (sceneIdle !== null) cancelIdleCallback(sceneIdle);
+	clearTimeout(sceneTimer);
 	if (typewriterTimeout) clearTimeout(typewriterTimeout);
 	clearInterval(clockTimer);
 	io?.disconnect();

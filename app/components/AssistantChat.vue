@@ -1,24 +1,18 @@
 <template>
 	<div v-if="enabled" class="ai">
-		<button
-			v-if="!open"
-			ref="launcher"
-			type="button"
-			class="ai-launch"
-			:class="{ 'ai-launch--wait': waitForScroll }"
-			aria-haspopup="dialog"
-			@click="openPanel"
-		>
-			<span class="ai-dot" aria-hidden="true"></span>
-			<span class="ai-launch-text">
-				<span class="readout !text-[var(--text)]">Ask my AI</span>
-				<span class="ai-launch-sub">About my work, skills or projects</span>
-			</span>
-			<span class="ai-launch-arrow" aria-hidden="true">↗</span>
-		</button>
+		<div v-if="!open && !dismissed" class="ai-launch-row" :class="{ 'ai-launch--wait': waitForScroll }">
+			<button ref="launcher" type="button" class="ai-launch" aria-haspopup="dialog" @click="openPanel">
+				<span class="ai-dot" aria-hidden="true"></span>
+				<span class="readout !text-[var(--text)]">Ask AI</span>
+				<span class="ai-launch-arrow" aria-hidden="true">↗</span>
+			</button>
+			<button type="button" class="ai-min" aria-label="Hide Ask AI button" @click="dismiss">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
 
 		<div
-			v-else
+			v-else-if="open"
 			ref="panel"
 			class="ai-panel"
 			role="dialog"
@@ -93,6 +87,29 @@ function openPanel() {
 	open.value = true;
 }
 
+// Visitors can hide the floating launcher for the rest of their visit. The
+// header's Ask AI button (nav and mobile menu) still opens the chat.
+// sessionStorage, so a later visit shows it again; access is guarded.
+const DISMISS_KEY = 'assistant-launcher-hidden';
+const dismissed = ref(false);
+onMounted(() => {
+	try {
+		dismissed.value = sessionStorage.getItem(DISMISS_KEY) === '1';
+	} catch {}
+});
+function dismiss() {
+	dismissed.value = true;
+	try {
+		sessionStorage.setItem(DISMISS_KEY, '1');
+	} catch {}
+	useTrackEvent('assistant_dismiss');
+	// The focused button is gone; hand focus to the header's Ask AI if it's visible
+	nextTick(() => {
+		const headerButton = document.querySelector('.header-ai');
+		if (headerButton instanceof HTMLElement && headerButton.offsetParent) headerButton.focus();
+	});
+}
+
 // On phones the launcher would sit on top of the home hero's buttons, so it
 // waits until the visitor has scrolled past the first half screen
 const route = useRoute();
@@ -120,10 +137,21 @@ watch(open, (isOpen) => {
 		nextTick(() => input.value?.focus());
 		return;
 	}
-	const target = returnFocus?.isConnected ? returnFocus : null;
+	const target = isFocusable(returnFocus) ? returnFocus : null;
 	returnFocus = null;
-	nextTick(() => (target ?? launcher.value)?.focus());
+	// Opened from the mobile menu (now closed) or with the launcher hidden:
+	// fall back to the launcher, the header's Ask AI, or the menu toggle
+	nextTick(() => {
+		const fallback = [launcher.value, document.querySelector('.header-ai'), document.querySelector('[aria-controls="mobile-menu"]')].find(isFocusable);
+		(target ?? fallback)?.focus();
+	});
 });
+
+// Connected and actually rendered (not display:none or inside a closed menu)
+function isFocusable(el) {
+	if (!(el instanceof HTMLElement) || !el.isConnected || el.closest('[inert]')) return false;
+	return el.checkVisibility ? el.checkVisibility({ visibilityProperty: true }) : el.getClientRects().length > 0;
+}
 
 function close() {
 	open.value = false;
@@ -211,8 +239,30 @@ function scrollDown() {
 	background: rgba(255, 91, 31, 0.12);
 }
 
+.ai-launch-row {
+	display: flex;
+	align-items: stretch;
+}
+
+.ai-min {
+	width: 44px;
+	border: 1px solid var(--accent);
+	border-left: none;
+	background: rgba(10, 11, 12, 0.92);
+	backdrop-filter: blur(8px);
+	color: var(--text-muted);
+	font-size: 1.1rem;
+	cursor: pointer;
+}
+
+.ai-min:hover {
+	color: var(--accent);
+	background: rgba(255, 91, 31, 0.12);
+}
+
 @media (max-width: 767px) {
-	.ai-launch {
+	.ai-launch,
+	.ai-launch-row {
 		transition:
 			opacity 0.25s ease,
 			visibility 0.25s;
@@ -224,27 +274,8 @@ function scrollDown() {
 	}
 }
 
-.ai-launch-text {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 0.2rem;
-	text-align: left;
-}
-
-.ai-launch-sub {
-	font-size: 0.75rem;
-	color: var(--text-muted);
-}
-
 .ai-launch-arrow {
 	color: var(--accent);
-}
-
-@media (max-width: 479px) {
-	.ai-launch-sub {
-		display: none;
-	}
 }
 
 .ai-dot {

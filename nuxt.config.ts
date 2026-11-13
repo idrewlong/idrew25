@@ -20,7 +20,7 @@ export default defineNuxtConfig({
 		githubToken: '',
 		// AI assistant (server-only). No key = assistant hidden and offline.
 		anthropicApiKey: '',
-		assistantModel: 'claude-opus-5-5',
+		assistantModel: 'claude-haiku-5-5',
 		assistantDailyCap: 300,
 		public: {
 			// Public by design: Web3Forms' free plan only accepts submissions
@@ -48,11 +48,15 @@ export default defineNuxtConfig({
 		},
 	},
 	gtag: {
+		// Only Vercel production builds report to GA4, so local dev and preview
+		// deploys don't pollute real data. Elsewhere the composables are no-ops.
+		enabled: process.env.VERCEL_ENV === 'production',
 		id: 'G-J7YM70XLHW',
 	},
 
-	// Pages set a static ogImage (/images/OG.webp), so the runtime OG image
-	// renderer is dead weight -- it only pulls in a native renderer dependency.
+	// Pages use a static OG image (/og/andrew-long.jpg, set in app.vue), so the
+	// runtime OG image renderer is dead weight -- it only pulls in a native
+	// renderer dependency.
 	ogImage: { enabled: false },
 
 	app: {
@@ -129,6 +133,10 @@ export default defineNuxtConfig({
 			},
 		},
 		'/blog/**': { isr: 60 },
+		// Static images in public/ aren't content-hashed, so cache for a week
+		// (and let the CDN revalidate after) rather than forever
+		'/images/**': { headers: { 'Cache-Control': 'public, max-age=604800, stale-while-revalidate=86400' } },
+		'/og/**': { headers: { 'Cache-Control': 'public, max-age=604800, stale-while-revalidate=86400' } },
 		// CDN-cached API routes. Use `isr` with seconds, not `swr`: on Vercel
 		// `swr` compiles to an ISR entry with no expiration, so the response
 		// never refreshes until the next deploy.

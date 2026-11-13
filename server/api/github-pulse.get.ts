@@ -43,7 +43,7 @@ export default defineEventHandler(
 		const today = all.at(-1)?.date;
 		// Start on a Sunday so each column of the grid is one week
 		let start = Math.max(0, all.length - WEEKS * 7);
-		while (start < all.length && new Date(`${all[start].date}T00:00:00Z`).getUTCDay() !== 0) start++;
+		while (start < all.length && new Date(`${all[start]!.date}T00:00:00Z`).getUTCDay() !== 0) start++;
 		return {
 			days: all.slice(start),
 			totals: today ? summarizeContributions(all, today) : { week: 0, month: 0, year: 0 },

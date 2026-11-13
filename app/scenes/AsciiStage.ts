@@ -141,7 +141,7 @@ export abstract class AsciiStage {
 		const cols = Math.max(8, Math.floor(w / CELL));
 		const rows = Math.max(8, Math.floor(h / (CELL * CELL_ASPECT)));
 		this.target.setSize(cols, rows);
-		this.asciiMat.uniforms.uCells.value.set(cols, rows);
+		this.asciiMat.uniforms.uCells!.value.set(cols, rows);
 		this.camera.aspect = w / h;
 		this.layout(w, h);
 		this.camera.updateProjectionMatrix();

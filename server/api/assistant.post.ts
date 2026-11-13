@@ -67,13 +67,19 @@ export default defineEventHandler(async (event) => {
 	// 6. The model call: small output cap, low effort, fixed scope. No retries,
 	// so each counted request is at most one billed call
 	client ??= new Anthropic({ apiKey: config.anthropicApiKey, maxRetries: 0, timeout: 30_000 });
+	// Haiku 5.5 by default: short answers over a small published knowledge base
+	// don't need a bigger model, and it costs about 1/40th of Opus 5.5 per token.
+	// Haiku has no server-side refusal fallback, so only send one for models that do.
+	const model = config.assistantModel || 'claude-haiku-5-5';
+	const fallback = model.startsWith('claude-haiku')
+		? {}
+		: { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const };
 	try {
 		const response = await client.beta.messages.create({
-			model: config.assistantModel || 'claude-opus-5-5',
+			model,
 			max_tokens: 1024,
 			output_config: { effort: 'low' },
-			betas: ['server-side-fallback-2026-07-01'],
-			fallbacks: 'default',
+			...fallback,
 			system: [{ type: 'text', text: ASSISTANT_SYSTEM, cache_control: { type: 'ephemeral' } }],
 			messages: [...input.history, { role: 'user', content: input.question }],
 		});

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    name: Typecheck, test and Studio build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            studio/package-lock.json
+      # postinstall runs `nuxt prepare`, which writes .nuxt/. The Studio build
+      # needs it too: its bundler reads the root tsconfig, which references .nuxt/.
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Studio build
+        working-directory: studio
+        run: |
+          npm ci
+          npm run build
