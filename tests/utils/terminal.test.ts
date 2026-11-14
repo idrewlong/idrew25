@@ -41,6 +41,11 @@ describe('site terminal', () => {
 		expect(runTerminal('history', ['ls', 'whoami']).lines).toHaveLength(2);
 	});
 
+	it('prints the recruiter quick facts', () => {
+		expect(text('facts')).toContain('U.S. citizen');
+		expect(runTerminal('facts').lines.at(-1)?.href).toMatch(/\.pdf$/);
+	});
+
 	it('completes commands and arguments', () => {
 		expect(completeTerminal('wh')).toEqual(['whoami']);
 		expect(completeTerminal('cd te')).toEqual(['cd teardown']);

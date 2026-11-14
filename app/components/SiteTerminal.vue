@@ -84,6 +84,7 @@ const welcome = () => [
 	{ text: '' },
 	{ cmd: 'help', text: 'every command', tone: 'muted' },
 	{ cmd: 'whoami', text: 'who built this', tone: 'muted' },
+	{ cmd: 'facts', text: 'quick facts for recruiters', tone: 'muted' },
 	{ cmd: 'projects', text: 'what I build (projects <name> for one)', tone: 'muted' },
 	{ cmd: 'cd <page>', text: 'go to a page, e.g. cd blog (ls lists them)', tone: 'muted' },
 	{ cmd: 'status', text: 'is the site up right now', tone: 'muted' },
@@ -92,7 +93,7 @@ const welcome = () => [
 	{ text: 'Tab completes · ↑ ↓ recall earlier commands · Esc closes', tone: 'muted' },
 ];
 
-const shortcuts = ['help', 'whoami', 'projects', 'ls', 'status', 'curl /api/ops'];
+const shortcuts = ['help', 'facts', 'whoami', 'projects', 'ls', 'status', 'curl /api/ops'];
 
 // Shortcut buttons run a command as if it had been typed
 function quick(cmd) {
@@ -206,7 +207,8 @@ function onKey(e) {
 
 // Same-site links navigate in the app (and close the terminal)
 function onLink(e, href) {
-	if (!href.startsWith('/')) return;
+	// Files like the resume PDF aren't app routes: let the browser open them
+	if (!href.startsWith('/') || /\.[a-z0-9]+$/i.test(href)) return;
 	e.preventDefault();
 	close();
 	navigateTo(href);
