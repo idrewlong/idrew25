@@ -128,11 +128,12 @@
 </template>
 
 <script setup>
+import { RESUME_PDF } from '#shared/siteData/recruiter';
 import { ref, onMounted } from 'vue';
 import { onPageLeft } from '~/composables/usePageLeave';
 import { experiences, educationList, skillCategories, certifications } from '#shared/siteData/resume';
 
-const RESUME_PDF = '/Andrew%20Long%20Resume.pdf';
+
 
 const root = ref(null);
 useReveal(root);

@@ -37,6 +37,7 @@
 					{{ link.label }}
 				</NuxtLink>
 				<NuxtLink to="/contact" class="sig-link">Contact</NuxtLink>
+				<button type="button" class="sig-link sig-button" @click="factsRequested = true">For recruiters</button>
 			</nav>
 
 			<div class="sig-col">
@@ -68,6 +69,8 @@
 <script setup>
 const year = new Date().getFullYear();
 const onSectionLink = useSectionLink();
+// Opens the recruiter quick facts (RecruiterPrompt.vue)
+const factsRequested = useState('recruiter-facts', () => false);
 
 // Open-source tools, linked to their repos
 const projects = [
@@ -152,6 +155,12 @@ const projects = [
 
 .sig-link:hover {
 	color: var(--accent);
+}
+
+.sig-button {
+	align-self: flex-start;
+	text-align: left;
+	cursor: pointer;
 }
 
 /* Touch screens get full 44px tap targets */

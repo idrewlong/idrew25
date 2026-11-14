@@ -5,6 +5,7 @@
 import { allProjects } from '../../shared/siteData/projects';
 import { certifications, experiences, skillCategories } from '../../shared/siteData/resume';
 import { contactEmail, socialLinks } from './siteLinks';
+import { quickFacts, RESUME_PDF } from '../../shared/siteData/recruiter';
 
 export interface TerminalLine {
 	text: string;
@@ -40,6 +41,7 @@ const HELP: [string, string][] = [
 	['ls', 'list pages'],
 	['cd <page>', 'go to a page, e.g. cd blog'],
 	['whoami', 'who built this'],
+	['facts', 'quick facts for recruiters'],
 	['cat resume', 'roles, newest first'],
 	['projects [name]', 'list projects, or show one'],
 	['skills', 'skills by area'],
@@ -54,7 +56,7 @@ const HELP: [string, string][] = [
 ];
 
 export const TERMINAL_COMMANDS = [
-	'help', 'ls', 'cd', 'open', 'whoami', 'cat', 'resume', 'projects', 'skills', 'certs', 'contact',
+	'help', 'ls', 'cd', 'open', 'whoami', 'facts', 'cat', 'resume', 'projects', 'skills', 'certs', 'contact',
 	'curl', 'ops', 'status', 'uptime', 'ask', 'history', 'clear', 'exit', 'pwd', 'date', 'echo', 'sudo',
 ];
 
@@ -115,10 +117,16 @@ export function runTerminal(input: string, history: string[] = [], path = '/'): 
 		case 'whoami': {
 			const now = experiences[0]!;
 			return out(`Andrew Long, ${now.title} at ${now.company}.`, {
-				text: 'Try cat resume, projects or ask "what do you build?"',
+				text: 'Try facts, cat resume, projects or ask "what do you build?"',
 				tone: 'muted',
 			});
 		}
+
+		case 'facts':
+			return out(
+				...quickFacts.map((f) => ({ cmd: f.label, text: f.value })),
+				{ text: 'Resume PDF', href: RESUME_PDF, tone: 'muted' }
+			);
 
 		case 'cat':
 			if (arg !== 'resume') return err(arg ? `cat: ${arg}: no such file. Try cat resume.` : 'cat: which file? Try cat resume.');

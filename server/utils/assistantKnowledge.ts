@@ -21,6 +21,7 @@ import {
 	skillCategories,
 } from '../../shared/siteData/resume';
 import { allProjects, type Project } from '../../shared/siteData/projects';
+import { quickFacts } from '../../shared/siteData/recruiter';
 
 /** Top-level routes, in nav order. tests/ checks this against app/pages. */
 export const SITE_PAGES: { path: string; note?: string }[] = [
@@ -83,6 +84,10 @@ Senior full stack developer at Mad Genius, based in Long Beach, Mississippi. U.S
 Tagline: "Go by choice. TypeScript by trade. AWS by necessity."
 At Mad Genius he owns AI tooling, web apps, headless sites, infra and more. He builds client web and mobile apps, from the database schema to production. He also designs and secures the AWS architecture behind Mississippi state agency sites. Day to day he builds apps in Laravel, React and Nuxt, sets up CI/CD pipelines and containerized deployments, and mentors junior developers.
 Personal: a dad.
+
+## Quick facts for recruiters (shown to visitors who say they're recruiters)
+${quickFacts.map((f) => `- ${f.label}: ${f.value}`).join('\n')}
+
 Focus and project descriptions below are quoted from the site, where Andrew writes in the first person.
 
 ## Focus
