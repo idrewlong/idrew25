@@ -52,7 +52,7 @@ import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import { quickFacts, RESUME_PDF } from '#shared/siteData/recruiter';
 
 /**
- * Asks once, a few seconds into a visit: "Are you a recruiter?" Yes opens the
+ * Asks once, early in a visit: "Are you a recruiter?" Yes opens the
  * quick facts (shared/siteData/recruiter.ts) in a modal; No just closes. The
  * question is a small card, not a full-screen pop-up, so it never blocks the
  * page (Google also penalizes intrusive mobile interstitials). Either answer
@@ -60,7 +60,12 @@ import { quickFacts, RESUME_PDF } from '#shared/siteData/recruiter';
  * lands on: once the visitor moves to another page, it stays quiet. The
  * footer's "For recruiters" link reopens the facts at any time.
  */
-const DELAY_MS = 6000;
+// When to ask: once the visitor has scrolled a quarter of a screen and been
+// on the page at least MIN_MS, or after FALLBACK_MS if they never scroll.
+// Timing starts after the preloader.
+const MIN_MS = 3000;
+const FALLBACK_MS = 15000;
+const SCROLL_FRACTION = 0.25;
 const STORAGE_KEY = 'recruiter-prompt';
 
 const step = ref(null); // null | 'ask' | 'facts'
@@ -100,18 +105,41 @@ const busy = () =>
 	assistant.open.value ||
 	Boolean(document.getElementById('mobile-menu'));
 
-function schedule() {
+let fallbackTimer;
+
+function cancel() {
 	clearTimeout(timer);
+	clearTimeout(fallbackTimer);
+	window.removeEventListener('scroll', onScroll);
+}
+
+function tryShow() {
+	cancel();
 	if (explored || answered() || step.value) return;
-	timer = setTimeout(function tryShow() {
-		if (explored || answered()) return;
-		if (busy()) {
-			timer = setTimeout(tryShow, 2000);
-			return;
-		}
-		step.value = 'ask';
-		track('shown');
-	}, DELAY_MS);
+	if (busy()) {
+		timer = setTimeout(tryShow, 2000);
+		return;
+	}
+	step.value = 'ask';
+	track('shown');
+}
+
+let startedAt = 0;
+
+function onScroll() {
+	if (window.scrollY < window.innerHeight * SCROLL_FRACTION) return;
+	window.removeEventListener('scroll', onScroll);
+	clearTimeout(timer);
+	timer = setTimeout(tryShow, Math.max(0, MIN_MS - (Date.now() - startedAt)));
+}
+
+function schedule() {
+	cancel();
+	if (explored || answered() || step.value) return;
+	startedAt = Date.now();
+	fallbackTimer = setTimeout(tryShow, FALLBACK_MS);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll(); // already scrolled, e.g. a restored scroll position
 }
 
 onMounted(() => {
@@ -131,7 +159,7 @@ watch(
 	() => route.path,
 	() => {
 		explored = true;
-		clearTimeout(timer);
+		cancel();
 		if (step.value === 'ask') step.value = null;
 	}
 );
@@ -140,7 +168,7 @@ watch(
 watch(factsRequested, (want) => {
 	if (!want) return;
 	factsRequested.value = false;
-	clearTimeout(timer);
+	cancel();
 	returnFocus = document.activeElement;
 	step.value = 'facts';
 	track('footer');
@@ -197,7 +225,7 @@ watch(step, (s, prev) => {
 
 onMounted(() => window.addEventListener('keydown', onKey));
 onBeforeUnmount(() => {
-	clearTimeout(timer);
+	cancel();
 	window.removeEventListener('keydown', onKey);
 	setPageInert(false);
 });
