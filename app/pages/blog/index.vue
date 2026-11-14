@@ -17,7 +17,7 @@
 		<section class="wrap">
 			<div class="sec-rule">
 				<span class="readout text-[var(--accent)]">[ 01 ]</span>
-				<span class="readout">Posts</span>
+				<h2 class="readout">Posts</h2>
 			</div>
 			<BlogTagFilter :tags="tags ?? []" :active="activeTag" class="mt-6 mb-4" />
 
@@ -32,7 +32,7 @@
 		<section v-if="features?.length" class="wrap mt-24 sm:mt-32">
 			<div class="sec-rule">
 				<span class="readout text-[var(--accent)]">[ 02 ]</span>
-				<span class="readout">Published elsewhere</span>
+				<h2 class="readout">Published elsewhere</h2>
 			</div>
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
 				<BlogFeatureCard v-for="feature in features" :key="feature.externalUrl" :feature="feature" />
