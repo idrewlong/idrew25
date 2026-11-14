@@ -6,6 +6,19 @@ const upstashUrl =
 const upstashToken =
 	process.env.NUXT_UPSTASH_REDIS_REST_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
 
+// The deploy the teardown ops panel reports, captured at build time from
+// Vercel's git system variables. Locally these are empty and the panel says so.
+const deploy = {
+	sha: process.env.VERCEL_GIT_COMMIT_SHA || '',
+	ref: process.env.VERCEL_GIT_COMMIT_REF || '',
+	message: (process.env.VERCEL_GIT_COMMIT_MESSAGE || '').split('\n')[0]!.slice(0, 120),
+	repo: process.env.VERCEL_GIT_REPO_OWNER && process.env.VERCEL_GIT_REPO_SLUG
+		? `${process.env.VERCEL_GIT_REPO_OWNER}/${process.env.VERCEL_GIT_REPO_SLUG}`
+		: '',
+	builtAt: new Date().toISOString(),
+	env: process.env.VERCEL_ENV || 'local',
+};
+
 export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['lenis/dist/lenis.css', '~/assets/css/main.css'],
@@ -16,12 +29,18 @@ export default defineNuxtConfig({
 			apiVersion: process.env.SANITY_API_VERSION,
 			readToken: process.env.SANITY_READ_TOKEN,
 		},
-		// Optional: raises GitHub's rate limit for the "Now shipping" feed
+		// Optional: raises GitHub's rate limit for the "Now shipping" feed and
+		// the teardown ops panel (CI status, DORA metrics)
 		githubToken: '',
 		// AI assistant (server-only). No key = assistant hidden and offline.
 		anthropicApiKey: '',
 		assistantModel: 'claude-haiku-5-5',
 		assistantDailyCap: 300,
+		// Teardown ops panel: the deploy above, plus the shared secret the
+		// ops-monitor GitHub Action uses to report uptime and Lighthouse runs
+		// (NUXT_OPS_INGEST_SECRET). Empty = ingest switched off.
+		deploy,
+		opsIngestSecret: '',
 		public: {
 			// Public by design: Web3Forms' free plan only accepts submissions
 			// from the browser, so this key ships in the client bundle.
@@ -144,6 +163,11 @@ export default defineNuxtConfig({
 		'/api/satellites': { isr: 60 * 60 * 2 },
 		'/api/github-activity': { isr: 60 * 30 },
 		'/api/github-pulse': { isr: 60 * 60 * 3 },
+		// Cached at the edge for a minute so the ops panel can show a real
+		// HIT/MISS for the visitor's own request. DORA reads GitHub, hourly.
+		'/api/ops': { isr: 60 },
+		'/api/ops/dora': { isr: 60 * 60 },
+		'/api/ops/ingest/**': { headers: { 'Cache-Control': 'no-store' } },
 		'/api/assistant/**': { headers: { 'Cache-Control': 'no-store' } },
 	},
 	// Assistant rate-limit counters. With Upstash configured they're shared

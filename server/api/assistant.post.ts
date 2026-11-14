@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto';
 import Anthropic from '@anthropic-ai/sdk';
+import { DEFAULT_ASSISTANT_MODEL } from '../utils/ops';
+import { recordAssistantUsage } from '../utils/opsStore';
 
 // Per-visitor limits. The global daily cap (runtimeConfig) is the backstop.
 const PER_VISITOR = [
@@ -70,7 +72,7 @@ export default defineEventHandler(async (event) => {
 	// Haiku 5.5 by default: short answers over a small published knowledge base
 	// don't need a bigger model, and it costs about 1/40th of Opus 5.5 per token.
 	// Haiku has no server-side refusal fallback, so only send one for models that do.
-	const model = config.assistantModel || 'claude-haiku-5-5';
+	const model = config.assistantModel || DEFAULT_ASSISTANT_MODEL;
 	const fallback = model.startsWith('claude-haiku')
 		? {}
 		: { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' as const };
@@ -83,6 +85,9 @@ export default defineEventHandler(async (event) => {
 			system: [{ type: 'text', text: ASSISTANT_SYSTEM, cache_control: { type: 'ephemeral' } }],
 			messages: [...input.history, { role: 'user', content: input.question }],
 		});
+
+		// Real token usage feeds the "cost today" line on the teardown ops panel
+		await recordAssistantUsage(model, response.usage);
 
 		const text =
 			response.stop_reason === 'refusal'

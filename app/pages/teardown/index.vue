@@ -9,7 +9,7 @@
 			<StatTiles
 				:items="[
 					{ value: String(entries.length).padStart(2, '0'), label: 'Components' },
-					{ value: '03', label: 'Live data sources' },
+					{ value: '04', label: 'Live data sources' },
 				]"
 			/>
 		</PageHeader>
@@ -30,6 +30,7 @@
 				<LabDemoCursor v-else-if="e.id === 'cursor'" />
 				<div v-else-if="e.id === 'network'" class="td-map"><UsNetworkMap /></div>
 				<LabDemoGuardrails v-else-if="e.id === 'assistant'" />
+				<LabDemoOps v-else-if="e.id === 'ops'" />
 			</LabEntry>
 
 			<!-- The glyph lookup at the heart of the ASCII renderer -->
@@ -128,6 +129,17 @@ const entries = [
 		tags: ['Claude API', 'Upstash Redis', 'HMAC', 'Rate limiting'],
 		cost: 'Capped daily, plus a Console spend limit',
 		tradeoff: 'Production refuses to run it without shared storage. Safer, but one more service to keep up.',
+	},
+	{
+		id: 'ops',
+		path: 'server/api/ops.get.ts · server/api/ops/dora.get.ts · .github/workflows/ops-monitor.yml',
+		name: 'Ops panel',
+		summary: 'How this site is running right now: the deploy you are looking at, its CI result, how your request was served, 30 days of uptime, the latest Lighthouse score, delivery (DORA) metrics and what the assistant has cost today.',
+		why: 'Most DevOps work is invisible when it goes well. This puts the pipeline, the cache, the monitoring and the bill where you can see them.',
+		how: 'Deploy details are captured at build time from Vercel’s git variables, and CI is GitHub’s check runs for that commit. The route is cached at Vercel’s edge for 60 seconds, and the panel reads x-vercel-cache and x-vercel-id from your response to show whether the edge answered and which region ran it. A scheduled GitHub Action checks the home page from outside Vercel every 15 minutes and runs Lighthouse once a day, reporting to an authenticated endpoint that stores results in Upstash. DORA metrics come from the production deployments Vercel records on GitHub. Each assistant answer adds its real token counts to a daily total, priced at list rates.',
+		tags: ['Vercel ISR', 'GitHub Actions', 'GitHub API', 'Lighthouse', 'DORA', 'Upstash Redis'],
+		cost: 'Free Actions minutes on a public repo, about one GitHub call a minute',
+		tradeoff: 'GitHub can start scheduled runs late or skip them, so uptime counts the checks that actually arrived. If the whole site is unreachable the report can’t land either, so a full outage shows as missing checks rather than failures. Lighthouse is one lab run that moves from day to day, and the assistant’s cost is calculated from token counts and list prices, not read from the bill.',
 	},
 ];
 

@@ -1,0 +1,80 @@
+# External monitoring for the teardown ops panel. Runs on GitHub's machines,
+# outside Vercel, and reports to the site with the OPS_INGEST_SECRET secret
+# (the same value as NUXT_OPS_INGEST_SECRET in Vercel).
+#   - every 15 minutes: fetch the home page, report status and response time
+#   - daily at 10:00 UTC: run Lighthouse (mobile) and report the scores
+# GitHub can start scheduled runs late or skip them when it's busy, so the
+# panel counts the checks it actually received.
+name: Ops monitor
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+    inputs:
+      lighthouse:
+        description: Also run Lighthouse
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  SITE: https://www.idrewlong.com/
+
+jobs:
+  uptime:
+    if: github.event_name != 'schedule' || github.event.schedule == '*/15 * * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check the home page
+        id: check
+        run: |
+          out=$(curl -s -o /dev/null -L --max-time 30 -w '%{http_code} %{time_total}' "$SITE" || true)
+          status=${out%% *}
+          ms=$(awk -v t="${out##* }" 'BEGIN { printf "%d", t * 1000 }')
+          echo "status=${status:-0} ms=${ms:-0}"
+          echo "status=${status:-0}" >> "$GITHUB_OUTPUT"
+          echo "ms=${ms:-0}" >> "$GITHUB_OUTPUT"
+      - name: Report the result
+        env:
+          OPS_INGEST_SECRET: ${{ secrets.OPS_INGEST_SECRET }}
+        run: |
+          curl -sf --retry 3 --retry-all-errors --max-time 20 -X POST "${SITE}api/ops/ingest/uptime" \
+            -H "Authorization: Bearer $OPS_INGEST_SECRET" -H 'Content-Type: application/json' \
+            -d '{"status": ${{ steps.check.outputs.status }}, "ms": ${{ steps.check.outputs.ms }}}'
+      # A failed run is the alert: GitHub notifies about failed scheduled runs
+      - name: Fail when the site is down
+        if: steps.check.outputs.status < 200 || steps.check.outputs.status >= 400
+        run: exit 1
+
+  lighthouse:
+    if: github.event.schedule == '0 10 * * *' || inputs.lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Run Lighthouse (mobile)
+        run: |
+          npx --yes lighthouse@12 "$SITE" --quiet --output=json --output-path=report.json \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox"
+      - name: Report the scores
+        env:
+          OPS_INGEST_SECRET: ${{ secrets.OPS_INGEST_SECRET }}
+        run: |
+          jq '{lighthouseResult: {finalUrl, fetchTime,
+                categories: (.categories | map_values({score})),
+                audits: {
+                  "largest-contentful-paint": {numericValue: .audits["largest-contentful-paint"].numericValue},
+                  "total-blocking-time": {numericValue: .audits["total-blocking-time"].numericValue},
+                  "cumulative-layout-shift": {numericValue: .audits["cumulative-layout-shift"].numericValue}
+                }}}' report.json > trimmed.json
+          curl -sf --retry 3 --retry-all-errors --max-time 30 -X POST "${SITE}api/ops/ingest/lighthouse" \
+            -H "Authorization: Bearer $OPS_INGEST_SECRET" -H 'Content-Type: application/json' \
+            --data @trimmed.json
