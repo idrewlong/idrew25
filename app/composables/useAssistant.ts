@@ -7,6 +7,8 @@ export function useAssistant() {
 	const enabled = useState('assistant-enabled', () => false);
 	const open = useState('assistant-open', () => false);
 	const checked = useState('assistant-checked', () => false);
+	// Set by the site terminal's `ask` command; the chat opens and sends it
+	const question = useState('assistant-question', () => '');
 
 	onMounted(async () => {
 		if (checked.value) return;
@@ -19,5 +21,5 @@ export function useAssistant() {
 		}
 	});
 
-	return { enabled, open };
+	return { enabled, open, question };
 }

@@ -27,7 +27,8 @@ export default defineEventHandler(async (): Promise<OpsPayload> => {
 		checkRuns(deploy.repo, deploy.sha, config.githubToken),
 		assistantToday().catch(() => null),
 		storedLighthouse().catch(() => null),
-		uptimeSamples().catch(() => null),
+		// ~31 days of 15-minute checks is plenty for the panel's 30-day view
+		uptimeSamples(3000).catch(() => null),
 	]);
 	const uptime = samples?.length ? uptimeSummary(samples, Date.now()) : null;
 

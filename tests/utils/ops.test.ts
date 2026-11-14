@@ -6,6 +6,9 @@ import {
 	doraMetrics,
 	encodeSample,
 	modelLabel,
+	outages,
+	siteState,
+	uptimePct,
 	parsePsi,
 	uptimeSummary,
 	type DeployRecord,
@@ -172,5 +175,40 @@ describe('doraMetrics', () => {
 
 	it('handles an empty window', () => {
 		expect(doraMetrics([], now)).toMatchObject({ deploys: 0, perWeek: 0, leadTimeMinutes: null, changeFailurePct: null, restoreMinutes: null });
+	});
+});
+
+describe('uptimePct and outages', () => {
+	const now = Date.parse('2026-11-13T12:00:00Z');
+	const min = (m: number) => now - m * 60_000;
+	const samples = [
+		{ at: min(75), status: 200, ms: 300 },
+		{ at: min(60), status: 502, ms: 50 },
+		{ at: min(45), status: 0, ms: 30000 },
+		{ at: min(30), status: 200, ms: 310 },
+		{ at: min(15), status: 503, ms: 40 },
+	];
+
+	it('counts checks inside the window only', () => {
+		expect(uptimePct(samples, now, 1)).toBe(33.33); // the check exactly 60 min old is outside: 1 of 3 up
+		expect(uptimePct(samples, now, 2)).toBe(40); // 2 of 5
+		expect(uptimePct([], now, 24)).toBeNull();
+	});
+
+	it('groups consecutive failures, newest first, with an open one still ongoing', () => {
+		expect(outages(samples)).toEqual([
+			{ start: min(15), end: null, checks: 1, status: 503 },
+			{ start: min(60), end: min(30), checks: 2, status: 502 },
+		]);
+	});
+});
+
+describe('siteState', () => {
+	const now = Date.parse('2026-11-13T12:00:00Z');
+	it('reads the latest check, and goes unknown after 45 minutes without one', () => {
+		expect(siteState(null, now)).toBe('unknown');
+		expect(siteState({ at: now - 20 * 60_000, status: 200, ms: 300 }, now)).toBe('up');
+		expect(siteState({ at: now - 20 * 60_000, status: 502, ms: 50 }, now)).toBe('down');
+		expect(siteState({ at: now - 50 * 60_000, status: 200, ms: 300 }, now)).toBe('unknown');
 	});
 });

@@ -240,3 +240,49 @@ export const githubHeaders = (token?: string): Record<string, string> => ({
 	'User-Agent': 'idrewlong.com',
 	...(token ? { Authorization: `Bearer ${token}` } : {}),
 });
+
+/** Share of checks that were up in the last `hours`; null with no checks. */
+export function uptimePct(samples: UptimeSample[], now: number, hours: number): number | null {
+	const since = now - hours * 3_600_000;
+	const recent = samples.filter((s) => s.at > since && s.at <= now);
+	if (!recent.length) return null;
+	return Math.round((recent.filter(isUp).length / recent.length) * 10000) / 100;
+}
+
+export interface Outage {
+	start: number; // first failed check
+	end: number | null; // first good check after it; null while ongoing
+	checks: number; // failed checks in a row
+	status: number; // status of the first failed check
+}
+
+/** Runs of consecutive failed checks, newest first. */
+export function outages(samples: UptimeSample[]): Outage[] {
+	const sorted = [...samples].sort((a, b) => a.at - b.at);
+	const out: Outage[] = [];
+	let current: Outage | null = null;
+	for (const s of sorted) {
+		if (!isUp(s)) {
+			if (current) current.checks++;
+			else current = { start: s.at, end: null, checks: 1, status: s.status };
+		} else if (current) {
+			current.end = s.at;
+			out.push(current);
+			current = null;
+		}
+	}
+	if (current) out.push(current);
+	return out.reverse();
+}
+
+export type SiteState = 'up' | 'down' | 'unknown';
+
+// A check is due every 15 minutes; GitHub often starts scheduled runs late,
+// so the state only turns unknown after three missed checks
+const STALE_MS = 45 * 60_000;
+
+/** Up or down from the latest check; unknown when it's missing or stale. */
+export function siteState(last: UptimeSample | null, now: number): SiteState {
+	if (!last || now - last.at > STALE_MS) return 'unknown';
+	return isUp(last) ? 'up' : 'down';
+}

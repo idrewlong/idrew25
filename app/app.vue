@@ -11,6 +11,7 @@
 		<ClientOnly>
 			<SiteCursor />
 			<AssistantChat />
+			<SiteTerminal />
 		</ClientOnly>
 		<!-- Hairline frame around the viewport (desktop) -->
 		<div class="page-frame" aria-hidden="true">

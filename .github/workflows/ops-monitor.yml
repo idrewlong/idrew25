@@ -2,7 +2,8 @@
 # outside Vercel, and reports to the site with the OPS_INGEST_SECRET secret
 # (the same value as NUXT_OPS_INGEST_SECRET in Vercel).
 #   - every 15 minutes: fetch the home page, report status and response time
-#   - daily at 10:00 UTC: run Lighthouse (mobile) and report the scores
+#   - daily at 10:00 UTC: run Lighthouse (mobile) three times and report the
+#     median run, since single lab runs swing by 20+ points
 # GitHub can start scheduled runs late or skip them when it's busy, so the
 # panel counts the checks it actually received.
 name: Ops monitor
@@ -54,16 +55,22 @@ jobs:
   lighthouse:
     if: github.event.schedule == '0 10 * * *' || inputs.lighthouse
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Run Lighthouse (mobile)
+      - name: Run Lighthouse (mobile) three times
         run: |
-          npx --yes lighthouse@12 "$SITE" --quiet --output=json --output-path=report.json \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --chrome-flags="--headless=new --no-sandbox"
+          for i in 1 2 3; do
+            npx --yes lighthouse@12 "$SITE" --quiet --output=json --output-path="run-$i.json" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --chrome-flags="--headless=new --no-sandbox"
+          done
+          # Keep the whole middle run by performance score, so the scores and
+          # vitals reported all come from the same run
+          jq -s 'sort_by(.categories.performance.score) | .[1]' run-*.json > report.json
+          jq -r '.categories.performance.score' run-*.json | paste -sd' ' | sed 's/^/performance scores: /'
       - name: Report the scores
         env:
           OPS_INGEST_SECRET: ${{ secrets.OPS_INGEST_SECRET }}

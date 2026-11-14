@@ -36,6 +36,14 @@
 					<Icon :name="social.icon" class="w-4 h-4" :aria-hidden="true" />
 				</a>
 
+				<!-- Live site status (from the external uptime checks) and the terminal -->
+				<NuxtLink to="/status" class="icon-item" :aria-label="siteStatus.label.value" :title="siteStatus.label.value">
+					<span class="status-dot" :class="`is-${siteStatus.state.value ?? 'unknown'}`" aria-hidden="true"></span>
+				</NuxtLink>
+				<button type="button" class="icon-item" aria-label="Open the site terminal" title="Terminal ( ~ )" @click="terminalOpen = true">
+					<Icon name="ph:terminal-window" class="w-4 h-4" :aria-hidden="true" />
+				</button>
+
 				<div class="nav-divider" aria-hidden="true" />
 
 				<button v-if="assistant.enabled.value" type="button" class="header-ai" @click="assistant.open.value = true">
@@ -145,6 +153,12 @@
 						>
 							<Icon :name="social.icon" class="w-5 h-5" :aria-hidden="true" />
 						</a>
+						<NuxtLink to="/status" class="icon-item" :aria-label="siteStatus.label.value" @click="menuOpen = false">
+							<span class="status-dot" :class="`is-${siteStatus.state.value ?? 'unknown'}`" aria-hidden="true"></span>
+						</NuxtLink>
+						<button type="button" class="icon-item" aria-label="Open the site terminal" @click="menuOpen = false; terminalOpen = true">
+							<Icon name="ph:terminal-window" class="w-5 h-5" :aria-hidden="true" />
+						</button>
 					</div>
 				</div>
 			</nav>
@@ -156,6 +170,8 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 
 const assistant = useAssistant();
+const siteStatus = useSiteStatus();
+const terminalOpen = useState('terminal-open', () => false);
 const isScrolled = ref(false);
 const menuOpen = ref(false);
 const toggleEl = ref(null);
@@ -514,6 +530,59 @@ onUnmounted(() => {
 	color: var(--accent);
 }
 
+button.icon-item {
+	cursor: pointer;
+}
+
+/* Header status dot: green when the last external check passed */
+.status-dot {
+	position: relative;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--text-muted);
+}
+
+.status-dot.is-up {
+	background: #3ddc84;
+}
+
+.status-dot.is-down {
+	background: #ef4444;
+}
+
+.status-dot.is-unknown {
+	background: #f59e0b;
+}
+
+.status-dot.is-up::after {
+	content: '';
+	position: absolute;
+	inset: -4px;
+	border-radius: 50%;
+	border: 1px solid #3ddc84;
+	opacity: 0;
+	animation: status-ping 2.4s ease-out infinite;
+}
+
+@keyframes status-ping {
+	0% {
+		transform: scale(0.5);
+		opacity: 0.8;
+	}
+	80%,
+	100% {
+		transform: scale(1.6);
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.status-dot.is-up::after {
+		animation: none;
+	}
+}
+
 /* ── Mobile menu toggle: hamburger ↔ X ──
    Lines slide to center, then rotate (open); un-rotate, then slide apart (close). */
 .menu-toggle {
@@ -639,9 +708,10 @@ onUnmounted(() => {
 
 .mobile-menu-meta {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 0.5rem 1rem;
 	padding-top: 1rem;
 }
 

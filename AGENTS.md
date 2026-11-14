@@ -24,7 +24,7 @@ No lint script yet.
 ## Layout
 ```
 app/components/   page sections (Hero, About, Experience, Skills, Projects2, Process, Cta, …) and blog/ components
-app/pages/        index, resume, process, contact, blog, teardown
+app/pages/        index, resume, process, contact, blog, teardown, status
 app/plugins/      gsap.ts (plugin registration), lenis.client.ts
 shared/siteData/  resume and project data read by the pages and the assistant (import via #shared/siteData/…)
 server/api/       blog API (Sanity queries) and __sitemap__ source

@@ -78,7 +78,7 @@
 						<span class="ops-val ops-scores">
 							<span v-for="s in scores" :key="s.label"><b class="tabular-nums">{{ s.value }}</b> {{ s.label }}</span>
 						</span>
-						<span class="ops-sub">Mobile, home page, daily in GitHub Actions · {{ timeAgo(data.lighthouse.measuredAt, now) }}</span>
+						<span class="ops-sub">Mobile, home page, median of 3 daily runs on a GitHub Actions runner · {{ timeAgo(data.lighthouse.measuredAt, now) }}</span>
 					</template>
 					<span v-else class="ops-val ops-muted">Not measured yet</span>
 				</dd>

@@ -167,6 +167,9 @@ export default defineNuxtConfig({
 		// HIT/MISS for the visitor's own request. DORA reads GitHub, hourly.
 		'/api/ops': { isr: 60 },
 		'/api/ops/dora': { isr: 60 * 60 },
+		// Status page data: checks arrive every 15 minutes
+		'/api/status': { isr: 60 * 5 },
+		'/api/status/now': { isr: 60 },
 		'/api/ops/ingest/**': { headers: { 'Cache-Control': 'no-store' } },
 		'/api/assistant/**': { headers: { 'Cache-Control': 'no-store' } },
 	},

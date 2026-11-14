@@ -76,7 +76,7 @@ const MAX_CHARS = 500;
 const MAX_HISTORY = 6;
 const MAX_HISTORY_CHARS = 4000;
 
-const { enabled, open } = useAssistant();
+const { enabled, open, question: handedQuestion } = useAssistant();
 const pending = ref(false);
 const error = ref('');
 const draft = ref('');
@@ -159,6 +159,14 @@ watch(open, (isOpen) => {
 		const fallback = [launcher.value, document.querySelector('.header-ai'), document.querySelector('[aria-controls="mobile-menu"]')].find(isFocusable);
 		(target ?? fallback)?.focus();
 	});
+});
+
+// A question handed over by the site terminal: open and send it
+watch(handedQuestion, (q) => {
+	if (!q) return;
+	handedQuestion.value = '';
+	open.value = true;
+	ask(q);
 });
 
 // Connected and actually rendered (not display:none or inside a closed menu)

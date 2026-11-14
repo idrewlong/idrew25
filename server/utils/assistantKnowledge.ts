@@ -30,6 +30,7 @@ export const SITE_PAGES: { path: string; note?: string }[] = [
 	{ path: '/blog' },
 	{ path: '/contact' },
 	{ path: '/teardown', note: 'how the site is built' },
+	{ path: '/status', note: 'live uptime and response time from external checks every 15 minutes' },
 ];
 
 // "https://www.msdh.ms.gov/" -> "msdh.ms.gov"; keeps any path

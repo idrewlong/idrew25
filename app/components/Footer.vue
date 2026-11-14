@@ -37,7 +37,6 @@
 					{{ link.label }}
 				</NuxtLink>
 				<NuxtLink to="/contact" class="sig-link">Contact</NuxtLink>
-				<NuxtLink to="/teardown" class="sig-link">Teardown</NuxtLink>
 			</nav>
 
 			<div class="sig-col">

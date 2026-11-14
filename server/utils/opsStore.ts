@@ -61,11 +61,14 @@ function memoryKv(): OpsKv {
  * Shared storage for the ops panel: the same Upstash database the assistant's
  * rate limits use (Upstash is mounted at `assistant:`), under `ops:` keys.
  * Null in production without Upstash, so the panel just omits those rows.
+ * Local dev always uses an in-memory copy.
  */
 export function opsKv(): OpsKv | null {
+	// Local dev never touches the real database, even when .env points at it,
+	// so testing can't put fake checks or costs on the live panel
+	if (import.meta.dev) return (devKv ??= memoryKv());
 	const driver = useStorage().getMount('assistant:')?.driver as { name?: string; getInstance?: () => Redis } | undefined;
 	if (driver?.name === 'upstash' && driver.getInstance) return driver.getInstance() as unknown as OpsKv;
-	if (import.meta.dev) return (devKv ??= memoryKv());
 	return null;
 }
 
@@ -117,9 +120,9 @@ export async function storedLighthouse(): Promise<LighthouseResult | null> {
 	return (await opsKv()?.get<LighthouseResult>(LIGHTHOUSE_KEY)) ?? null;
 }
 
-// Newest first, capped a little above 30 days of 15-minute checks
+// Newest first, capped a little above 90 days of 15-minute checks
 const UPTIME_KEY = 'ops:uptime';
-const UPTIME_MAX = 3200;
+const UPTIME_MAX = 8800;
 
 export async function recordUptime(sample: UptimeSample): Promise<void> {
 	const kv = opsKv();
@@ -128,9 +131,10 @@ export async function recordUptime(sample: UptimeSample): Promise<void> {
 	await kv.ltrim(UPTIME_KEY, 0, UPTIME_MAX - 1);
 }
 
-export async function uptimeSamples(): Promise<UptimeSample[] | null> {
+/** The newest `limit` checks (default: everything kept, about 90 days). */
+export async function uptimeSamples(limit = UPTIME_MAX): Promise<UptimeSample[] | null> {
 	const kv = opsKv();
 	if (!kv) return null;
-	const raw = await kv.lrange<unknown>(UPTIME_KEY, 0, UPTIME_MAX - 1);
+	const raw = await kv.lrange<unknown>(UPTIME_KEY, 0, Math.min(limit, UPTIME_MAX) - 1);
 	return raw.map(decodeSample).filter((s): s is UptimeSample => s !== null);
 }
