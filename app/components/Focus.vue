@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { focusAreas } from '~/utils/resume';
+import { focusAreas } from '#shared/siteData/resume';
 
 const root = ref(null);
 useReveal(root);

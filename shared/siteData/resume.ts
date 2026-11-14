@@ -1,4 +1,5 @@
-// Resume data shared by the home page sections and /resume, so the two never drift.
+// Resume data shared by the home page sections, /resume and the site assistant
+// (server/utils/assistantKnowledge.ts), so none of them drift from the others.
 
 // Highlights and focus tags restate facts from each role's own bullets.
 export const experiences = [

@@ -18,7 +18,6 @@
 			role="dialog"
 			aria-modal="false"
 			aria-labelledby="ai-title"
-			@keydown.esc="close"
 		>
 			<div class="ai-head">
 				<p id="ai-title" class="readout !text-[var(--text)]">
@@ -27,7 +26,9 @@
 				<button type="button" class="ai-close" aria-label="Close assistant" @click="close">×</button>
 			</div>
 
-			<div ref="log" class="ai-log" aria-live="polite">
+			<!-- role="log" announces new replies politely; the typing dots are visual only,
+			     and the status/alert lines below the log carry the spoken updates -->
+			<div ref="log" class="ai-log" role="log" aria-live="polite" aria-relevant="additions" :aria-busy="pending">
 				<p class="ai-msg ai-msg--bot">
 					Ask about Andrew's work, projects, skills or this site. Answers come only from what's published here.
 				</p>
@@ -37,9 +38,11 @@
 					class="ai-msg"
 					:class="m.role === 'user' ? 'ai-msg--user' : 'ai-msg--bot'"
 				>{{ m.content }}</p>
-				<p v-if="pending" class="ai-msg ai-msg--bot ai-typing" aria-label="Thinking">…</p>
-				<p v-if="error" class="ai-msg ai-msg--error" role="alert">{{ error }}</p>
+				<p v-if="pending" class="ai-msg ai-msg--bot ai-typing" aria-hidden="true">…</p>
+				<p v-if="error" class="ai-msg ai-msg--error">{{ error }}</p>
 			</div>
+			<p class="sr-only" role="status">{{ pending ? 'Thinking…' : '' }}</p>
+			<p class="sr-only" role="alert">{{ error }}</p>
 
 			<div v-if="!messages.length" class="ai-suggest">
 				<button v-for="s in suggestions" :key="s" type="button" class="readout ai-chip" @click="ask(s)">{{ s }}</button>
@@ -55,7 +58,8 @@
 					:maxlength="MAX_CHARS"
 					autocomplete="off"
 					placeholder="Ask a question…"
-					:disabled="pending"
+					:readonly="pending"
+					:aria-busy="pending"
 				/>
 				<button type="submit" class="ai-send" :disabled="pending || !draft.trim()" aria-label="Send">↑</button>
 			</form>
@@ -130,6 +134,16 @@ let returnFocus = null;
 // Focus the input however the panel was opened (launcher or nav button). On
 // close, focus goes back to the button that opened it; the floating launcher
 // was removed while the panel was up, so it falls back to the new one.
+// Esc closes the panel even when focus has moved elsewhere on the page
+const onWindowKey = (e) => {
+	if (e.key === 'Escape' && open.value) close();
+};
+watch(open, (isOpen) => {
+	if (isOpen) window.addEventListener('keydown', onWindowKey);
+	else window.removeEventListener('keydown', onWindowKey);
+});
+onBeforeUnmount(() => window.removeEventListener('keydown', onWindowKey));
+
 watch(open, (isOpen) => {
 	if (isOpen) {
 		useTrackEvent('assistant_open');

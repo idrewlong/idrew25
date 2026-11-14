@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { skillCategories, expertiseAreas } from '~/utils/resume';
+import { skillCategories, expertiseAreas } from '#shared/siteData/resume';
 
 const root = ref(null);
 useReveal(root);

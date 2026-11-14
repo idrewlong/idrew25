@@ -130,7 +130,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { onPageLeft } from '~/composables/usePageLeave';
-import { experiences, educationList, skillCategories, certifications } from '~/utils/resume';
+import { experiences, educationList, skillCategories, certifications } from '#shared/siteData/resume';
 
 const RESUME_PDF = '/Andrew%20Long%20Resume.pdf';
 

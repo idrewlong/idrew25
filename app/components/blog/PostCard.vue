@@ -9,7 +9,7 @@
 			</span>
 		</div>
 		<div class="post-copy">
-			<h2 class="display post-title">{{ post.title }}</h2>
+			<h3 class="display post-title">{{ post.title }}</h3>
 			<p class="post-desc">{{ post.description }}</p>
 			<span class="readout post-read">Read <span aria-hidden="true">↗</span></span>
 		</div>
