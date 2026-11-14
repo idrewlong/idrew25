@@ -1,6 +1,6 @@
 # idrewlong.com
 
-Andrew Long's portfolio site: home, selected work (tools listed before websites), a process page, a Sanity-backed blog, and a contact form. It's read by recruiters and hiring managers, so accurate copy, mobile layout, and fast first load matter most. Copy written as Andrew follows the `my-skills:writing-voice` skill: nothing goes on the site that isn't true.
+Andrew Long's portfolio site: home, selected work (newest first, tools and sites mixed), a process page, a Sanity-backed blog, and a contact form. It's read by recruiters and hiring managers, so accurate copy, mobile layout, and fast first load matter most. Copy written as Andrew follows the `my-skills:writing-voice` skill: nothing goes on the site that isn't true.
 
 ## Stack
 - Nuxt 4.5 (Vue 3) · Tailwind 4 via `@tailwindcss/vite` · GSAP 3.15 + Lenis · `@nuxtjs/seo` (meta, sitemap, robots) · `@nuxt/image`, `@nuxt/fonts`, `@nuxt/icon` · Google tag

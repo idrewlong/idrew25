@@ -22,8 +22,25 @@ export interface Project {
 	command?: string;
 }
 
-// Tools lead: they're the strongest engineering signal on the page.
+// Newest first, tools and sites mixed, so the first cards (five show before
+// "show more") are recent work of both kinds. Add new projects at the top.
 export const allProjects: Project[] = [
+	{
+		title: 'Mississippi State Department of Health',
+		description:
+			'Built much of the custom Laravel CMS behind the state health department\'s new site, parts of the Inertia and React front end, the AWS hosting, and internal tooling that migrated pages over from the old site.',
+		image: '/images/msdh.webp',
+		link: 'https://msdh.ms.gov/',
+		workTypes: ['Web Development', 'Cloud'],
+		isRealWork: true,
+		category: 'website',
+		technologies: [
+			'logos:laravel',
+			'logos:react',
+			'logos:tailwindcss-icon',
+			'logos:aws',
+		],
+	},
 	{
 		title: 'crawlmark',
 		description:
@@ -36,6 +53,21 @@ export const allProjects: Project[] = [
 		isRealWork: false,
 		category: 'tool',
 		technologies: ['logos:typescript-icon', 'logos:nodejs-icon'],
+	},
+	{
+		title: 'Southern AgCredit',
+		description:
+			'Custom WordPress theme for a farm and rural land lender serving Mississippi and Northwest Louisiana, with a loan calculator and Gravity Forms lead forms, hosted on WP Engine.',
+		image: '/images/southernagcredit.webp',
+		link: 'https://southernagcredit.com/',
+		workTypes: ['Web Development'],
+		isRealWork: true,
+		category: 'website',
+		technologies: [
+			'logos:wordpress-icon',
+			'logos:tailwindcss-icon',
+			'logos:wpengine',
+		],
 	},
 	{
 		title: 'Skinamp',
@@ -66,16 +98,32 @@ export const allProjects: Project[] = [
 		technologies: ['logos:go'],
 	},
 	{
-		title: 'Shrinkr',
+		title: 'Lessley Aviation',
 		description:
-			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds. It hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
-		image: '/images/shrinkr.webp',
-		link: 'https://cli.shrinkr.app/',
-		repo: 'https://github.com/idrewlong/shrinkr_cli',
-		workTypes: ['Developer Tool', 'Open Source'],
+			'Designed and built the site end to end: a headless WordPress CMS serving a Nuxt frontend over GraphQL, so the school edits content without touching code.',
+		image: '/images/lessleyaviation.webp',
+		link: 'https://lessleyaviation.com/',
+		workTypes: ['Web Development', 'Web Design'],
+		isRealWork: false,
+		category: 'website',
+		technologies: [
+			'logos:nuxt-icon',
+			'logos:tailwindcss-icon',
+			'logos:wordpress-icon',
+			'logos:graphql',
+		],
+	},
+	{
+		title: 'Snapr',
+		description:
+			'Chrome extension that captures clean screenshots of any webpage in one click. Viewport, full page with scroll-and-stitch, or a dragged selection, exported as PNG, JPG, WebP or PDF. No account, no cloud.',
+		image: '/images/snapr.webp',
+		link: 'https://chromewebstore.google.com/detail/snapr/obbmbckbeeegfhfjmhhlhadgoiabiigg',
+		repo: 'https://github.com/idrewlong/snapr',
+		workTypes: ['Browser Extension', 'Developer Tool'],
 		isRealWork: false,
 		category: 'tool',
-		technologies: ['logos:go'],
+		technologies: ['logos:chrome'],
 	},
 	{
 		title: 'Morphr',
@@ -91,47 +139,16 @@ export const allProjects: Project[] = [
 		technologies: ['logos:go'],
 	},
 	{
-		title: 'Snapr',
+		title: 'Shrinkr',
 		description:
-			'Chrome extension that captures clean screenshots of any webpage in one click. Viewport, full page with scroll-and-stitch, or a dragged selection, exported as PNG, JPG, WebP or PDF. No account, no cloud.',
-		image: '/images/snapr.webp',
-		link: 'https://chromewebstore.google.com/detail/snapr/obbmbckbeeegfhfjmhhlhadgoiabiigg',
-		repo: 'https://github.com/idrewlong/snapr',
-		workTypes: ['Browser Extension', 'Developer Tool'],
+			'Open-source CLI tool written in Go that batch-compresses entire image folders in seconds. It hits a target file size using binary search across WebP, AVIF, JPEG, and PNG. Zero config, one command.',
+		image: '/images/shrinkr.webp',
+		link: 'https://cli.shrinkr.app/',
+		repo: 'https://github.com/idrewlong/shrinkr_cli',
+		workTypes: ['Developer Tool', 'Open Source'],
 		isRealWork: false,
 		category: 'tool',
-		technologies: ['logos:chrome'],
-	},
-	{
-		title: 'Mississippi State Department of Health',
-		description:
-			'Built much of the custom Laravel CMS behind the state health department\'s new site, parts of the Inertia and React front end, the AWS hosting, and internal tooling that migrated pages over from the old site.',
-		image: '/images/msdh.webp',
-		link: 'https://msdh.ms.gov/',
-		workTypes: ['Web Development', 'Cloud'],
-		isRealWork: true,
-		category: 'website',
-		technologies: [
-			'logos:laravel',
-			'logos:react',
-			'logos:tailwindcss-icon',
-			'logos:aws',
-		],
-	},
-	{
-		title: 'Southern AgCredit',
-		description:
-			'Custom WordPress theme for a farm and rural land lender serving Mississippi and Northwest Louisiana, with a loan calculator and Gravity Forms lead forms, hosted on WP Engine.',
-		image: '/images/southernagcredit.webp',
-		link: 'https://southernagcredit.com/',
-		workTypes: ['Web Development'],
-		isRealWork: true,
-		category: 'website',
-		technologies: [
-			'logos:wordpress-icon',
-			'logos:tailwindcss-icon',
-			'logos:wpengine',
-		],
+		technologies: ['logos:go'],
 	},
 	{
 		title: 'Mad Genius - 5.0',
@@ -197,22 +214,6 @@ export const allProjects: Project[] = [
 			'logos:wordpress-icon',
 			'logos:tailwindcss-icon',
 			'logos:wpengine',
-		],
-	},
-	{
-		title: 'Lessley Aviation',
-		description:
-			'Designed and built the site end to end: a headless WordPress CMS serving a Nuxt frontend over GraphQL, so the school edits content without touching code.',
-		image: '/images/lessleyaviation.webp',
-		link: 'https://lessleyaviation.com/',
-		workTypes: ['Web Development', 'Web Design'],
-		isRealWork: false,
-		category: 'website',
-		technologies: [
-			'logos:nuxt-icon',
-			'logos:tailwindcss-icon',
-			'logos:wordpress-icon',
-			'logos:graphql',
 		],
 	},
 	{
