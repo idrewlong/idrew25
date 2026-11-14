@@ -288,6 +288,8 @@ onBeforeUnmount(() => {
 .rp-modal {
 	width: min(100%, 640px);
 	max-height: calc(100vh - 32px);
+	/* Visible height on mobile browsers, so the toolbar can't hide the bottom */
+	max-height: calc(100dvh - 32px);
 	overflow-y: auto;
 	overscroll-behavior: contain;
 	padding: 1.25rem;
@@ -370,5 +372,13 @@ onBeforeUnmount(() => {
 	flex-wrap: wrap;
 	gap: 0.75rem;
 	margin-top: 1.25rem;
+}
+
+/* Phones: full-width buttons, stacked */
+@media (max-width: 639px) {
+	.rp-actions > * {
+		flex: 1 1 100%;
+		justify-content: center;
+	}
 }
 </style>
